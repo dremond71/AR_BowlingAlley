@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - bowlingBall
+  - bowlingPin
+  - rollingBall_Sound
+  - ballSpawner
+  - rackSpawner
+  - hitByBall_Sound
+  - floor
+  - deleted_pin
+  - hiss_Sound
+  - alley_finding
+  - alley_chosen
+  - bottomFloor
+  - positioning_on
+  - positioning_off
+  - positioning_on_x
+  - positioning_on_y
+  - positioning_on_z
+  - positioning_off_need_game_restart
+  - welcome_Sound
+  - swipingDirections_Sound
+  - controlPanelLocation_Sound
+  - goodbye_Sound
+  - xyzPositioning_Sound
+  - haaAirBall_Sound
+  - tieFighterRoar_Sound
+  - tieFighterBlaster_Sound
+  - tieFighterBlastOrigin
+  - starwars_weapon_blast
+  - theme_default
+  - theme_starwars_empire
+  - theme_starwars_rebels
+  - xwingBlasterPosition1
+  - xwingBlasterPosition2
+  - xwingBlasterPosition3
+  - xwingBlasterPosition4
+  - xwingFighterBlasts_Sound
+  - xwingFighterRoar_Sound
+  - testFlyer_swoop_Animation
+  - animationPlaying_Off
+  - animationPlaying_On
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
