@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 7}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 394}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -95,8 +95,8 @@ MonoBehaviour:
     y: 30
     width: 1600
     height: 767
-  m_MinSize: {x: 887, y: 344}
-  m_MaxSize: {x: 16012, y: 8044}
+  m_MinSize: {x: 885, y: 344}
+  m_MaxSize: {x: 16010, y: 8044}
   vertical: 0
   controlID: 114
 --- !u!114 &5
@@ -118,8 +118,8 @@ MonoBehaviour:
     y: 0
     width: 309
     height: 553
-  m_MinSize: {x: 202, y: 222}
-  m_MaxSize: {x: 4002, y: 4022}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -144,8 +144,8 @@ MonoBehaviour:
     y: 553
     width: 1600
     height: 214
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 100, y: 122}
+  m_MaxSize: {x: 4000, y: 4022}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 16}
@@ -241,8 +241,8 @@ MonoBehaviour:
     y: 0
     width: 1600
     height: 767
-  m_MinSize: {x: 887, y: 344}
-  m_MaxSize: {x: 16012, y: 8044}
+  m_MinSize: {x: 885, y: 344}
+  m_MaxSize: {x: 16010, y: 8044}
   vertical: 1
   controlID: 115
 --- !u!114 &11
@@ -268,8 +268,8 @@ MonoBehaviour:
     y: 0
     width: 1600
     height: 553
-  m_MinSize: {x: 887, y: 222}
-  m_MaxSize: {x: 16012, y: 4022}
+  m_MinSize: {x: 885, y: 222}
+  m_MaxSize: {x: 16010, y: 4022}
   vertical: 0
   controlID: 116
 --- !u!114 &12
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 22364
+  m_LastSelectedObjectID: 135076
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -431,20 +431,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets
+  - Assets/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\dremond\Documents\BowlingAlley\BowlingAlley
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b82d0000
-    m_LastClickedID: 11704
-    m_ExpandedIDs: 00000000b82d0000
+    m_SelectedIDs: 182e0000
+    m_LastClickedID: 11800
+    m_ExpandedIDs: 00000000ba2d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -472,7 +472,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 943}
     m_SelectedIDs: cc3c0000
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000b82d0000
+    m_ExpandedIDs: 00000000ba2d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -497,8 +497,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 98370000
-    m_LastClickedInstanceID: 14232
+    m_SelectedInstanceIDs: 88ee0100
+    m_LastClickedInstanceID: 126600
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000e43900000a360000a0350000c035000000000000
     m_RenameOverlay:
@@ -559,7 +559,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 86e9ffffbee9ffff66eaffffd6ecffff12edffffbcedffff76fbffffba340000
+      m_ExpandedIDs: 3a41ffff7041ffff2042ffff7443ffffac43ffff5c44ffff6446ffff9a46ffff4a47ffff4e49ffff8449ffff344affff764bffffac4bffff5c4cffff864dffffbc4dffff6c4effffcc4fffff0450ffffb450ffff2a55ffff6255ffff1256ffff8257ffffba57ffff6a58ffff325affff685affff185bffff645cffff9c5cffff4c5dfffff65fffff2e60ffffdc60ffff9264ffffca64ffff7a65ffff0e67ffff4667fffff667ffff6c69ffffa269ffff526affff286cffff606cffff106dffffc66efffffe6effffac6fffff08f5ffffcafaffff76fbffffb83400009e360000aad4000044fc000096ff0000027401005477010012ef010026110200
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -619,9 +619,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.07080001, y: -0.20516002, z: 0.95077205}
+    m_Target: {x: 2.2617998, y: 0.43500006, z: 0.2900002}
     speed: 2
-    m_Value: {x: -0.07080001, y: -0.20516002, z: 0.95077205}
+    m_Value: {x: 2.2617998, y: 0.43500006, z: 0.2900002}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -650,13 +650,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.32065618, y: -0.26623827, z: 0.07742002, w: -0.9073066}
+    m_Target: {x: -0.047185276, y: -0.5602164, z: 0.012168587, w: -0.8286697}
     speed: 2
-    m_Value: {x: -0.32019183, y: -0.26585275, z: 0.07730791, w: -0.90599275}
+    m_Value: {x: -0.047116756, y: -0.55940294, z: 0.012150917, w: -0.82746637}
   m_Size:
-    m_Target: 4.1984897
+    m_Target: 7.7979836
     speed: 2
-    m_Value: 4.1984897
+    m_Value: 7.7979836
   m_Ortho:
     m_Target: 0
     speed: 2

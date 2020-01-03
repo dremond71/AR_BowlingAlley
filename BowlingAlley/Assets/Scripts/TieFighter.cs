@@ -59,9 +59,8 @@ public class TieFighter : MonoBehaviour
         
 
         
-         //debugText =  GameObject.Find("debugText").GetComponent<TextMesh>();
-         //debugText.text = "working...";
-
+       
+        
         blasterSource = GameObject.FindGameObjectWithTag("tieFighterBlaster_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
 

@@ -181,11 +181,29 @@ void kill_Pin(GameObject go){
             
             start_Fresh_Game();
        }
+       else if (positioningStatus.tag == "positioning_on"){
+      
+           // user turned on the bowling alley positioning menu
+           // make certain the ball and the rack don't exist 
+           ballKilled = false;   
+           pinsKilled=false;
+           simplyKillBallAndPins();
+
+       }
        else {
           // user is busy positioning the bowling alley
           // make certain the ball and the rack don't exist
 
           // positioning_on_x , y, z tags...
+          simplyKillBallAndPins();
+     
+
+       }// user is positioning the bowling alley
+
+    
+    }
+
+     void simplyKillBallAndPins() {
 
         if (!ballKilled)  
           simply_Kill_Ball();
@@ -193,11 +211,7 @@ void kill_Pin(GameObject go){
         if (!pinsKilled)  
            simply_Kill_All_Pins();
 
-       }// user is positioning the bowling alley
-
-    
-    }
-
+     }
 
      bool falling(GameObject go) {
 
