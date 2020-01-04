@@ -44,6 +44,12 @@ TagManager:
   - testFlyer_swoop_Animation
   - animationPlaying_Off
   - animationPlaying_On
+  - positioning_on_scale
+  - r2d2_Sound
+  - red5GoingIn_Sound
+  - lostr2d2_Sound
+  - buttonClick_Sound
+  - positioning_on_rotate
   layers:
   - Default
   - TransparentFX

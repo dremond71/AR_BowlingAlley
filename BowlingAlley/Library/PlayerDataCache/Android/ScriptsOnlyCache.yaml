@@ -110,39 +110,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10482}
     - Class: 114
-      Script: {instanceID: 10710}
+      Script: {instanceID: 10714}
     - Class: 114
-      Script: {instanceID: 10760}
+      Script: {instanceID: 10764}
     - Class: 114
-      Script: {instanceID: 10918}
+      Script: {instanceID: 10922}
     - Class: 114
-      Script: {instanceID: 10940}
+      Script: {instanceID: 10944}
     - Class: 114
-      Script: {instanceID: 11036}
+      Script: {instanceID: 11040}
     - Class: 114
-      Script: {instanceID: 11098}
+      Script: {instanceID: 11102}
     - Class: 114
-      Script: {instanceID: 11128}
+      Script: {instanceID: 11132}
     - Class: 114
-      Script: {instanceID: 11204}
+      Script: {instanceID: 11208}
     - Class: 114
-      Script: {instanceID: 11230}
+      Script: {instanceID: 11234}
     - Class: 114
-      Script: {instanceID: 11286}
+      Script: {instanceID: 11290}
     - Class: 114
-      Script: {instanceID: 11298}
+      Script: {instanceID: 11302}
     - Class: 114
-      Script: {instanceID: 11308}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 11374}
+      Script: {instanceID: 11378}
     - Class: 114
-      Script: {instanceID: 11398}
+      Script: {instanceID: 11402}
     - Class: 114
-      Script: {instanceID: 11526}
+      Script: {instanceID: 11530}
     - Class: 114
-      Script: {instanceID: 11564}
+      Script: {instanceID: 11568}
     - Class: 114
-      Script: {instanceID: 11612}
+      Script: {instanceID: 11616}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -432,6 +432,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: 5465fd5178f4ec69543515499ca89268
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ControlPanelShowcase
+  - hash:
+      serializedVersion: 2
       Hash: 2fd3bc4ab95fe1028c96ed4dbea48db8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -454,6 +460,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: XWingFighterShowcase
   - hash:
       serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
