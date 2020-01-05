@@ -204,7 +204,7 @@ void handleInputAndroid(){
                     }
                     else if (name == "quitYes") {
                       PlayButtonClickSound_Immediately();
-                      //handleGoodbyeSoundsOnDifferentThread();
+                     handleGoodbyeSoundsOnDifferentThread();
                     }
                     else if ( isABlaster(name) || isAWing(name)  ) {
                      // MyDebug("touched blaster");
@@ -430,7 +430,7 @@ bool isCockpitWindow(string name) {
 bool isR2D2(string name) {
   bool value = false;
 
-   if ( (name == "r2Head") || (name == "r2base") 
+   if ( name.StartsWith("r2")  
       ) {
         value = true;
       }
