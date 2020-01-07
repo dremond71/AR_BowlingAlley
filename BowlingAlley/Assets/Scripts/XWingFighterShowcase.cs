@@ -7,7 +7,7 @@ public class XWingFighterShowcase : MonoBehaviour
 
     GameObject positioningStatus;
     
-   
+    
  
 
 // swipe gesture variables - begin
@@ -22,13 +22,13 @@ public class XWingFighterShowcase : MonoBehaviour
     float updated_horizontal_swipe_X_position;
 // swipe gesture variables - end
 
-
+    static int timesScaleIncreased=0;
+    static int timesScaleDecreased=0;
+    static float SCALE_FACTOR=0.010f;
 
     void Start()
     {
      positioningStatus      =  GameObject.Find("positioningStatus");
-
- 
     }
 
     
@@ -272,25 +272,54 @@ void rotateRight() {
                  
    }
 
+/*
+  Figure out if vehicule was scaled by certain amount, so that we can apply the same
+  scale to the blaster bolts
+*/
+public static float getScaleDifference() {
+
+    float value;
+    if ( (timesScaleIncreased == 0) &&
+         (timesScaleDecreased == 0) 
+    ){
+        value = 0.0f;//since instantiation, user hasn't scaled the vehicle
+    }
+    else {
+        int factor = timesScaleIncreased - timesScaleDecreased;
+        if (factor == 0){
+           value = 0.0f;// //since instantiation, user has scaled the vehicle, but difference  is 0
+        }//if
+        else {
+           // this can be a positive or negative value
+           value = factor * SCALE_FACTOR;
+        }// endif
+    }
+
+    return value;
+
+}
+
 void decreaseScale() {
-          float value = 0.010f;
+          float value = SCALE_FACTOR;
           float x = value;
           float y = value;
           float z = value;
 
           this.transform.localScale -= new Vector3(x, y, z);
+
+          timesScaleDecreased++;
                  
    }
 
 void increaseScale() {
-          float value = 0.010f;
+          float value = SCALE_FACTOR;
           float x = value;
           float y = value;
           float z = value;
 
           this.transform.localScale += new Vector3(x, y, z);
      
-                 
+         timesScaleIncreased++;     
    }
 
 void decreaseZvalue() {

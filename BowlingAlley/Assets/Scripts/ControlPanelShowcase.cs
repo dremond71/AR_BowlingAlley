@@ -11,7 +11,6 @@ public class ControlPanelShowcase : MonoBehaviour
     public GameObject positioningMenu;
     public GameObject quitDialog;
 
-
     private GameObject frikkingAnnoying3DLabel;
     private GameObject positioningConfigIcon;
     private GameObject quitIcon;
@@ -64,7 +63,7 @@ public class ControlPanelShowcase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MyDebug("working...");
+        //MyDebug("working...");
         positioningStatus      =  GameObject.Find("positioningStatus");
         
         frikkingAnnoying3DLabel      =  GameObject.Find("configPanelLabel");
@@ -95,7 +94,7 @@ public class ControlPanelShowcase : MonoBehaviour
 
         lostR2D2Source=  GameObject.FindGameObjectWithTag("lostr2d2_Sound").GetComponent<AudioSource>();
         lostR2D2 = lostR2D2Source.clip;   
-        //reportOnObject(lostR2D2Source,"lostR2D2Source");
+       
           
         buttonClickSource=  GameObject.FindGameObjectWithTag("buttonClick_Sound").GetComponent<AudioSource>();
         buttonClick = buttonClickSource.clip;   
@@ -141,7 +140,7 @@ void handleInputAndroid(){
       if ( nbTouches > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
       {
 
-           //MyDebug("touched something");
+          
            Touch touch = Input.GetTouch(0);
            Ray ray = Camera.main.ScreenPointToRay(touch.position);
  
@@ -153,10 +152,10 @@ void handleInputAndroid(){
                     
                    
                     string name = hit.collider.transform.gameObject.name;
-                     //MyDebug("touched '" + name + "'");
+                     
                     if (name == "positioningConfigIcon"){
                             // use touched floor with 2 fingers - to bring up floor config mode
-                        // MyDebug("touch config icon");
+                        
                          positioningStatus.tag = "positioning_on"; //global status
                          PlayButtonClickSound_Immediately();
 
@@ -165,7 +164,7 @@ void handleInputAndroid(){
                             
                     }
                     else if (name == "posX") {
-                       // MyDebug("touch x icon");
+                       
                       positioningStatus.tag = "positioning_on_x"; //global status
                       PlayButtonClickSound_Immediately();
                     }
@@ -186,14 +185,14 @@ void handleInputAndroid(){
                       PlayButtonClickSound_Immediately();
                     }
                     else if (name == "posDone") {
-                     //MyDebug("touch done icon");
+                     
                      positioningStatus.tag = "positioning_off_need_game_restart"; //global status
                      PlayButtonClickSound_Immediately();
                       deactivatePositioningMenu();
                     }
                     else if (name == "quitIcon"){
                      // confirm 
-                     //MyDebug("touch quit icon");
+                     
                      PlayButtonClickSound_Immediately();
                      activateQuitDialog();
 
@@ -207,7 +206,7 @@ void handleInputAndroid(){
                      handleGoodbyeSoundsOnDifferentThread();
                     }
                     else if ( isABlaster(name) || isAWing(name)  ) {
-                     // MyDebug("touched blaster");
+                     
                         shoot();
                     }
                     else if ( isCockpitWindow(name) ) {
@@ -308,7 +307,38 @@ IEnumerator PlayXYZPositioningSounds()
 
   }
 
+     
+      void scaleBlasterBolt_IfNecessary(GameObject go) {
 
+         
+         // figure out if xwing fighter was scaled up or down; if at all
+      
+         float xwingScaleDifference = XWingFighterShowcase.getScaleDifference();
+        
+         if (xwingScaleDifference != 0.0f){
+            // then the xwing experienced a change in scale 
+           
+            // can be positive or negative in value
+            float x = xwingScaleDifference;
+            float y = xwingScaleDifference;
+            float z = xwingScaleDifference;
+
+            if (xwingScaleDifference < 0.0f) {
+                // vehicle was decreased in scale MORE than it was increased in scale
+                x*=-1.0f;//cheap way of getting absolute amount ;)
+                y*=-1.0f;
+                z*=-1.0f;
+                go.transform.localScale -= new Vector3(x, y, z);
+            }
+            else {
+              // vehicle was increased in scale MORE than it was decreased in scale
+                 go.transform.localScale += new Vector3(x, y, z);
+            }
+         }//if
+
+         // else - do nothing to scale of blaster bolt
+
+      }
 
       void spawnNewBlasterBolt() {
             // recreating ball
@@ -316,23 +346,28 @@ IEnumerator PlayXYZPositioningSounds()
  
             // bolt 1
             xwingBlastOrigin1 =  GameObject.FindGameObjectWithTag("xwingBlasterPosition1");
-            reportOnObject(xwingBlastOrigin1,"xwingBlastOrigin1");
+            
             float x = xwingBlastOrigin1.transform.position.x;
             float y = xwingBlastOrigin1.transform.position.y;
             float z = xwingBlastOrigin1.transform.position.z;
             GameObject go = (GameObject)  Instantiate(xwingBlastPrefab, new Vector3(x,y,z), Quaternion.identity);
-            reportOnObject(go,"go1");
+            scaleBlasterBolt_IfNecessary(go);
+            
             GameObject bolt1 = PrefabFactory.GetChildWithName(go,"xwingBlastTwo");
-           reportOnObject(bolt1,"bolt1");
+           
+          
+
             // bolt 2
             xwingBlastOrigin2 =  GameObject.FindGameObjectWithTag("xwingBlasterPosition2");
             x = xwingBlastOrigin2.transform.position.x;
             y = xwingBlastOrigin2.transform.position.y;
             z = xwingBlastOrigin2.transform.position.z;
             go = (GameObject)  Instantiate(xwingBlastPrefab, new Vector3(x,y,z), Quaternion.identity);
-            reportOnObject(go,"go2");
+            scaleBlasterBolt_IfNecessary(go);
+            
             GameObject bolt2 = PrefabFactory.GetChildWithName(go,"xwingBlastTwo");
-            reportOnObject(bolt2,"bolt2");
+            
+           
 
             // bolt 3
             xwingBlastOrigin3 =  GameObject.FindGameObjectWithTag("xwingBlasterPosition3");
@@ -340,9 +375,11 @@ IEnumerator PlayXYZPositioningSounds()
             y = xwingBlastOrigin3.transform.position.y;
             z = xwingBlastOrigin3.transform.position.z;
             go = (GameObject)  Instantiate(xwingBlastPrefab, new Vector3(x,y,z), Quaternion.identity);
-            reportOnObject(go,"go3");
+            scaleBlasterBolt_IfNecessary(go);
+            
             GameObject bolt3 = PrefabFactory.GetChildWithName(go,"xwingBlastTwo");
-            reportOnObject(bolt3,"bolt3");
+           
+           
 
             // bolt 4
             xwingBlastOrigin4 =  GameObject.FindGameObjectWithTag("xwingBlasterPosition4");
@@ -350,10 +387,11 @@ IEnumerator PlayXYZPositioningSounds()
             y = xwingBlastOrigin4.transform.position.y;
             z = xwingBlastOrigin4.transform.position.z;
             go = (GameObject)  Instantiate(xwingBlastPrefab, new Vector3(x,y,z), Quaternion.identity);
-            reportOnObject(go,"go4");
+            scaleBlasterBolt_IfNecessary(go);
+            
             GameObject bolt4 = PrefabFactory.GetChildWithName(go,"xwingBlastTwo");
-            reportOnObject(bolt4,"bolt4");
-
+            
+            
            // if tie fighter is rolling down the alley, add ITS force to the force of the bolts; to keep bolts ahead of tie fighter.
            float blasterForce = tieBlastForce * -1;
           
