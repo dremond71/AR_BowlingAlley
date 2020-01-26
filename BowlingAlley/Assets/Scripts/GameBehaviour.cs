@@ -17,9 +17,12 @@ public class GameBehaviour : MonoBehaviour
     
     private float pauseBeforeDroppingBall = 3.0f;
     private float pauseBeforeDroppingRack = 4.0f;
+
     private bool performingRackLogic = false;
     private bool performingBallLogic = false;
-
+    private bool allowSpawningOfNewRack = true;
+    private bool needToChangeBall = false;
+    private bool changingBall = false;
     private bool ballKilled;
     private bool pinsKilled;
 
@@ -31,14 +34,21 @@ public class GameBehaviour : MonoBehaviour
     private  AudioSource swipingInstructions;
     private  AudioSource controlPanelLocation;
     private bool playIntroSounds = false;
-
+  private TextMesh debugText; 
    
     private GameObject endCap;
+
+    
+
+   
     // Start is called before the first frame update
    void Awake() {
        welcome = GameObject.FindGameObjectWithTag("welcome_Sound").GetComponent<AudioSource>();
        swipingInstructions = GameObject.FindGameObjectWithTag("swipingDirections_Sound").GetComponent<AudioSource>();
        controlPanelLocation = GameObject.FindGameObjectWithTag("controlPanelLocation_Sound").GetComponent<AudioSource>();
+        debugText =  GameObject.Find("debugText").GetComponent<TextMesh>();
+       
+       
    }
 
     
@@ -58,8 +68,9 @@ public class GameBehaviour : MonoBehaviour
          ballKilled=false;
          pinsKilled=false;
 
-         handleIntroSoundsOnDifferentThread();
-         start_Fresh_Game();
+         //MyDebug("allowSpawningOfNewRack: " + allowSpawningOfNewRack);
+         //handleIntroSoundsOnDifferentThread();
+         start_Fresh_Game(false);
     }
 
     void kill_Ball(GameObject go){
@@ -72,6 +83,7 @@ public class GameBehaviour : MonoBehaviour
     }
 
 void kill_Pin(GameObject go){
+      
        try {
            if (taggedAsDeleted(go) ){
               
@@ -81,17 +93,42 @@ void kill_Pin(GameObject go){
        catch(Exception e) {
           Debug.Log("Error deleting pin");
        }
+
+       //after killing a pin, check if a new rack is required
+       
+       
     }
 
     void tagAsDeleted(GameObject pin) {
-        pin.tag="deleted_pin";   
+
+       try {
+            pin.tag="deleted_pin"; 
+       }
+       catch(Exception e) {
+          Debug.Log("Error tagging pin");
+       } 
+         
     }
 
+
     bool taggedAsDeleted(GameObject pin) {
-       return pin.tag=="deleted_pin";   
+       bool value = false;
+
+      try {
+            value = (pin.tag=="deleted_pin"); 
+       }
+       catch(Exception e) {
+          Debug.Log("Error tagging pin");
+       } 
+ 
+       return value;   
     }
 
     void killPins_If_Falling() {
+
+         // we should kill falling pins immediately otherwise
+         // you will see them falling below the bowling alley
+
          GameObject[] pins = GameObject.FindGameObjectsWithTag("bowlingPin");
          foreach (GameObject pin in pins)
          {
@@ -110,7 +147,7 @@ void kill_Pin(GameObject go){
                kill_Pin(pin);
          }
 
-         handleRackLogicOnDifferentThread();
+       
 
     }
 
@@ -121,18 +158,21 @@ void kill_Pin(GameObject go){
           if ( falling(bowlingBall) ) {
             // Debug.Log("Killing ball");
              kill_Ball(bowlingBall);
-             handleBallLogicOnDifferentThread();
+             handleBallLogicOnDifferentThread(false);
           }
         }
 
     }
 
-    void simply_Kill_Ball() {
+    void kill_Ball_With_NullCheck() {
        // delete bowling ball
        bowlingBall = GameObject.FindGameObjectWithTag("bowlingBall");
         if (bowlingBall != null) {
              kill_Ball(bowlingBall);    
         }  
+    } 
+    void simply_Kill_Ball() {
+        kill_Ball_With_NullCheck();
         ballKilled = true; 
     }
 
@@ -156,19 +196,44 @@ void kill_Pin(GameObject go){
     // Update is called once per frame
     void Update()
     {
+     //
+     // detect change of theme
+     //
+     if (previousThemeTag != themeStatusHolder.tag){
+           previousThemeTag = themeStatusHolder.tag;
+           needToChangeBall = true;      
+           return;
+     }//if
 
-   //   // handle change of theme
-   //   if (previousThemeTag != themeStatusHolder.tag){
-   //         previousThemeTag = themeStatusHolder.tag;
-   //         simply_Kill_Ball();
-   //         return;
-   //   }//if
+
+     //
+     // handle the changing of ball - normal processing won't continue until this work is complete
+     //
+     if (needToChangeBall){
+
+        if (!changingBall) {
+          changingBall = true;
+
+          //call work to change ball
+          startWorkToChangeBall();
+          return;
+        }
+        return;
+     }
+
+
+     //
+     // Normal processing
+     //
 
     //positioning_off_need_game_restart  -> have config menu apply put into this mode. then this class respawns rack and ball
        if (positioningStatus.tag == "positioning_off"){
               //when alley positioning mode is off, perform regular duties
               killBall_If_Falling();
+               
               killPins_If_Falling();
+              killPins_If_NotVertical();
+              spawnNewRack_If_Necessary();
        }
        else if (positioningStatus.tag == "positioning_off_need_game_restart" ) {
             // the user has just pressed DONE on the positioning menu, so 
@@ -178,8 +243,9 @@ void kill_Pin(GameObject go){
             
             ballKilled=false;
             pinsKilled=false;
-            
-            start_Fresh_Game();
+            allowSpawningOfNewRack = true;
+           // MyDebug("allowSpawningOfNewRack: " + allowSpawningOfNewRack);
+            start_Fresh_Game(true);
        }
        else if (positioningStatus.tag == "positioning_on"){
       
@@ -187,6 +253,8 @@ void kill_Pin(GameObject go){
            // make certain the ball and the rack don't exist 
            ballKilled = false;   
            pinsKilled=false;
+           allowSpawningOfNewRack = false;
+           //MyDebug("allowSpawningOfNewRack: " + allowSpawningOfNewRack);
            simplyKillBallAndPins();
 
        }
@@ -253,6 +321,12 @@ void kill_Pin(GameObject go){
      
     }
 
+    void startWorkToChangeBall() {
+       
+          kill_Ball_With_NullCheck();
+          bool reset_ChangingBall_Flags_When_Complete = true;
+          handleBallLogicOnDifferentThread(reset_ChangingBall_Flags_When_Complete);
+   }
 
          void spawnNewBall() {
             // recreating ball
@@ -275,25 +349,46 @@ void kill_Pin(GameObject go){
             
      }
 
-    void start_Fresh_Game() {
-        handleBallLogicOnDifferentThread();
-        handleRackLogicOnDifferentThread();
+    void start_Fresh_Game(bool alsoPerformRackLogic) {
+        handleBallLogicOnDifferentThread(false);
+        if (alsoPerformRackLogic)
+           handleRackLogicOnDifferentThread();
     }
 
+    // function that starts a thread to take care of deleting a pin
+    // that is down, but hasn't rolled off the bowling lane
+    void handleDeleteNonVerticalPinOnDifferentThread(GameObject pin) {
+        StartCoroutine(DeleteNonVerticalPinWork(pin));
+    }
+
+
+    IEnumerator DeleteNonVerticalPinWork(GameObject pin)
+    {
+        
+        //Debug.Log("Started DoWork : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(3.0f);
+       tagAsDeleted(pin);
+       kill_Pin(pin);
+
+
+        //Debug.Log("Finished DoWork : " + Time.time);
+    }
     void handleRackLogicOnDifferentThread() {
 
-        if (!performingRackLogic){
-           performingRackLogic = true;
-           StartCoroutine(DoRackWork());
-        }//if
-
+       if (!performingRackLogic){
+         performingRackLogic = true;
+         StartCoroutine(DoRackWork());
+       }//if
+        
      }
 
-    void handleBallLogicOnDifferentThread() {
+    void handleBallLogicOnDifferentThread(bool reset_ChangingBall_Flags_When_Complete) {
 
         if (!performingBallLogic){
            performingBallLogic=true;
-          StartCoroutine(DoBallWork());
+          StartCoroutine(DoBallWork(reset_ChangingBall_Flags_When_Complete));
         }
         
 
@@ -306,7 +401,7 @@ void kill_Pin(GameObject go){
 
      }
 
-IEnumerator DoBallWork()
+IEnumerator DoBallWork(bool reset_ChangingBall_Flags_When_Complete)
     {
         
         //Debug.Log("Started DoWork : " + Time.time);
@@ -317,8 +412,15 @@ IEnumerator DoBallWork()
         //After we have waited 5 seconds print the time again.
         //Debug.Log("Finished pausing in DoWork : " + Time.time);
 
-        whatsNextForBall();
+        spawnNewBall();
 
+        performingBallLogic = false;
+
+        // this will allow normal processing to resume in Update() method
+        if (reset_ChangingBall_Flags_When_Complete){
+            changingBall = false;
+            needToChangeBall = false;
+        }
         //Debug.Log("Finished DoWork : " + Time.time);
     }
 IEnumerator DoRackWork()
@@ -332,33 +434,37 @@ IEnumerator DoRackWork()
         //After we have waited 5 seconds print the time again.
         //Debug.Log("Finished pausing in DoWork : " + Time.time);
 
-        whatsNextForRack();
-
+        //whatsNextForRack();
+        //spawnNewRack_If_Necessary();
         //Debug.Log("Finished DoWork : " + Time.time);
+        spawnNewRack();
+        performingRackLogic = false;
+ 
     }
 
      void whatsNextForBall() {
       
-        spawnNewBall();
-
-        performingBallLogic = false;
+    
      }
 
-   void whatsNextForRack() {
-
-        destroyPinsThatAreNotVertical();
-        
-        if (!anyPinsLeft()) {
-            //Debug.Log("About to spawn new rack");
-           spawnNewRack();
+   // called from kill_Pin().
+   void spawnNewRack_If_Necessary() {
+         if (!anyPinsLeft()) {
+         
+           if (allowSpawningOfNewRack){
+              handleRackLogicOnDifferentThread();
+           }
         }
 
-        performingRackLogic = false;
-        
-     }
+   }
+   
 
+ long getCurrentTimeInMilliseconds() {
 
- void destroyPinsThatAreNotVertical() {
+    return DateTimeOffset.Now.ToUnixTimeMilliseconds();
+ }
+
+ void killPins_If_NotVertical() {
 
          GameObject[] pins = GameObject.FindGameObjectsWithTag("bowlingPin");
          foreach (GameObject pin in pins)
@@ -372,8 +478,7 @@ IEnumerator DoRackWork()
               )
            {
             
-                tagAsDeleted(pin);
-                kill_Pin(pin);
+               handleDeleteNonVerticalPinOnDifferentThread(pin);
                 
            }
        
@@ -390,7 +495,6 @@ IEnumerator DoRackWork()
         
         pinsLeft = pins.Length>0;
 
-       
         return pinsLeft;
 
      }
@@ -447,4 +551,12 @@ IEnumerator DoRackWork()
        return value;
     }
 
+
+     void MyDebug(string someText) {
+     
+      if (debugText != null){
+          debugText.text = someText;
+      }
+
+  }
 }
