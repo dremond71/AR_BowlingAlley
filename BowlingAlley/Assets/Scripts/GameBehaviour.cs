@@ -8,8 +8,8 @@ public class GameBehaviour : MonoBehaviour
     public GameObject defaultBowlingBallPrefab;
     public GameObject empireBowlingBallPrefab;
     public GameObject rebelsBowlingBallPrefab;
-
     public GameObject rackPrefab;
+    private ParticleSystem changeBallParticleSystem;
 
     GameObject positioningStatus;
     private GameObject bowlingBall;
@@ -47,6 +47,7 @@ public class GameBehaviour : MonoBehaviour
        swipingInstructions = GameObject.FindGameObjectWithTag("swipingDirections_Sound").GetComponent<AudioSource>();
        controlPanelLocation = GameObject.FindGameObjectWithTag("controlPanelLocation_Sound").GetComponent<AudioSource>();
         debugText =  GameObject.Find("debugText").GetComponent<TextMesh>();
+        changeBallParticleSystem = GameObject.Find("ballChangeParticleSystem").GetComponent<ParticleSystem>();
        
        
    }
@@ -193,6 +194,11 @@ void kill_Pin(GameObject go){
          pinsKilled = true;
     }
 
+    void playChangeBallParticleEffect() {
+
+       changeBallParticleSystem.Play(true);
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -324,6 +330,7 @@ void kill_Pin(GameObject go){
     void startWorkToChangeBall() {
        
           kill_Ball_With_NullCheck();
+          playChangeBallParticleEffect();
           bool reset_ChangingBall_Flags_When_Complete = true;
           handleBallLogicOnDifferentThread(reset_ChangingBall_Flags_When_Complete);
    }
