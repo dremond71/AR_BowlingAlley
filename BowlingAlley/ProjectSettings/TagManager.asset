@@ -50,6 +50,7 @@ TagManager:
   - lostr2d2_Sound
   - buttonClick_Sound
   - positioning_on_rotate
+  - flyingXWingCameraLookAt
   layers:
   - Default
   - TransparentFX
