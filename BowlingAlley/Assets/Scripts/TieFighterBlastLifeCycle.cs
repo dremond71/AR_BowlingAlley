@@ -12,13 +12,27 @@ public class TieFighterBlastLifeCycle : MonoBehaviour
         lifeTimer = lifeDuration;
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "box")
+        {
+            destroySelf();
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
-        lifeTimer -= Time.deltaTime; 
-        if (lifeTimer <= 0f) {
-            //Debug.Log("destroyed bullet");
-           Destroy(gameObject);
+        lifeTimer -= Time.deltaTime;
+        if (lifeTimer <= 0f)
+        {
+
+            destroySelf();
         }
+    }
+
+    void destroySelf()
+    {
+        Destroy(gameObject);
     }
 }

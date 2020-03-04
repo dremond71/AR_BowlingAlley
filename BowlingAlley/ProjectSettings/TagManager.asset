@@ -4,53 +4,42 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - bowlingBall
-  - bowlingPin
-  - rollingBall_Sound
-  - ballSpawner
-  - rackSpawner
-  - hitByBall_Sound
-  - floor
-  - deleted_pin
-  - hiss_Sound
-  - alley_finding
-  - alley_chosen
-  - bottomFloor
-  - positioning_on
-  - positioning_off
-  - positioning_on_x
-  - positioning_on_y
-  - positioning_on_z
-  - positioning_off_need_game_restart
-  - welcome_Sound
-  - swipingDirections_Sound
-  - controlPanelLocation_Sound
-  - goodbye_Sound
-  - xyzPositioning_Sound
-  - haaAirBall_Sound
-  - tieFighterRoar_Sound
+  - Shootable
   - tieFighterBlaster_Sound
+  - bowlingPin
+  - goodbye_Sound
+  - bowlingBall
+  - floor
+  - xwingFighterBlasts_Sound
+  - tieFighterRoar_Sound
+  - hiss_Sound
+  - welcome_Sound
+  - positioning_off
+  - haaAirBall_Sound
+  - xwingFighterRoar_Sound
+  - alley_finding
+  - ballSpawner
+  - theme_default
+  - hitByBall_Sound
+  - swipingDirections_Sound
+  - rackSpawner
+  - bottomFloor
+  - xyzPositioning_Sound
+  - rollingBall_Sound
+  - controlPanelLocation_Sound
+  - buttonClick_Sound
+  - xwingBlasterPosition4
+  - xwingBlasterPosition1
+  - xwingBlasterPosition3
+  - xwingBlasterPosition2
   - tieFighterBlastOrigin
   - starwars_weapon_blast
-  - theme_default
-  - theme_starwars_empire
-  - theme_starwars_rebels
-  - xwingBlasterPosition1
-  - xwingBlasterPosition2
-  - xwingBlasterPosition3
-  - xwingBlasterPosition4
-  - xwingFighterBlasts_Sound
-  - xwingFighterRoar_Sound
-  - testFlyer_swoop_Animation
-  - animationPlaying_Off
-  - animationPlaying_On
-  - positioning_on_scale
-  - r2d2_Sound
-  - red5GoingIn_Sound
-  - lostr2d2_Sound
-  - buttonClick_Sound
-  - positioning_on_rotate
-  - flyingXWingCameraLookAt
+  - box
+  - grenade
+  - boxTargetSpawner
+  - swExplosion_Sound
+  - swMetalHit_Sound
+  - PlayerShooter
   layers:
   - Default
   - TransparentFX
@@ -60,9 +49,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Lighting
+  - Ground
+  - Postprocessing
   - 
   - 
   - 
@@ -85,6 +74,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Fire
+    uniqueID: 3804908061
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
