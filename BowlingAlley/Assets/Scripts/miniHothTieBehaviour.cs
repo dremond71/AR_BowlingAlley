@@ -18,7 +18,7 @@ https://www.youtube.com/watch?v=-IuvXTnQS4U
 public class miniHothTieBehaviour : MonoBehaviour
 {
 
-    // private Animator anim;
+    //private Animator anim;
     private AudioSource roarSource;
     private AudioClip roar;
 
@@ -39,7 +39,9 @@ public class miniHothTieBehaviour : MonoBehaviour
     float touchTimeStart, touchTimeFinish, timeInterval;
     private TextMesh debugText;
 
-    private bool debug = true;
+    private float horizontalMove = 0.0f;
+    private float verticalMove = 0.0f;
+    private bool debug = false;
     bool androidDevice = true;
 
     bool roarSoundIsPlaying = false;
@@ -50,10 +52,16 @@ public class miniHothTieBehaviour : MonoBehaviour
     private float pauseAfterShooting = 0.15f;
     bool shooting = false;
     private float blasterSpeed = 400.0f;
+
+    public Joystick leftJoyStick;
+    public Joystick rightJoyStick;
+    private float movementSpeed = 1.0f;
+
+    public float increment = 0.001f;
     void Awake()
     {
-        //anim = GetComponent<Animator>();
-        //anim.speed = 0.25f;
+        // anim = GetComponent<Animator>();
+        // anim.speed = 0.25f;
 
         blasterSource = GameObject.FindGameObjectWithTag("tieFighterBlaster_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
@@ -111,6 +119,10 @@ public class miniHothTieBehaviour : MonoBehaviour
     }
 
     void handleWindowsInput()
+    {
+        handleInputAndroid();
+    }
+    void handleWindowsInput2()
     {
         if (Input.GetKeyDown("1"))
         {
@@ -276,229 +288,90 @@ public class miniHothTieBehaviour : MonoBehaviour
     void handleInputAndroid()
     {
 
-        foreach (Touch touch in Input.touches)
+        if (leftJoyStick.Horizontal >= 0.2f)
         {
-            if (touch.phase == TouchPhase.Began)
-            {
-                fingerUp = touch.position;
-                fingerDown = touch.position;
+            MyDebug("Move right");
 
-                timeInterval = 0.0f;
-                changeInY = 0.0f;
-                changeInX = 0.0f;
-                touchTimeStart = Time.time;
-            }
+            increaseXvalue();
+        }
+        else if (leftJoyStick.Horizontal <= -0.2f)
+        {
+            MyDebug("Move left");
 
-            //Detects Swipe while finger is still moving
-            if (touch.phase == TouchPhase.Moved)
-            {
-
-
-                if (!detectSwipeOnlyAfterRelease)
-                {
-                    fingerDown = touch.position;
-                    touchTimeFinish = Time.time;
-                    direction = fingerDown - fingerUp;
-                    timeInterval = touchTimeFinish - touchTimeStart;
-                    changeInY = fingerDown.y - fingerUp.y;// we only have swipe up/down (y) or left/right (x)...no Z . 
-                    changeInX = fingerDown.x - fingerUp.x;
-                    checkSwipe();
-                }
-            }
-
-            //Detects swipe after finger is released
-            if (touch.phase == TouchPhase.Ended)
-            {
-
-
-                fingerDown = touch.position;
-                touchTimeFinish = Time.time;
-                direction = fingerDown - fingerUp;
-                timeInterval = touchTimeFinish - touchTimeStart;
-                checkSwipe();
-            }
+            decreaseXvalue();
         }
 
 
 
-    }
-
-
-    void handleInputAndroid2()
-    {
-
-        foreach (Touch touch in Input.touches)
+        if (leftJoyStick.Vertical >= 0.5f)
         {
-            if (touch.phase == TouchPhase.Began)
-            {
-                fingerUp = touch.position;
-                fingerDown = touch.position;
+            MyDebug("Move up");
 
-                timeInterval = 0.0f;
-                changeInY = 0.0f;
-                changeInX = 0.0f;
-                touchTimeStart = Time.time;
-            }
+            increaseYvalue();
+        }
+        else if (leftJoyStick.Vertical <= -0.5f)
+        {
+            MyDebug("Move down");
 
-            //Detects Swipe while finger is still moving
-            if (touch.phase == TouchPhase.Moved)
-            {
-
-                if (!detectSwipeOnlyAfterRelease)
-                {
-                    fingerDown = touch.position;
-                    touchTimeFinish = Time.time;
-                    direction = fingerDown - fingerUp;
-                    timeInterval = touchTimeFinish - touchTimeStart;
-                    changeInY = fingerDown.y - fingerUp.y; // we only have swipe up/down (y) or left/right (x)...no Z . 
-                    changeInX = fingerDown.x - fingerUp.x;
-                    checkSwipe();
-                }
-            }
-
-            //Detects swipe after finger is released
-            if (touch.phase == TouchPhase.Ended)
-            {
-
-                fingerDown = touch.position;
-                touchTimeFinish = Time.time;
-                direction = fingerDown - fingerUp;
-                timeInterval = touchTimeFinish - touchTimeStart;
-                checkSwipe();
-            }
+            decreaseYvalue();
         }
 
-    }
 
-    void checkSwipe()
-    {
-        //Check if Vertical swipe
-        if (verticalMove() > SWIPE_THRESHOLD && verticalMove() > horizontalValMove())
+        if (rightJoyStick.Vertical >= 0.5f)
         {
-            //Debug.Log("Vertical");
-            if (fingerDown.y - fingerUp.y > 0)//up swipe
-            {
-                OnSwipeUp();
-            }
-            else if (fingerDown.y - fingerUp.y < 0)//Down swipe
-            {
-                OnSwipeDown();
-            }
-            fingerUp = fingerDown;
-        }
-
-        //Check if Horizontal swipe
-        else if (horizontalValMove() > SWIPE_THRESHOLD && horizontalValMove() > verticalMove())
-        {
-            //Debug.Log("Horizontal");
-            if (fingerDown.x - fingerUp.x > 0)//Right swipe
-            {
-                OnSwipeRight();
-            }
-            else if (fingerDown.x - fingerUp.x < 0)//Left swipe
-            {
-                OnSwipeLeft();
-            }
-            fingerUp = fingerDown;
-        }
-
-        //No Movement at-all
-        else
-        {
-            //Debug.Log("No Swipe!");
+            MyDebug("Fire");
             handleShoot();
         }
+
     }
 
-    void checkSwipe2()
+    void increaseYvalue()
     {
-        //Check if Vertical swipe
-        if (verticalMove() > SWIPE_THRESHOLD && verticalMove() > horizontalValMove())
-        {
-            //Debug.Log("Vertical");
-            if (fingerDown.y - fingerUp.y > 0) //up swipe
-            {
-                OnSwipeUp();
-            }
-            else if (fingerDown.y - fingerUp.y < 0) //Down swipe
-            {
-                OnSwipeDown();
-            }
-            fingerUp = fingerDown;
-        }
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        float z = this.transform.position.z;
 
-        //Check if Horizontal swipe
-        else if (horizontalValMove() > SWIPE_THRESHOLD && horizontalValMove() > verticalMove())
-        {
-            //Debug.Log("Horizontal");
-            if (fingerDown.x - fingerUp.x > 0) //Right swipe
-            {
-                OnSwipeRight();
-            }
-            else if (fingerDown.x - fingerUp.x < 0) //Left swipe
-            {
-                OnSwipeLeft();
-            }
-            fingerUp = fingerDown;
-        }
+        y += increment;
 
-        //No Movement at-all
-        else
-        {
-            //Debug.Log("No Swipe!");
-            handleShoot();
-        }
+        this.transform.position = new Vector3(x, y, z);
+
     }
-
-    float verticalMove()
+    void increaseXvalue()
     {
-        return Mathf.Abs(fingerDown.y - fingerUp.y);
-    }
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        float z = this.transform.position.z;
 
-    float horizontalValMove()
+        x += increment;
+
+        this.transform.position = new Vector3(x, y, z);
+
+    }
+    void decreaseYvalue()
     {
-        return Mathf.Abs(fingerDown.x - fingerUp.x);
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        float z = this.transform.position.z;
+
+        y -= increment;
+
+        this.transform.position = new Vector3(x, y, z);
+
     }
 
-    void OnSwipeRight()
+    void decreaseXvalue()
     {
-        MyDebug("Swipe Right");
-        moveTieFighter_Horizontal_Swipe(1.0f);
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        float z = this.transform.position.z;
 
-        // try
-        // {
-        //     spawnNewBox();
-        // }
-        // catch (System.Exception e)
-        // {
+        x -= increment;
 
-        //     MyDebug("Swipe Right, exception :" + e.ToString());
-        // }
+        this.transform.position = new Vector3(x, y, z);
 
     }
 
-    void OnSwipeUp()
-    {
-        MyDebug("Swipe Up");
 
-        //letsStartTheAnimation2();
-        moveTieFighter_Vertical_Swipe(1.0f);
-    }
-
-    void OnSwipeDown()
-    {
-        MyDebug("Swipe Down");
-        // handleShoot();
-        moveTieFighter_Vertical_Swipe(-1.0f);
-    }
-
-    void OnSwipeLeft()
-    {
-        MyDebug("Swipe Left");
-        //letsStartTheAnimation();
-        moveTieFighter_Horizontal_Swipe(-1.0f);
-
-    }
 
     void delayInSeconds(float seconds)
     {
@@ -582,23 +455,23 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         // // ONLY thing that moved bowling ball to proper position.
 
-        Ray ray = Camera.main.ScreenPointToRay(fingerDown);// the last position of the swipe
-        RaycastHit hit;
-        // https://docs.unity3d.com/ScriptReference/RaycastHit.html
-        if (Physics.Raycast(ray, out hit, 5000.0f))
-        {//see what object it hit in the virtual world
-            MyDebug("hit something on x");
-            float new_X = hit.point.x;//get the point X in the virtual world where there was a hit
+        // Ray ray = Camera.main.ScreenPointToRay(fingerDown);// the last position of the swipe
+        // RaycastHit hit;
+        // // https://docs.unity3d.com/ScriptReference/RaycastHit.html
+        // if (Physics.Raycast(ray, out hit, 5000.0f))
+        // {//see what object it hit in the virtual world
+        //     MyDebug("hit something on x");
+        //     float new_X = hit.point.x;//get the point X in the virtual world where there was a hit
 
-            Vector3 position = this.transform.position;
-            position.x = new_X; //update the position of the ball to that X coordinate
-            this.transform.position = position;
+        //     Vector3 position = this.transform.position;
+        //     position.x = new_X; //update the position of the ball to that X coordinate
+        //     this.transform.position = position;
 
-        }
-        else
-        {
-            MyDebug("nothing hit on x");
-        }
+        // }
+        // else
+        // {
+        //     MyDebug("nothing hit on x");
+        // }
 
 
     }
@@ -606,50 +479,50 @@ public class miniHothTieBehaviour : MonoBehaviour
     void moveTieFighter_Vertical_Swipe(float signFactor)
     {
 
-        float verticalAmount = verticalMove() * signFactor;
-        MyDebug("want to move Y by " + verticalAmount);
+        //     float verticalAmount = verticalMove() * signFactor;
+        //     MyDebug("want to move Y by " + verticalAmount);
 
-        try
-        {
-            float x = this.transform.position.x;
-            float y = this.transform.position.y;
-            float z = this.transform.position.z;
+        //     try
+        //     {
+        //         float x = this.transform.position.x;
+        //         float y = this.transform.position.y;
+        //         float z = this.transform.position.z;
 
-            y += verticalAmount;
+        //         y += verticalAmount;
 
-            this.transform.position = new Vector3(x, y, z);
+        //         this.transform.position = new Vector3(x, y, z);
 
-            // Vector3 position = this.transform.position;
-            // position.y += verticalAmount; //update the position of the ball to that Y coordinate
-            // this.transform.position = position;
-        }
-        catch (System.Exception e)
-        {
+        //         // Vector3 position = this.transform.position;
+        //         // position.y += verticalAmount; //update the position of the ball to that Y coordinate
+        //         // this.transform.position = position;
+        //     }
+        //     catch (System.Exception e)
+        //     {
 
-            MyDebug("error swipe vert: " + e.Message);
-        }
+        //         MyDebug("error swipe vert: " + e.Message);
+        //     }
 
 
-        // ONLY thing that moved bowling ball to proper position.
+        //     // ONLY thing that moved bowling ball to proper position.
 
-        // Ray ray = Camera.main.ScreenPointToRay(fingerDown);// the last position of the swipe
-        // RaycastHit hit;
-        // // https://docs.unity3d.com/ScriptReference/RaycastHit.html
-        // if (Physics.Raycast(ray, out hit, 5000.0f))
-        // {//see what object it hit in the virtual world
+        //     // Ray ray = Camera.main.ScreenPointToRay(fingerDown);// the last position of the swipe
+        //     // RaycastHit hit;
+        //     // // https://docs.unity3d.com/ScriptReference/RaycastHit.html
+        //     // if (Physics.Raycast(ray, out hit, 5000.0f))
+        //     // {//see what object it hit in the virtual world
 
-        //     float new_Y = hit.point.y;//get the point Y in the virtual world where there was a hit
+        //     //     float new_Y = hit.point.y;//get the point Y in the virtual world where there was a hit
 
-        //     Vector3 position = this.transform.position;
-        //     position.y = new_Y; //update the position of the ball to that Y coordinate
-        //     this.transform.position = position;
+        //     //     Vector3 position = this.transform.position;
+        //     //     position.y = new_Y; //update the position of the ball to that Y coordinate
+        //     //     this.transform.position = position;
 
-        //     MyDebug("something hit on y");
-        // }
-        // else
-        // {
-        //     MyDebug("nothing hit on y");
-        // }
+        //     //     MyDebug("something hit on y");
+        //     // }
+        //     // else
+        //     // {
+        //     //     MyDebug("nothing hit on y");
+        //     // }
 
 
     }
