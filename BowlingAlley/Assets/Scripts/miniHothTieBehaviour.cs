@@ -19,6 +19,10 @@ public class miniHothTieBehaviour : MonoBehaviour
 {
 
     //private Animator anim;
+    private AudioSource hoverSource1;
+    private AudioClip hover1;
+    private AudioSource hoverSource2;
+    private AudioClip hover2;
     private AudioSource roarSource;
     private AudioClip roar;
 
@@ -57,7 +61,20 @@ public class miniHothTieBehaviour : MonoBehaviour
     public Joystick rightJoyStick;
     private float movementSpeed = 1.0f;
 
+    public float switchHoverSoundDuration = 2.0f;
+    public float hoverSoundVolume = 0.7f;
+    private float switchHoverSoundTimer = 0.0f;
+
+    private bool playingHover1 = true;// flag used to determine which of 2 sounds to play to create a continuous hover sound for tie fighter
+
     public float increment = 0.001f;
+
+    void Start()
+    {
+        playHoveringSound1();
+        switchHoverSoundTimer = switchHoverSoundDuration;
+
+    }
     void Awake()
     {
         // anim = GetComponent<Animator>();
@@ -69,11 +86,64 @@ public class miniHothTieBehaviour : MonoBehaviour
         roarSource = GameObject.FindGameObjectWithTag("tieFighterRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
+        hoverSource1 = GameObject.FindGameObjectWithTag("hoveringTie_Sound").GetComponent<AudioSource>();
+        hover1 = hoverSource1.clip;
+        hoverSource2 = GameObject.FindGameObjectWithTag("hoveringTie_Sound").GetComponent<AudioSource>();
+        hover2 = hoverSource2.clip;
+
         tieBlastPrefab = PrefabFactory.getPrefab("miniTieBlast");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
+    }
+    void Update()
+    {
+
+        switchHoverSoundTimer -= Time.deltaTime;
+        MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
+        if (switchHoverSoundTimer <= 0f)
+        {
+            //start duplicate sound 
+            if (playingHover1)
+            {
+
+                playingHover1 = false;
+                playHoveringSound2();
+
+            }
+            else
+            {
+                playingHover1 = true;
+                playHoveringSound1();
+
+            }
+
+            switchHoverSoundTimer = switchHoverSoundDuration;
+
+        }
+
+
+        if (androidDevice)
+            handleInputAndroid();
+        else
+            handleWindowsInput();
+
+        // if (!performingLoop) {
+        //       Debug.Log("Setting booleans to true again.");
+        //       performingLoop = true;
+        //       anim.SetBool("shouldPerformLoop",true);
+        // }
+        // else {
+        //     Debug.Log("In Update and performingLoop is true");
+        // }
+
+        // if (Input.GetKeyDown("1") ) {
+        //     anim.SetBool("shouldPerformLoop",true);
+        // }
+        // else {
+        //     anim.SetBool("shouldPerformLoop",false);
+        // }    
     }
 
     void shoot()
@@ -89,6 +159,43 @@ public class miniHothTieBehaviour : MonoBehaviour
         float y = boxSpawner.transform.position.y;
         float z = boxSpawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(boxPrefab, new Vector3(x, y, z), boxSpawner.transform.rotation);
+
+    }
+
+    void playHoveringSound1()
+    {
+
+
+        try
+        {
+            hoverSource1.PlayOneShot(hover1, hoverSoundVolume);
+            MyDebug("Hover 1 started");
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("error sound1 : " + e.Message);
+        }
+
+
+
+    }
+
+
+
+    void playHoveringSound2()
+    {
+        try
+        {
+            hoverSource2.PlayOneShot(hover2, hoverSoundVolume);
+            MyDebug("Hover 2 started");
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("error sound2 : " + e.Message);
+        }
+
+
+
 
     }
 
@@ -118,9 +225,45 @@ public class miniHothTieBehaviour : MonoBehaviour
         }
     }
 
+    void handleRoar()
+    {
+        if (!roarSoundIsPlaying)
+            playRoarOnDifferentThread();
+    }
     void handleWindowsInput()
     {
-        handleInputAndroid();
+
+        if (Input.GetKey("up"))
+        {
+            increaseYvalue();
+            // handleRoar();
+
+        }
+        else if (Input.GetKey("down"))
+        {
+            decreaseYvalue();
+            // handleRoar();
+
+        }
+        else if (Input.GetKey("left"))
+        {
+            decreaseXvalue();
+            // handleRoar();
+
+        }
+        else if (Input.GetKey("right"))
+        {
+            increaseXvalue();
+            // handleRoar();
+
+        }
+        else if (Input.GetKey("f"))
+        {
+            handleShoot();
+
+        }
+
+
     }
     void handleWindowsInput2()
     {
@@ -153,30 +296,6 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update()
-    {
-
-        if (androidDevice)
-            handleInputAndroid();
-        else
-            handleWindowsInput();
-
-        // if (!performingLoop) {
-        //       Debug.Log("Setting booleans to true again.");
-        //       performingLoop = true;
-        //       anim.SetBool("shouldPerformLoop",true);
-        // }
-        // else {
-        //     Debug.Log("In Update and performingLoop is true");
-        // }
-
-        // if (Input.GetKeyDown("1") ) {
-        //     anim.SetBool("shouldPerformLoop",true);
-        // }
-        // else {
-        //     anim.SetBool("shouldPerformLoop",false);
-        // }    
-    }
 
     // void letsStartTheAnimation()
     // {
@@ -293,12 +412,14 @@ public class miniHothTieBehaviour : MonoBehaviour
             MyDebug("Move right");
 
             increaseXvalue();
+            // handleRoar();
         }
         else if (leftJoyStick.Horizontal <= -0.2f)
         {
             MyDebug("Move left");
 
             decreaseXvalue();
+            // handleRoar();
         }
 
 
@@ -308,12 +429,14 @@ public class miniHothTieBehaviour : MonoBehaviour
             MyDebug("Move up");
 
             increaseYvalue();
+            //handleRoar();
         }
         else if (leftJoyStick.Vertical <= -0.5f)
         {
             MyDebug("Move down");
 
             decreaseYvalue();
+            // handleRoar();
         }
 
 

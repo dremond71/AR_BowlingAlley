@@ -5,8 +5,26 @@ using UnityEngine;
 public class TieFighterBoxBehaviour : MonoBehaviour
 {
 
+    /*
+
+     Ok... to detect collisions, the object needs a collider. 
+           to move an object with AddForce, the object needs a rigidbody  
+           If two objects collide, physics will be applied and will move objects IF 
+           they have a rigidbody which applies physics. 
+           I didn't want objects to move...only detect collisions and apply an 
+           effects object (sparks or dust). 
+           So I gave the bullets prefab a weight and drag of 0 pounds, so the 
+           physics engine doesn't move stuff. 
+           I also gave the tiefighter a collider and rigid body, but turned 
+           isKinematic to true; which prevents it from being affected by physics. 
+
+
+    */
     public GameObject explosionEffect;
-    public GameObject sparksEffect;
+
+    public GameObject damageSparksPrefab;
+    public GameObject damageDustPrefab;
+
     public float health = 2f;
     bool hasExploded = false;
 
@@ -26,7 +44,7 @@ public class TieFighterBoxBehaviour : MonoBehaviour
     private AudioSource metalHitSource;
     private AudioClip metalHit;
 
-    List<GameObject> sparksList = new List<GameObject>();
+
 
     void Awake()
     {
@@ -38,7 +56,7 @@ public class TieFighterBoxBehaviour : MonoBehaviour
         try
         {
             debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
-            MyDebug("box stuff");
+            //MyDebug("box stuff");
 
             explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
             explosion = explosionSource.clip;
@@ -63,32 +81,55 @@ public class TieFighterBoxBehaviour : MonoBehaviour
         {
             Explode();
         }
+
+        destroyIfIrrelevantNow();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
 
+        ContactPoint cp = collision.contacts[0];
+        contactPoint = cp.point;
 
         if (collision.gameObject.tag == "starwars_weapon_blast")
         {
-            health = 0f;
-            ContactPoint cp = collision.contacts[0];
-            contactPoint = cp.point;
 
-            // if (allowDamage)
-            // {
-            //     //health -= 1f;
-            //     handleHit();
-            // }
-            // pauseDamageIfNecessary();
+            if (allowDamage)
+            {
+                health -= 1f;
+                handleHit();
+            }
+            pauseDamageIfNecessary();
+        }
+        else if (collision.gameObject.tag == "PlayerShooter1")
+        {
+            health = 0f;// immediately explode if box hits player shooter
         }
         else
         {
-            health = 0f;// immediately explode if box hits player
+            health = 0f;// something unexpected
         }
 
+        // MyDebug("box collided with : " + collision.gameObject.tag);
     }
 
+
+    void destroyIfIrrelevantNow()
+    {
+        // this object becomes irrelevant if it has flown past the shooter 
+
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+        float shooterZ = shooter.transform.position.z;
+
+        float myZ = transform.position.z;
+
+        if (myZ < (shooterZ - 3f))
+        {
+            destroySelf();
+        }
+
+
+    }
     void Explode()
     {
         //show effect 
@@ -98,8 +139,8 @@ public class TieFighterBoxBehaviour : MonoBehaviour
             GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
             PlayExplosionSound_Immediately();
 
-            deleteAllSparks();
-            Destroy(gameObject);
+
+            destroySelf();
 
         }
         catch (System.Exception e)
@@ -110,6 +151,10 @@ public class TieFighterBoxBehaviour : MonoBehaviour
 
     }
 
+    void destroySelf()
+    {
+        Destroy(gameObject);
+    }
     void MyDebug(string someText)
     {
 
@@ -148,27 +193,30 @@ public class TieFighterBoxBehaviour : MonoBehaviour
         PlayMetalHitSound_Immediately();
     }
 
-    void handleSparks()
+    void handleDamage()
     {
-        //show spark effect 
-        GameObject sparksObject = Instantiate(sparksEffect, contactPoint, transform.rotation);
-        sparksList.Add(sparksObject);
+
+
+        GameObject damageObject = Instantiate(damageSparksPrefab, contactPoint, transform.rotation);
+        damageObject.transform.SetParent(this.transform);
+
+
+
+        damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+        damageObject.transform.SetParent(this.transform);
+
+
+
+
     }
 
-    void deleteAllSparks()
-    {
-        foreach (GameObject spark in sparksList)
-        {
-            Destroy(spark);
-        }
-    }
+
+
     void handleHit()
     {
 
-        handleSparks();
+        handleDamage();
 
-        // PlayMetalHitSound_Immediately();
-        //playHitOnDifferentThread ();
         StartCoroutine(performPauseAndPlayHitSound());
 
     }

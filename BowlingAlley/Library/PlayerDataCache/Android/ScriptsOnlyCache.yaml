@@ -95,51 +95,51 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9854}
+      Script: {instanceID: 9856}
     - Class: 114
-      Script: {instanceID: 10136}
+      Script: {instanceID: 10138}
     - Class: 114
-      Script: {instanceID: 10184}
+      Script: {instanceID: 10186}
     - Class: 114
-      Script: {instanceID: 10578}
+      Script: {instanceID: 10584}
     - Class: 114
-      Script: {instanceID: 10676}
+      Script: {instanceID: 10682}
     - Class: 114
-      Script: {instanceID: 10714}
+      Script: {instanceID: 10720}
     - Class: 114
-      Script: {instanceID: 10786}
+      Script: {instanceID: 10792}
     - Class: 114
-      Script: {instanceID: 10822}
+      Script: {instanceID: 10828}
     - Class: 114
-      Script: {instanceID: 11168}
+      Script: {instanceID: 11176}
     - Class: 114
-      Script: {instanceID: 11542}
+      Script: {instanceID: 11554}
     - Class: 114
-      Script: {instanceID: 11558}
+      Script: {instanceID: 11570}
     - Class: 114
-      Script: {instanceID: 11574}
+      Script: {instanceID: 11586}
     - Class: 114
-      Script: {instanceID: 11600}
+      Script: {instanceID: 11612}
     - Class: 114
-      Script: {instanceID: 11650}
+      Script: {instanceID: 11664}
     - Class: 114
-      Script: {instanceID: 11760}
+      Script: {instanceID: 11666}
     - Class: 114
-      Script: {instanceID: 11910}
+      Script: {instanceID: 11776}
     - Class: 114
-      Script: {instanceID: 11942}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 12144}
+      Script: {instanceID: 11962}
     - Class: 114
-      Script: {instanceID: 12160}
+      Script: {instanceID: 12164}
     - Class: 114
-      Script: {instanceID: 12162}
+      Script: {instanceID: 12180}
     - Class: 114
-      Script: {instanceID: 12318}
+      Script: {instanceID: 12182}
     - Class: 114
-      Script: {instanceID: 12446}
+      Script: {instanceID: 12338}
     - Class: 114
-      Script: {instanceID: 16914}
+      Script: {instanceID: 12468}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -169,6 +169,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: PostProcessLayer
+  - hash:
+      serializedVersion: 2
+      Hash: ce669872a2be11bc686ea22961d8a3bb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Joystick
   - hash:
       serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
@@ -363,6 +369,12 @@ ScriptsOnlyBuild:
     className: ARPlaneManager
   - hash:
       serializedVersion: 2
+      Hash: 9e27f44bbf48228f203a37254d40f8ae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickSetterExample
+  - hash:
+      serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -501,6 +513,12 @@ ScriptsOnlyBuild:
     className: ChromaticAberration
   - hash:
       serializedVersion: 2
+      Hash: ce669872a2be11bc686ea22961d8a3bb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FloatingJoystick
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.XR.ARFoundation.dll
     namespaceName: UnityEngine.XR.ARFoundation
@@ -585,7 +603,7 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
-      Hash: 687dce9916d0e9b5c07014f8ac6cdf59
+      Hash: fbdc0a9a9601a6ae5d1dcb31650caea2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TieFighterBoxBehaviour
@@ -705,10 +723,22 @@ ScriptsOnlyBuild:
     className: ExplosionLifeCycle
   - hash:
       serializedVersion: 2
-      Hash: 87cd9d9024394a24d2cd3233ed0f7421
+      Hash: 824e8d4cb47ffd88ddf959dbd4526585
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DynamicJoystick
+  - hash:
+      serializedVersion: 2
+      Hash: f42443533f11bb353a27e268e04767c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: miniHothTieBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: ce669872a2be11bc686ea22961d8a3bb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FixedJoystick
   - hash:
       serializedVersion: 2
       Hash: 36808e0bceda2a44a651d2c754474786
@@ -775,6 +805,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GraphicRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 528e9858840cb8370d93939fff6b42d9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JoystickPlayerExample
   - hash:
       serializedVersion: 2
       Hash: e1c35cdce946e9da77fe80a39c261608
@@ -951,6 +987,12 @@ ScriptsOnlyBuild:
     className: Grenade
   - hash:
       serializedVersion: 2
+      Hash: 9dac16f3efc511835ac976dfae55f580
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: VariableJoystick
+  - hash:
+      serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -985,48 +1027,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: ce669872a2be11bc686ea22961d8a3bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Joystick
-  - hash:
-      serializedVersion: 2
-      Hash: 9e27f44bbf48228f203a37254d40f8ae
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickSetterExample
-  - hash:
-      serializedVersion: 2
-      Hash: ce669872a2be11bc686ea22961d8a3bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FloatingJoystick
-  - hash:
-      serializedVersion: 2
-      Hash: 824e8d4cb47ffd88ddf959dbd4526585
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: DynamicJoystick
-  - hash:
-      serializedVersion: 2
-      Hash: ce669872a2be11bc686ea22961d8a3bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FixedJoystick
-  - hash:
-      serializedVersion: 2
-      Hash: 528e9858840cb8370d93939fff6b42d9
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: JoystickPlayerExample
-  - hash:
-      serializedVersion: 2
-      Hash: 9dac16f3efc511835ac976dfae55f580
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: VariableJoystick
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity
