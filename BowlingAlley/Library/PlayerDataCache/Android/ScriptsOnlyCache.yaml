@@ -501,7 +501,7 @@ ScriptsOnlyBuild:
     className: FlyingXWingBlastBoltLifecycle
   - hash:
       serializedVersion: 2
-      Hash: e61357413484bf3af8144d1b642e4270
+      Hash: 35452af00f7ee15d2c2644acb0fb4729
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelManager
@@ -729,7 +729,7 @@ ScriptsOnlyBuild:
     className: DynamicJoystick
   - hash:
       serializedVersion: 2
-      Hash: f42443533f11bb353a27e268e04767c7
+      Hash: 52e0b1935fa7908b2739480148079c25
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: miniHothTieBehaviour

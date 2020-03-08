@@ -46,7 +46,7 @@ public class miniHothTieBehaviour : MonoBehaviour
     private float horizontalMove = 0.0f;
     private float verticalMove = 0.0f;
     private bool debug = false;
-    bool androidDevice = true;
+    public bool androidDevice = false;
 
     bool roarSoundIsPlaying = false;
 
