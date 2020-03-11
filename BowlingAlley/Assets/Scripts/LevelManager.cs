@@ -6,6 +6,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
+    private static object olock = new object();
+
     private bool debug = false;
 
     private TextMesh debugText;
@@ -60,7 +62,7 @@ public class LevelManager : MonoBehaviour
         return rnd.Next(1, totalSpawnPositionsAvailable);
     }
 
-    int numberOfSpawnedItems = 0;
+    static int numberOfSpawnedItems = 0;
 
     public float enemySpeed = 35.0f;
 
@@ -69,11 +71,15 @@ public class LevelManager : MonoBehaviour
 
     private GameObject boxPrefab;
 
+    private GameObject xwingPrefab;
 
 
     private int spawnIndexChosen = 0;
+
+    private bool spawnedTemp = false;
     void Awake()
     {
+        xwingPrefab = PrefabFactory.getPrefab("miniTargetXWingFighter");
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
     }
@@ -82,10 +88,24 @@ public class LevelManager : MonoBehaviour
         pauseTimer = spawningPauseDuration;
     }
 
+    // void Update()
+    // {
+    //     if (!spawnedTemp)
+    //     {
+    //         spawnedTemp = true;
+    //         GameObject ss = GameObject.FindGameObjectWithTag("tempSpawnPosition");
+    //         float x = ss.transform.position.x;
+    //         float y = ss.transform.position.y;
+    //         float z = ss.transform.position.z;
+    //         GameObject go = (GameObject)Instantiate(xwingPrefab, new Vector3(x, y, z), ss.transform.rotation);
+    //         go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+
+
+    //     }
+    // }
     // Update is called once per frame
     void Update()
     {
-
 
         //MyDebug("Spawn pos: " + spawnIndexChosen + ", # created: " + numberOfSpawnedItems);
         pauseTimer -= Time.deltaTime;
@@ -95,12 +115,43 @@ public class LevelManager : MonoBehaviour
             if (numberOfSpawnedItems < 100)
             {
                 setRandomSpawnAmount();//determine amount to spawn
-                spawnNewBoxes();
+                spawnNewTargets();
 
             }
         }
 
 
+    }
+
+
+    void spawnNewXWingAtPosition(int position)
+    {
+
+        string spawnPositionNumber = "spawn" + position;
+        GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        float x = enemySpawner.transform.position.x;
+        float y = enemySpawner.transform.position.y;
+        float z = enemySpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(xwingPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+        go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+        go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+        incrementNumSpawned();
+    }
+
+    void incrementNumSpawned()
+    {
+        lock (olock)
+        {
+            numberOfSpawnedItems++;
+        }
+    }
+
+    public static void decrementNumSpawned()
+    {
+        lock (olock)
+        {
+            numberOfSpawnedItems--;
+        }
     }
 
     void spawnNewBoxAtPosition(int position)
@@ -113,17 +164,16 @@ public class LevelManager : MonoBehaviour
         float z = enemySpawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(boxPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
-        numberOfSpawnedItems++;
+        incrementNumSpawned();
     }
-    void spawnNewBoxes()
+    void spawnNewTargets()
     {
         getRandomSpawnPositions();
         foreach (var pos in randomSpawnPositions)
         {
-            spawnNewBoxAtPosition(pos);
-            // MyDebug("Spawn position:" + pos);
+            //spawnNewBoxAtPosition(pos);
+            spawnNewXWingAtPosition(pos);
         }
-        // MyDebug("\n");
 
     }
 

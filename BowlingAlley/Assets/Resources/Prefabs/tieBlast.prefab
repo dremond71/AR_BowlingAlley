@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 1970350300859709762}
   m_Layer: 0
   m_Name: rightBlast
-  m_TagString: starwars_weapon_blast
+  m_TagString: miniTieBlast
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 1970350300946122838}
   m_Layer: 0
   m_Name: leftBlast
-  m_TagString: starwars_weapon_blast
+  m_TagString: miniTieBlast
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -72,6 +72,8 @@
      <Compile Include="Assets\Scripts\ReferencePointManager.cs" />
      <Compile Include="Assets\Scripts\ReferencePointManagerOriginal.cs" />
      <Compile Include="Assets\Scripts\SceneHandler.cs" />
+     <Compile Include="Assets\Scripts\TargetXWingBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TargetXWingBlastLifeCycle.cs" />
      <Compile Include="Assets\Scripts\TestFlyerScript.cs" />
      <Compile Include="Assets\Scripts\TieFighter.cs" />
      <Compile Include="Assets\Scripts\TieFighterBlastLifeCycle.cs" />

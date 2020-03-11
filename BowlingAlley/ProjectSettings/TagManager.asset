@@ -41,6 +41,14 @@ TagManager:
   - swMetalHit_Sound
   - PlayerShooter
   - hoveringTie_Sound
+  - targetXWing
+  - flyingXWingCameraLookAt
+  - r2d2_Sound
+  - lostr2d2_Sound
+  - red5GoingIn_Sound
+  - miniTieBlast
+  - miniXWingBlast
+  - tempSpawnPosition
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,8 @@ ScriptsOnlyBuild:
     - FixedJoystick
     - FlyingXWingBlastBoltLifecycle
     - LevelManager
+    - TargetXWingBehaviour
+    - TargetXWingBlastLifeCycle
     - TieFighterBlastLifeCycle
     - TieFighterBoxBehaviour
     - miniHothTieBehaviour
@@ -78,6 +80,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
     - Class: 81
@@ -113,33 +117,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11176}
     - Class: 114
-      Script: {instanceID: 11554}
+      Script: {instanceID: 11178}
     - Class: 114
-      Script: {instanceID: 11570}
+      Script: {instanceID: 11556}
     - Class: 114
-      Script: {instanceID: 11586}
+      Script: {instanceID: 11572}
     - Class: 114
-      Script: {instanceID: 11612}
+      Script: {instanceID: 11588}
     - Class: 114
-      Script: {instanceID: 11664}
+      Script: {instanceID: 11614}
     - Class: 114
       Script: {instanceID: 11666}
     - Class: 114
-      Script: {instanceID: 11776}
+      Script: {instanceID: 11668}
     - Class: 114
-      Script: {instanceID: 11928}
+      Script: {instanceID: 11778}
     - Class: 114
-      Script: {instanceID: 11962}
+      Script: {instanceID: 11930}
     - Class: 114
-      Script: {instanceID: 12164}
+      Script: {instanceID: 11964}
     - Class: 114
-      Script: {instanceID: 12180}
+      Script: {instanceID: 12166}
     - Class: 114
       Script: {instanceID: 12182}
     - Class: 114
-      Script: {instanceID: 12338}
+      Script: {instanceID: 12184}
     - Class: 114
-      Script: {instanceID: 12468}
+      Script: {instanceID: 12340}
+    - Class: 114
+      Script: {instanceID: 12470}
+    - Class: 114
+      Script: {instanceID: 25464}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -603,6 +611,12 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
+      Hash: 942df7210195877370ed7442182f5a16
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetXWingBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: fbdc0a9a9601a6ae5d1dcb31650caea2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1027,6 +1041,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetXWingBlastLifeCycle
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity

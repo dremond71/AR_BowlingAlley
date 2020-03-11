@@ -125,6 +125,7 @@ public class TieFighterBoxBehaviour : MonoBehaviour
 
         if (myZ < (shooterZ - 3f))
         {
+            LevelManager.decrementNumSpawned();//since player one didn't kill me, get LevelManager to spawn me again
             destroySelf();
         }
 

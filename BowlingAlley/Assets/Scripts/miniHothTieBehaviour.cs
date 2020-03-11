@@ -236,25 +236,25 @@ public class miniHothTieBehaviour : MonoBehaviour
         if (Input.GetKey("up"))
         {
             increaseYvalue();
-            // handleRoar();
+            //handleRoar();
 
         }
         else if (Input.GetKey("down"))
         {
             decreaseYvalue();
-            // handleRoar();
+            //handleRoar();
 
         }
         else if (Input.GetKey("left"))
         {
             decreaseXvalue();
-            // handleRoar();
+            //handleRoar();
 
         }
         else if (Input.GetKey("right"))
         {
             increaseXvalue();
-            // handleRoar();
+            //handleRoar();
 
         }
         else if (Input.GetKey("f"))
@@ -412,14 +412,14 @@ public class miniHothTieBehaviour : MonoBehaviour
             MyDebug("Move right");
 
             increaseXvalue();
-            // handleRoar();
+            //handleRoar();
         }
         else if (leftJoyStick.Horizontal <= -0.2f)
         {
             MyDebug("Move left");
 
             decreaseXvalue();
-            // handleRoar();
+            //handleRoar();
         }
 
 
@@ -436,7 +436,7 @@ public class miniHothTieBehaviour : MonoBehaviour
             MyDebug("Move down");
 
             decreaseYvalue();
-            // handleRoar();
+            //handleRoar();
         }
 
 
