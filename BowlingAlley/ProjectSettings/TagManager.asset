@@ -49,6 +49,7 @@ TagManager:
   - miniTieBlast
   - miniXWingBlast
   - tempSpawnPosition
+  - starshipSpawnPoint
   layers:
   - Default
   - TransparentFX

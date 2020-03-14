@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class LevelManager : MonoBehaviour
 {
 
@@ -28,7 +27,7 @@ public class LevelManager : MonoBehaviour
     {
         // choose a random amount between 1 and 9
         //currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
-        currentAllowedSpawnPositions = rnd.Next(1, 5);// nine enemies is too much ;S
+        currentAllowedSpawnPositions = rnd.Next(1, 5); // nine enemies is too much ;S
         MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
     }
     void getRandomSpawnPositions()
@@ -44,7 +43,7 @@ public class LevelManager : MonoBehaviour
             {
                 randomSpawnPositions.Add(someNumber);
                 totalCollected++;
-            }//if
+            } //if
 
         }
 
@@ -54,7 +53,6 @@ public class LevelManager : MonoBehaviour
     {
 
         return Random.Range(0.0f, 20.0f);
-
 
     }
     int GetRandomSpawnPosition()
@@ -73,7 +71,9 @@ public class LevelManager : MonoBehaviour
 
     private GameObject xwingPrefab;
 
+    private GameObject rebelStarshipPrefab;
 
+    private bool starshipExists = false;
     private int spawnIndexChosen = 0;
 
     private bool spawnedTemp = false;
@@ -81,6 +81,7 @@ public class LevelManager : MonoBehaviour
     {
         xwingPrefab = PrefabFactory.getPrefab("miniTargetXWingFighter");
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
+        rebelStarshipPrefab = PrefabFactory.getPrefab("rebelTantiveIV");
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
     }
     void Start()
@@ -100,12 +101,28 @@ public class LevelManager : MonoBehaviour
     //         GameObject go = (GameObject)Instantiate(xwingPrefab, new Vector3(x, y, z), ss.transform.rotation);
     //         go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
 
-
     //     }
     // }
     // Update is called once per frame
+
+    void spawnRebelStarship()
+    {
+
+        GameObject starshipSpawner = GameObject.FindGameObjectWithTag("starshipSpawnPoint");
+        float x = starshipSpawner.transform.position.x;
+        float y = starshipSpawner.transform.position.y;
+        float z = starshipSpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(rebelStarshipPrefab, new Vector3(x, y, z), starshipSpawner.transform.rotation);
+
+    }
     void Update()
     {
+
+        if (!starshipExists)
+        {
+            starshipExists = true;
+            spawnRebelStarship();
+        }
 
         //MyDebug("Spawn pos: " + spawnIndexChosen + ", # created: " + numberOfSpawnedItems);
         pauseTimer -= Time.deltaTime;
@@ -114,15 +131,13 @@ public class LevelManager : MonoBehaviour
             pauseTimer = spawningPauseDuration;
             if (numberOfSpawnedItems < 100)
             {
-                setRandomSpawnAmount();//determine amount to spawn
+                setRandomSpawnAmount(); //determine amount to spawn
                 spawnNewTargets();
 
             }
         }
 
-
     }
-
 
     void spawnNewXWingAtPosition(int position)
     {
