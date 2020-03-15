@@ -8503,7 +8503,7 @@ MonoBehaviour:
   health: 2
   blastRadius: 5
   explosionForce: 700
-  roarVolume: 0.5
+  roarVolume: 0.1
 --- !u!1 &838516746951648815
 GameObject:
   m_ObjectHideFlags: 0

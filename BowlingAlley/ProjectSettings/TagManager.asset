@@ -50,6 +50,10 @@ TagManager:
   - miniXWingBlast
   - tempSpawnPosition
   - starshipSpawnPoint
+  - exitHyperspace_Sound
+  - emperorLaugh_Sound
+  - emperorDesign_Sound
+  - emperorEndOfAlliance_Sound
   layers:
   - Default
   - TransparentFX
