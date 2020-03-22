@@ -62,9 +62,35 @@ Here is video of the application in action:
 
 [YouTube - Augmented Reality (AR) Star Wars X-Wing Fighter](https://www.youtube.com/watch?v=gzRnFOTOMKY) (Best viewed in 720p)
 
+
+## Tie Fighter and X-Wing Fighter Shooting Game (In Progress)
+
+Right now I am working on a shooting game. Currently you control a 
+Tie Fighter, and you shoot at incoming swarms of X-Wing Fighters.
+I have a basic Tantive IV coming out of hyperspace, and letting out a bang. 
+Then the Emperor (from inside the Death Star) taunts the rebels, and a swarm
+of X-Wing Fighters attacks the Tie Fighter. This process repeats.
+
+![](./shootingGame.png)
+
+[Link to the video](https://photos.app.goo.gl/wNQ6fDZAPorEsQS86)
+
+### Detailed Tantive IV (Just finished)
+
+The basic Tantive IV in the video above will soon be replaced by
+the detailed one I just finished.
+
+![](./tantiveiv_1.png)
+![](./tantiveiv_2.png)
+![](./tantiveiv_3.png)
+
+The tiny spec in some of the pictures above is a Tie Fighter from my shooting game.
+
 ## Still In Progress
 
-I worked on this quickly during my Christmas vacation, so it still needs some work.
+I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
+
+Since January, I've started to work on the shooting game, and it is still in progress.
 
 Things I couldn't figure out:
 
