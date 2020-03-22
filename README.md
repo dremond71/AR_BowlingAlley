@@ -4,6 +4,7 @@ This repository contains 2 augmented reality applications:
 
 - A bowling alley with 3 different balls ( normal ball, Star Wars Tie Fighter, Star Wars X-Wing Fighter)
 - A Star Wars X-Wing Fighter Showcase
+- A Tie Fighter vs X-Wing Fighter shooting game
 
 These applications were tested on an Android Google Pixel 3 phone.
 
@@ -62,12 +63,11 @@ Here is video of the application in action:
 
 [YouTube - Augmented Reality (AR) Star Wars X-Wing Fighter](https://www.youtube.com/watch?v=gzRnFOTOMKY) (Best viewed in 720p)
 
-
 ## Tie Fighter and X-Wing Fighter Shooting Game (In Progress)
 
-Right now I am working on a shooting game. Currently you control a 
+Right now I am working on a shooting game. Currently you control a
 Tie Fighter, and you shoot at incoming swarms of X-Wing Fighters.
-I have a basic Tantive IV coming out of hyperspace, and letting out a bang. 
+I have a basic Tantive IV coming out of hyperspace, and letting out a bang.
 Then the Emperor (from inside the Death Star) taunts the rebels, and a swarm
 of X-Wing Fighters attacks the Tie Fighter. This process repeats.
 
