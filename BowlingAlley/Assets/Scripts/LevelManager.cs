@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
     {
         // choose a random amount between 1 and 9
         //currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
-        currentAllowedSpawnPositions = rnd.Next(1, 5); // nine enemies is too much ;S
+        currentAllowedSpawnPositions = rnd.Next(1, 7); // nine enemies is too much ;S
         MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
     }
     void getRandomSpawnPositions()

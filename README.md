@@ -67,24 +67,25 @@ Here is video of the application in action:
 
 Right now I am working on a shooting game. Currently you control a
 Tie Fighter, and you shoot at incoming swarms of X-Wing Fighters.
-I have a basic Tantive IV coming out of hyperspace, and letting out a bang.
+I have a Tantive IV coming out of hyperspace, and letting out a bang.
 Then the Emperor (from inside the Death Star) taunts the rebels, and a swarm
 of X-Wing Fighters attacks the Tie Fighter. This process repeats.
 
 ![](./shootingGame.png)
 
-[Link to the video](https://photos.app.goo.gl/wNQ6fDZAPorEsQS86)
+[Link to the video](https://photos.app.goo.gl/UwveJgohawuAuAxN8)
 
 ### Detailed Tantive IV (Just finished)
 
-The basic Tantive IV in the video above will soon be replaced by
-the detailed one I just finished.
+I just added this detailed Tantive IV to the video above.
 
 ![](./tantiveiv_1.png)
 ![](./tantiveiv_2.png)
 ![](./tantiveiv_3.png)
 
 The tiny spec in some of the pictures above is a Tie Fighter from my shooting game.
+
+In the video, however, I made it 1/10 the scale of the pictures.
 
 ## Still In Progress
 
@@ -95,9 +96,7 @@ Since January, I've started to work on the shooting game, and it is still in pro
 Things I couldn't figure out:
 
 - how to use an image with a transparent background in Unity (had to resort to images with white backgrounds)
-- how to animate my tie fighter or x-wing fighter. The preview mode would animate perfectly, but in Play mode the coordinates would be all messed up. I gave up.
 - I used Plane detection stuff at first (to set my bowling alley on the ground), but had to abandon it because the alley would be angled a tiny bit, and bowling ball would fall off
-- how to rotate my x-wing fighter. It doesn't rotate on its axis...it rotates on an axis around 3 meters from its center.
 
 I wasn't focusing on perfect 3D AR textures...just 'good enough' textures. For textures (materials) applied to 3D objects, I just quickly used the RGB color editor to find a close approximation, or I made square panels with portions of images.
 
