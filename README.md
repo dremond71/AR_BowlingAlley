@@ -1,6 +1,6 @@
 # Overview
 
-This repository contains 2 augmented reality applications:
+This repository contains 3 augmented reality applications:
 
 - A bowling alley with 3 different balls ( normal ball, Star Wars Tie Fighter, Star Wars X-Wing Fighter)
 - A Star Wars X-Wing Fighter Showcase
