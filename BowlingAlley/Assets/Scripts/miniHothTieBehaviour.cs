@@ -15,7 +15,8 @@ Animation events:
 https://www.youtube.com/watch?v=-IuvXTnQS4U
 
 */
-public class miniHothTieBehaviour : MonoBehaviour {
+public class miniHothTieBehaviour : MonoBehaviour
+{
 
     //private Animator anim;
     private AudioSource hoverSource1;
@@ -28,6 +29,13 @@ public class miniHothTieBehaviour : MonoBehaviour {
     private AudioSource blasterSource;
     private AudioClip blaster;
     private GameObject tieBlastPrefab;
+
+    private bool movingLeft = false;
+    private bool movingRight = false;
+
+    private bool movingUp = false;
+    private bool movingDown = false;
+
 
     private GameObject boxPrefab;
 
@@ -68,46 +76,53 @@ public class miniHothTieBehaviour : MonoBehaviour {
 
     public float increment = 0.001f;
 
-    void Start () {
-        playHoveringSound1 ();
+    void Start()
+    {
+        playHoveringSound1();
         switchHoverSoundTimer = switchHoverSoundDuration;
 
     }
-    void Awake () {
+    void Awake()
+    {
         // anim = GetComponent<Animator>();
         // anim.speed = 0.25f;
 
-        blasterSource = GameObject.FindGameObjectWithTag ("tieFighterBlaster_Sound").GetComponent<AudioSource> ();
+        blasterSource = GameObject.FindGameObjectWithTag("tieFighterBlaster_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
 
-        roarSource = GameObject.FindGameObjectWithTag ("tieFighterRoar_Sound").GetComponent<AudioSource> ();
+        roarSource = GameObject.FindGameObjectWithTag("tieFighterRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
-        hoverSource1 = GameObject.FindGameObjectWithTag ("hoveringTie_Sound").GetComponent<AudioSource> ();
+        hoverSource1 = GameObject.FindGameObjectWithTag("hoveringTie_Sound").GetComponent<AudioSource>();
         hover1 = hoverSource1.clip;
-        hoverSource2 = GameObject.FindGameObjectWithTag ("hoveringTie_Sound").GetComponent<AudioSource> ();
+        hoverSource2 = GameObject.FindGameObjectWithTag("hoveringTie_Sound").GetComponent<AudioSource>();
         hover2 = hoverSource2.clip;
 
-        tieBlastPrefab = PrefabFactory.getPrefab ("miniTieBlast");
+        tieBlastPrefab = PrefabFactory.getPrefab("miniTieBlast");
 
-        boxPrefab = PrefabFactory.getPrefab ("boxTarget");
+        boxPrefab = PrefabFactory.getPrefab("boxTarget");
 
-        debugText = GameObject.Find ("debugText").GetComponent<TextMesh> ();
+        debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
     }
-    void Update () {
+    void Update()
+    {
 
         switchHoverSoundTimer -= Time.deltaTime;
-        MyDebug (switchHoverSoundTimer + " , playingHover1: " + playingHover1);
-        if (switchHoverSoundTimer <= 0f) {
+        MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
+        if (switchHoverSoundTimer <= 0f)
+        {
             //start duplicate sound 
-            if (playingHover1) {
+            if (playingHover1)
+            {
 
                 playingHover1 = false;
-                playHoveringSound2 ();
+                playHoveringSound2();
 
-            } else {
+            }
+            else
+            {
                 playingHover1 = true;
-                playHoveringSound1 ();
+                playHoveringSound1();
 
             }
 
@@ -115,10 +130,6 @@ public class miniHothTieBehaviour : MonoBehaviour {
 
         }
 
-        if (androidDevice)
-            handleInputAndroid ();
-        else
-            handleWindowsInput ();
 
         // if (!performingLoop) {
         //       Debug.Log("Setting booleans to true again.");
@@ -137,113 +148,199 @@ public class miniHothTieBehaviour : MonoBehaviour {
         // }    
     }
 
-    void shoot () {
-        spawnNewBlasterBolt ();
-        PlayBlasterSound_Immediately ();
+    void shoot()
+    {
+        spawnNewBlasterBolt();
+        PlayBlasterSound_Immediately();
     }
 
-    void spawnNewBox () {
-        GameObject boxSpawner = GameObject.FindGameObjectWithTag ("boxTargetSpawner");
+    void spawnNewBox()
+    {
+        GameObject boxSpawner = GameObject.FindGameObjectWithTag("boxTargetSpawner");
         float x = boxSpawner.transform.position.x;
         float y = boxSpawner.transform.position.y;
         float z = boxSpawner.transform.position.z;
-        GameObject go = (GameObject) Instantiate (boxPrefab, new Vector3 (x, y, z), boxSpawner.transform.rotation);
+        GameObject go = (GameObject)Instantiate(boxPrefab, new Vector3(x, y, z), boxSpawner.transform.rotation);
 
     }
 
-    void playHoveringSound1 () {
+    void playHoveringSound1()
+    {
 
-        try {
-            hoverSource1.PlayOneShot (hover1, hoverSoundVolume);
-            MyDebug ("Hover 1 started");
-        } catch (System.Exception e) {
-            MyDebug ("error sound1 : " + e.Message);
+        try
+        {
+            hoverSource1.PlayOneShot(hover1, hoverSoundVolume);
+            MyDebug("Hover 1 started");
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("error sound1 : " + e.Message);
         }
 
     }
 
-    void playHoveringSound2 () {
-        try {
-            hoverSource2.PlayOneShot (hover2, hoverSoundVolume);
-            MyDebug ("Hover 2 started");
-        } catch (System.Exception e) {
-            MyDebug ("error sound2 : " + e.Message);
+    void playHoveringSound2()
+    {
+        try
+        {
+            hoverSource2.PlayOneShot(hover2, hoverSoundVolume);
+            MyDebug("Hover 2 started");
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("error sound2 : " + e.Message);
         }
 
     }
 
-    void spawnNewBlasterBolt () {
+    void spawnNewBlasterBolt()
+    {
 
-        tieBlastOrigin = GameObject.FindGameObjectWithTag ("tieFighterBlastOrigin");
+        tieBlastOrigin = GameObject.FindGameObjectWithTag("tieFighterBlastOrigin");
         float x = tieBlastOrigin.transform.position.x;
         float y = tieBlastOrigin.transform.position.y;
         float z = tieBlastOrigin.transform.position.z;
-        GameObject go = (GameObject) Instantiate (tieBlastPrefab, new Vector3 (x, y, z), tieBlastOrigin.transform.rotation);
-        GameObject bolt1 = PrefabFactory.GetChildWithName (go, "leftBlast");
-        GameObject bolt2 = PrefabFactory.GetChildWithName (go, "rightBlast");
+        GameObject go = (GameObject)Instantiate(tieBlastPrefab, new Vector3(x, y, z), tieBlastOrigin.transform.rotation);
+        GameObject bolt1 = PrefabFactory.GetChildWithName(go, "leftBlast");
+        GameObject bolt2 = PrefabFactory.GetChildWithName(go, "rightBlast");
 
-        bolt1.GetComponent<Rigidbody> ().velocity = blasterSpeed * tieBlastOrigin.transform.forward * Time.deltaTime;
-        bolt2.GetComponent<Rigidbody> ().velocity = blasterSpeed * tieBlastOrigin.transform.forward * Time.deltaTime;
+        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * tieBlastOrigin.transform.forward * Time.deltaTime;
+        bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * tieBlastOrigin.transform.forward * Time.deltaTime;
 
     }
-    void handleShoot () {
+    void handleShoot()
+    {
 
-        if (!shooting) {
+        if (!shooting)
+        {
             shooting = true;
-            shoot ();
-            onDifferentThread_PauseAfterShooting ();
+            shoot();
+            onDifferentThread_PauseAfterShooting();
         }
     }
 
-    void handleRoar () {
+    void handleRoar()
+    {
         if (!roarSoundIsPlaying)
-            playRoarOnDifferentThread ();
+            playRoarOnDifferentThread();
     }
-    void handleWindowsInput () {
 
-        if (Input.GetKey ("up")) {
-            increaseYvalue ();
+
+    void setMovingLeft()
+    {
+        movingLeft = true;
+    }
+
+
+
+
+    void setMovingRight()
+    {
+        movingRight = true;
+    }
+
+    void setMovingUp()
+    {
+        movingUp = true;
+
+
+    }
+    void setMovingDown()
+    {
+
+        movingDown = true;
+
+    }
+
+    void resetAllMovementBooleans()
+    {
+        movingLeft = false;
+        movingRight = false;
+        movingUp = false;
+        movingDown = false;
+
+    }
+    void handleWindowsInput()
+    {
+
+        resetAllMovementBooleans();
+
+        if (Input.GetKey("up"))
+        {
+
+            setMovingUp();
+            increaseYvalue();
+
             //handleRoar();
 
-        } else if (Input.GetKey ("down")) {
-            decreaseYvalue ();
-            //handleRoar();
+        }
+        else if (Input.GetKey("down"))
+        {
 
-        } else if (Input.GetKey ("left")) {
-            decreaseXvalue ();
-            //handleRoar();
+            setMovingDown();
+            decreaseYvalue();
 
-        } else if (Input.GetKey ("right")) {
-            increaseXvalue ();
             //handleRoar();
-
-        } else if (Input.GetKey ("f")) {
-            handleShoot ();
 
         }
 
-    }
-    void handleWindowsInput2 () {
-        if (Input.GetKeyDown ("1")) {
-            MyDebug ("Pressed 1");
-            // letsStartTheAnimation();
-        } else if (Input.GetKeyDown ("2")) {
-            MyDebug ("Pressed 2");
-            // letsStartTheAnimation2();
-        } else if (Input.GetKeyDown ("f")) {
-            MyDebug ("Pressed f");
-            handleShoot ();
-        } else if (Input.GetKeyDown ("s")) {
-            MyDebug ("Pressed s");
-            //spawn new box
-            spawnNewBox ();
+        if (Input.GetKey("left"))
+        {
+            setMovingLeft();
+            decreaseXvalue();
+            //handleRoar();
 
-        } else if (Input.GetKeyDown ("w")) {
+        }
+        else if (Input.GetKey("right"))
+        {
+            setMovingRight();
+            increaseXvalue();
+            //handleRoar();
 
         }
 
+
+
+        if (Input.GetKey("f"))
+        {
+            handleShoot();
+
+        }
+
+
     }
-    // Update is called once per frame
+
+
+    private void FixedUpdate()
+    {
+
+        if (androidDevice)
+            handleInputAndroid();
+        else
+            handleWindowsInput();
+
+        float x = 0f;// this.transform.rotation.eulerAngles.x;
+        float y = 0f;//this.transform.rotation.eulerAngles.y;
+        float z = 0f;//this.transform.rotation.eulerAngles.z;
+
+
+        if (movingLeft)
+        {
+            z = 20f;
+        }
+        else if (movingRight)
+        {
+            z = -20f;
+        }
+
+
+        float angleMovementSpeed = 5.0f;
+        Vector3 targetAngles = new Vector3(x, y, z);
+        Quaternion targetRotation = Quaternion.Euler(targetAngles);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * angleMovementSpeed);
+
+    }
+
 
     // void letsStartTheAnimation()
     // {
@@ -275,30 +372,34 @@ public class miniHothTieBehaviour : MonoBehaviour {
 
     // }
 
-    void handleFireEventFromAnimation () {
+    void handleFireEventFromAnimation()
+    {
         // PlayBlasterSound_Immediately();
     }
-    void PlayRoarSound_Immediately () {
+    void PlayRoarSound_Immediately()
+    {
         // we want a seperate object for each fire; so we can handle multi blasts in quick succession
 
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
 
-        roarSource.PlayOneShot (roar, 0.7f);
+        roarSource.PlayOneShot(roar, 0.7f);
 
     }
-    IEnumerator pauseThenStartAnimationAgain () {
+    IEnumerator pauseThenStartAnimationAgain()
+    {
 
         float myDelay = 1.0f;
-        yield return new WaitForSeconds (myDelay);
+        yield return new WaitForSeconds(myDelay);
 
         performingLoop = false;
 
     }
 
-    void startAnimationAgainOnDifferentThread () {
+    void startAnimationAgainOnDifferentThread()
+    {
 
-        StartCoroutine (pauseThenStartAnimationAgain ());
+        StartCoroutine(pauseThenStartAnimationAgain());
 
     }
 
@@ -313,12 +414,13 @@ public class miniHothTieBehaviour : MonoBehaviour {
 
     // }
 
-    void PlayBlasterSound_Immediately () {
+    void PlayBlasterSound_Immediately()
+    {
         // we want a seperate object for each fire; so we can handle multi blasts in quick succession
 
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
-        blasterSource.PlayOneShot (blaster, blastVolume);
+        blasterSource.PlayOneShot(blaster, blastVolume);
 
     }
 
@@ -326,147 +428,153 @@ public class miniHothTieBehaviour : MonoBehaviour {
     //     return performLoop;
     // }
 
-    // void handleInputAndroid()
-    // {
-    //     if (Input.touchCount > 0)
-    //     {
-    //         // The screen has been touched so store the touch
 
-    //         Touch touch = Input.GetTouch(0);
+    void handleInputAndroid()
+    {
 
-    //         if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
-    //         {
+        resetAllMovementBooleans();
 
-    //             // If the finger is on the screen, move the object smoothly to the touch position
+        if (leftJoyStick.Horizontal >= 0.2f)
+        {
+            MyDebug("Move right");
 
-    //             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 0.0f));
-
-    //             transform.position = Vector3.Lerp(transform.position, new Vector3(touchPosition.x, 0.0f, touchPosition.z), Time.deltaTime * 5.0f);
-    //         }
-
-    //     }
-    // }
-    void handleInputAndroid () {
-
-        if (leftJoyStick.Horizontal >= 0.2f) {
-            MyDebug ("Move right");
-
-            increaseXvalue ();
+            setMovingRight();
+            increaseXvalue();
             //handleRoar();
-        } else if (leftJoyStick.Horizontal <= -0.2f) {
-            MyDebug ("Move left");
-
-            decreaseXvalue ();
+        }
+        else if (leftJoyStick.Horizontal <= -0.2f)
+        {
+            MyDebug("Move left");
+            setMovingLeft();
+            decreaseXvalue();
             //handleRoar();
         }
 
-        if (leftJoyStick.Vertical >= 0.5f) {
-            MyDebug ("Move up");
-
-            increaseYvalue ();
+        if (leftJoyStick.Vertical >= 0.5f)
+        {
+            MyDebug("Move up");
+            setMovingUp();
+            increaseYvalue();
             //handleRoar();
-        } else if (leftJoyStick.Vertical <= -0.5f) {
-            MyDebug ("Move down");
-
-            decreaseYvalue ();
+        }
+        else if (leftJoyStick.Vertical <= -0.5f)
+        {
+            MyDebug("Move down");
+            setMovingDown();
+            decreaseYvalue();
             //handleRoar();
         }
 
-        if (rightJoyStick.Vertical >= 0.5f) {
-            MyDebug ("Fire");
-            handleShoot ();
+        if (rightJoyStick.Vertical >= 0.5f)
+        {
+            MyDebug("Fire");
+            handleShoot();
         }
 
     }
 
-    void increaseYvalue () {
+    void increaseYvalue()
+    {
         float x = this.transform.position.x;
         float y = this.transform.position.y;
         float z = this.transform.position.z;
 
         y += increment;
 
-        this.transform.position = new Vector3 (x, y, z);
+        this.transform.position = new Vector3(x, y, z);
 
     }
-    void increaseXvalue () {
+    void increaseXvalue()
+    {
         float x = this.transform.position.x;
         float y = this.transform.position.y;
         float z = this.transform.position.z;
 
         x += increment;
 
-        this.transform.position = new Vector3 (x, y, z);
+        this.transform.position = new Vector3(x, y, z);
 
     }
-    void decreaseYvalue () {
+
+    void decreaseYvalue()
+    {
         float x = this.transform.position.x;
         float y = this.transform.position.y;
         float z = this.transform.position.z;
 
         y -= increment;
 
-        this.transform.position = new Vector3 (x, y, z);
+        this.transform.position = new Vector3(x, y, z);
 
     }
 
-    void decreaseXvalue () {
+    void decreaseXvalue()
+    {
         float x = this.transform.position.x;
         float y = this.transform.position.y;
         float z = this.transform.position.z;
 
         x -= increment;
 
-        this.transform.position = new Vector3 (x, y, z);
+        this.transform.position = new Vector3(x, y, z);
 
     }
 
-    void delayInSeconds (float seconds) {
-        StartCoroutine (PauseInSeconds (seconds));
+    void delayInSeconds(float seconds)
+    {
+        StartCoroutine(PauseInSeconds(seconds));
     }
 
-    IEnumerator PauseInSeconds (float seconds) {
+    IEnumerator PauseInSeconds(float seconds)
+    {
 
-        yield return new WaitForSeconds (seconds);
-
-    }
-
-    void playRoarOnDifferentThread () {
-
-        StartCoroutine (PlayRoarSound ());
+        yield return new WaitForSeconds(seconds);
 
     }
 
-    IEnumerator PlayRoarSound () {
+    void playRoarOnDifferentThread()
+    {
+
+        StartCoroutine(PlayRoarSound());
+
+    }
+
+    IEnumerator PlayRoarSound()
+    {
         //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
         roarSoundIsPlaying = true;
-        roarSource.PlayOneShot (roar, 0.7f);
-        yield return new WaitForSeconds (roar.length);
+        roarSource.PlayOneShot(roar, 0.7f);
+        yield return new WaitForSeconds(roar.length);
         roarSoundIsPlaying = false;
 
     }
 
-    void MyDebug (string someText) {
+    void MyDebug(string someText)
+    {
 
-        if (debugText != null & debug) {
+        if (debugText != null & debug)
+        {
             debugText.text = someText;
         }
 
     }
 
-    void onDifferentThread_PauseAfterShooting () {
+    void onDifferentThread_PauseAfterShooting()
+    {
 
-        StartCoroutine (DoThePausing ());
+        StartCoroutine(DoThePausing());
 
     }
 
-    IEnumerator DoThePausing () {
-        yield return new WaitForSeconds (pauseAfterShooting);
+    IEnumerator DoThePausing()
+    {
+        yield return new WaitForSeconds(pauseAfterShooting);
         shooting = false;
 
     }
 
-    void moveTieFighter_Horizontal_Swipe (float signFactor) {
+    void moveTieFighter_Horizontal_Swipe(float signFactor)
+    {
         // float horizontalAmount = horizontalValMove() * signFactor;
         // MyDebug("want to move X by " + horizontalAmount);
         // try
@@ -513,7 +621,8 @@ public class miniHothTieBehaviour : MonoBehaviour {
 
     }
 
-    void moveTieFighter_Vertical_Swipe (float signFactor) {
+    void moveTieFighter_Vertical_Swipe(float signFactor)
+    {
 
         //     float verticalAmount = verticalMove() * signFactor;
         //     MyDebug("want to move Y by " + verticalAmount);
