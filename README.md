@@ -70,10 +70,11 @@ Tie Fighter, and you shoot at incoming swarms of X-Wing Fighters.
 I have a Tantive IV coming out of hyperspace, and letting out a bang.
 Then the Emperor (from inside the Death Star) taunts the rebels, and a swarm
 of X-Wing Fighters attacks the Tie Fighter. This process repeats.
+Added ion torpedo and ion explosion as well.
 
 ![](./shootingGame.png)
 
-[Link to the video](https://photos.app.goo.gl/UwveJgohawuAuAxN8)
+[Link to the video](https://photos.app.goo.gl/cn8Sc2ZoKZkBWoJn9)
 
 ### Detailed Tantive IV (Just finished)
 

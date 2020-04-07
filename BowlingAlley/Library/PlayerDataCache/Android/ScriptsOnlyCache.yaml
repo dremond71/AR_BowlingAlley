@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - EnergyExplosionLifeCycle
     - ExplosionLifeCycle
     - FixedJoystick
     - FlyingXWingBlastBoltLifecycle
@@ -10,6 +11,8 @@ ScriptsOnlyBuild:
     - TargetXWingBlastLifeCycle
     - TieFighterBlastLifeCycle
     - TieFighterBoxBehaviour
+    - TieMissleBehaviour
+    - TieMissleTargetBehaviour
     - miniHothTieBehaviour
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
@@ -97,6 +100,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 95
       Script: {instanceID: 0}
+    - Class: 96
+      Script: {instanceID: 0}
     - Class: 102
       Script: {instanceID: 0}
     - Class: 104
@@ -106,57 +111,63 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9856}
+      Script: {instanceID: 9870}
     - Class: 114
-      Script: {instanceID: 10138}
+      Script: {instanceID: 9946}
     - Class: 114
-      Script: {instanceID: 10186}
+      Script: {instanceID: 10272}
     - Class: 114
-      Script: {instanceID: 10584}
+      Script: {instanceID: 10334}
     - Class: 114
-      Script: {instanceID: 10682}
+      Script: {instanceID: 10848}
     - Class: 114
-      Script: {instanceID: 10720}
+      Script: {instanceID: 11000}
     - Class: 114
-      Script: {instanceID: 10792}
+      Script: {instanceID: 11054}
     - Class: 114
-      Script: {instanceID: 10828}
+      Script: {instanceID: 11152}
     - Class: 114
-      Script: {instanceID: 11176}
+      Script: {instanceID: 11194}
     - Class: 114
-      Script: {instanceID: 11178}
+      Script: {instanceID: 11644}
     - Class: 114
-      Script: {instanceID: 11556}
+      Script: {instanceID: 11646}
     - Class: 114
-      Script: {instanceID: 11572}
+      Script: {instanceID: 12150}
     - Class: 114
-      Script: {instanceID: 11588}
+      Script: {instanceID: 12174}
     - Class: 114
-      Script: {instanceID: 11614}
+      Script: {instanceID: 12192}
     - Class: 114
-      Script: {instanceID: 11666}
+      Script: {instanceID: 12222}
     - Class: 114
-      Script: {instanceID: 11668}
+      Script: {instanceID: 12288}
     - Class: 114
-      Script: {instanceID: 11778}
+      Script: {instanceID: 12290}
     - Class: 114
-      Script: {instanceID: 11930}
+      Script: {instanceID: 12442}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 12628}
     - Class: 114
-      Script: {instanceID: 12166}
+      Script: {instanceID: 12670}
     - Class: 114
-      Script: {instanceID: 12182}
+      Script: {instanceID: 12966}
     - Class: 114
-      Script: {instanceID: 12184}
+      Script: {instanceID: 12982}
     - Class: 114
-      Script: {instanceID: 12340}
+      Script: {instanceID: 12984}
     - Class: 114
-      Script: {instanceID: 12360}
+      Script: {instanceID: 13064}
     - Class: 114
-      Script: {instanceID: 12472}
+      Script: {instanceID: 13206}
     - Class: 114
-      Script: {instanceID: 12560}
+      Script: {instanceID: 13232}
+    - Class: 114
+      Script: {instanceID: 13378}
+    - Class: 114
+      Script: {instanceID: 13500}
+    - Class: 114
+      Script: {instanceID: 29760}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -224,6 +235,18 @@ ScriptsOnlyBuild:
     className: TMP_SelectionCaret
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TieMissleBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEditor.VFX
+    className: SpawnOverDistance
+  - hash:
+      serializedVersion: 2
       Hash: 87ff43d2baf3385cba327d8f803a4ebb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -272,6 +295,12 @@ ScriptsOnlyBuild:
     className: ActivationTrack
   - hash:
       serializedVersion: 2
+      Hash: 6b0bba260d4eac03edddf3f2fecb7912
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXInputTouchBinder
+  - hash:
+      serializedVersion: 2
       Hash: 72712369a7c681ad84fc255a5ec0b333
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -294,6 +323,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: 321dce969f1704d676527ee15a4ded1e
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXRigidBodyCollisionEventBinder
   - hash:
       serializedVersion: 2
       Hash: 8e0313c6f5e2ce35991fec2d64f8eaab
@@ -356,6 +391,12 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEditor.VFX
+    className: SetSpawnTime
+  - hash:
+      serializedVersion: 2
       Hash: 38bcb4d3f9a1812fd650f92e87a4cf64
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -392,6 +433,12 @@ ScriptsOnlyBuild:
     className: JoystickSetterExample
   - hash:
       serializedVersion: 2
+      Hash: de565434bac5d1fe70917171145e9425
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXRaycastBinder
+  - hash:
+      serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -408,6 +455,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PinBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEditor.VFX
+    className: VFXCustomSpawnerSample
   - hash:
       serializedVersion: 2
       Hash: a693fb3985f2f0b8cb43752522d978d2
@@ -434,6 +487,12 @@ ScriptsOnlyBuild:
     className: ARReferencePoint
   - hash:
       serializedVersion: 2
+      Hash: 5c2a2df122ff85322cd770df9892d754
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXPlaneBinder
+  - hash:
+      serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -452,6 +511,12 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEditor.VFX
+    className: LoopAndDelay
+  - hash:
+      serializedVersion: 2
       Hash: d251bf88db6c95a6b1aa0b69298da9ef
     assemblyName: UnityEngine.SpatialTracking.dll
     namespaceName: UnityEngine.SpatialTracking
@@ -464,6 +529,12 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
+      Hash: 6b6b826561374e066ccf6901e0798244
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: 
+    className: VisualEffectActivationClip
+  - hash:
+      serializedVersion: 2
       Hash: e8733e39efa851172df1c9eaef062265
     assemblyName: Unity.XR.ARFoundation.dll
     namespaceName: UnityEngine.XR.ARFoundation
@@ -474,6 +545,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AdjustTimeScale
+  - hash:
+      serializedVersion: 2
+      Hash: 9db6c0fb26443acdbbd16948b4dd9e4d
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXMultiplePositionParameterBinder
+  - hash:
+      serializedVersion: 2
+      Hash: 6b31e7535359c208622d2a7b3b167e8c
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXTerrainBinder
   - hash:
       serializedVersion: 2
       Hash: 7e6ed836cbaa230e56d6a2bbae1b9bb5
@@ -492,6 +575,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ControlPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 5c2a2df122ff85322cd770df9892d754
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXPositionBinder
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEditor.VFX
+    className: VFXCustomSpawnerTest
   - hash:
       serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
@@ -548,10 +643,22 @@ ScriptsOnlyBuild:
     className: TMP_Asset
   - hash:
       serializedVersion: 2
+      Hash: 612fba6f769645e0bfcbbc5788697fd7
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXUIDropdownBinder
+  - hash:
+      serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ScrollRect
+  - hash:
+      serializedVersion: 2
+      Hash: c3d3430df9e3ea95e3e3d587961390fb
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: 
+    className: VisualEffectActivationTrack
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -564,6 +671,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ControlPanelShowcase
+  - hash:
+      serializedVersion: 2
+      Hash: c3d8a84cc8c1b6c77d2468e56e822159
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXInputMouseBinder
   - hash:
       serializedVersion: 2
       Hash: 2fd3bc4ab95fe1028c96ed4dbea48db8
@@ -668,16 +781,40 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: 5c2a2df122ff85322cd770df9892d754
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXPreviousPositionBinder
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TestFlyerScript
   - hash:
       serializedVersion: 2
+      Hash: 39d9d7d0e1d31d7c73be68723c0c8b2d
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXLightBinder
+  - hash:
+      serializedVersion: 2
+      Hash: e26c1dc4ba1f7fa814c25c1fb4cba798
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXInputKeyBinder
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 5c2a2df122ff85322cd770df9892d754
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXVelocityBinder
   - hash:
       serializedVersion: 2
       Hash: bb1f0eabf586c59f439d232ff8a83b3b
@@ -836,6 +973,12 @@ ScriptsOnlyBuild:
     className: JoystickPlayerExample
   - hash:
       serializedVersion: 2
+      Hash: c681317d84e0dda360394f07434b1238
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXEnabledBinder
+  - hash:
+      serializedVersion: 2
       Hash: e1c35cdce946e9da77fe80a39c261608
     assemblyName: Unity.XR.ARFoundation.dll
     namespaceName: UnityEngine.XR.ARFoundation
@@ -854,6 +997,12 @@ ScriptsOnlyBuild:
     className: SceneHandler
   - hash:
       serializedVersion: 2
+      Hash: af164bff162c371aad5157d3b4bf9056
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXInputButtonBinder
+  - hash:
+      serializedVersion: 2
       Hash: 38c495b53f7018b026b780eec92eeb9b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -870,6 +1019,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.XR.ARFoundation.dll
     namespaceName: UnityEngine.XR.ARFoundation
     className: ARPointCloudMeshVisualizer
+  - hash:
+      serializedVersion: 2
+      Hash: 2c3eb264a395239c6e478ed81bc8efb6
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXInputAxisBinder
+  - hash:
+      serializedVersion: 2
+      Hash: f4c02471dcd9f0ddb8c322a1a0beade6
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXTriggerEventBinder
+  - hash:
+      serializedVersion: 2
+      Hash: 3e2ef35fe16c6c624b004754af77e1f3
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXAudioSpectrumBinder
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -902,6 +1069,24 @@ ScriptsOnlyBuild:
     className: TieFighterBlastLifeCycle
   - hash:
       serializedVersion: 2
+      Hash: cb4e61212c967eaca40fb1f3246fa6c1
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXHierarchyAttributeMapBinder
+  - hash:
+      serializedVersion: 2
+      Hash: da14535bb05f94583c7536a845dfa9f6
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXMouseEventBinder
+  - hash:
+      serializedVersion: 2
+      Hash: dfdf2ca76cd29209aad324f2e9251362
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TieMissleTargetBehaviour
+  - hash:
+      serializedVersion: 2
       Hash: d5630f96bd5a6a6eed7e1754c3fb8703
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -924,6 +1109,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ColorGradient
+  - hash:
+      serializedVersion: 2
+      Hash: 8a444cfb9920cbf22c77af8f58cd7f42
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXUIToggleBinder
   - hash:
       serializedVersion: 2
       Hash: dfdf2ca76cd29209aad324f2e9251362
@@ -956,7 +1147,7 @@ ScriptsOnlyBuild:
     className: AmbientOcclusion
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 778c82a00b49b4f785357edf4fed62be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TantiveIVShipBehaviour
@@ -998,6 +1189,12 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
+      Hash: 5c2a2df122ff85322cd770df9892d754
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXTransformBinder
+  - hash:
+      serializedVersion: 2
       Hash: 20eeaeae829475b5e354d1f626c51a2b
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner
@@ -1008,6 +1205,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 294081b4a58e27c39341d501e3609aa7
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXVisibilityEventBinder
   - hash:
       serializedVersion: 2
       Hash: 21eef8cf54b444a9281fc76b3ad6a7c2
@@ -1040,6 +1243,12 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
+      Hash: ab74319876b0c8a7d1444f0e170d9233
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXParameterBinder
+  - hash:
+      serializedVersion: 2
       Hash: 7072231382eb3c4871b3dd75ad0227e1
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1058,10 +1267,28 @@ ScriptsOnlyBuild:
     className: TargetXWingBlastLifeCycle
   - hash:
       serializedVersion: 2
+      Hash: 60f1b089e372e35bead61a4d8a712d27
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXSphereBinder
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: d26ae8cd661f7f210ca50dff474578f1
+    assemblyName: Unity.VisualEffectGraph.Runtime.dll
+    namespaceName: UnityEngine.Experimental.VFX.Utility
+    className: VFXUISliderBinder
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnergyExplosionLifeCycle
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity

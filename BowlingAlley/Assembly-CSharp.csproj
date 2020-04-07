@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\CameraMotor.cs" />
      <Compile Include="Assets\Scripts\CatchPlaneBehaviour.cs" />
      <Compile Include="Assets\Scripts\ControlPanelShowcase.cs" />
+     <Compile Include="Assets\Scripts\EnergyExplosionLifeCycle.cs" />
      <Compile Include="Assets\Scripts\ExplosionLifeCycle.cs" />
      <Compile Include="Assets\Scripts\FloorPositioningBehaviour.cs" />
      <Compile Include="Assets\Scripts\FlyingVehicleMotor.cs" />
@@ -79,6 +80,8 @@
      <Compile Include="Assets\Scripts\TieFighter.cs" />
      <Compile Include="Assets\Scripts\TieFighterBlastLifeCycle.cs" />
      <Compile Include="Assets\Scripts\TieFighterBoxBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TieMissleBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TieMissleTargetBehaviour.cs" />
      <Compile Include="Assets\Scripts\XWingFighter.cs" />
      <Compile Include="Assets\Scripts\XWingFighterShowcase.cs" />
      <Compile Include="Assets\Scripts\XYZPositioningHandler.cs" />
@@ -132,6 +135,9 @@
  <Reference Include="Unity.ProGrids.Editor">
  <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.VisualEffectGraph.Runtime">
+ <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.XR.ARFoundation.Editor">
  <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/Unity.XR.ARFoundation.Editor.dll</HintPath>
  </Reference>
@@ -173,6 +179,9 @@
  </Reference>
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualEffectGraph.Editor">
+ <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/dremond/Documents/BowlingAlley/BowlingAlley/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

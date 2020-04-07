@@ -28,14 +28,17 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     private AudioSource blasterSource;
     private AudioClip blaster;
+
+    private AudioSource missleSource;
+    private AudioClip missle;
     private GameObject tieBlastPrefab;
+    private GameObject tieMisslePrefab;
 
     private bool movingLeft = false;
     private bool movingRight = false;
 
     private bool movingUp = false;
     private bool movingDown = false;
-
 
     private GameObject boxPrefab;
 
@@ -61,7 +64,9 @@ public class miniHothTieBehaviour : MonoBehaviour
     bool performingLongLoop = false;
 
     private float pauseAfterShooting = 0.15f;
+    private float pauseAfterShootingMissle = 3.00f;
     bool shooting = false;
+    bool shootingMissle = false;
     private float blasterSpeed = 400.0f;
 
     public Joystick leftJoyStick;
@@ -90,6 +95,9 @@ public class miniHothTieBehaviour : MonoBehaviour
         blasterSource = GameObject.FindGameObjectWithTag("tieFighterBlaster_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
 
+        missleSource = GameObject.FindGameObjectWithTag("launchMissle_Sound").GetComponent<AudioSource>();
+        missle = missleSource.clip;
+
         roarSource = GameObject.FindGameObjectWithTag("tieFighterRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
@@ -99,6 +107,7 @@ public class miniHothTieBehaviour : MonoBehaviour
         hover2 = hoverSource2.clip;
 
         tieBlastPrefab = PrefabFactory.getPrefab("miniTieBlast");
+        tieMisslePrefab = PrefabFactory.getPrefab("miniTieMissle");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
 
@@ -130,7 +139,6 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         }
 
-
         // if (!performingLoop) {
         //       Debug.Log("Setting booleans to true again.");
         //       performingLoop = true;
@@ -146,6 +154,12 @@ public class miniHothTieBehaviour : MonoBehaviour
         // else {
         //     anim.SetBool("shouldPerformLoop",false);
         // }    
+    }
+
+    void shootMissle()
+    {
+        spawnNewMissle();
+        PlayMissleLaunchSound_Immediately();
     }
 
     void shoot()
@@ -193,6 +207,18 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     }
 
+    void spawnNewMissle()
+    {
+
+        //tieFighterMissleOrigin
+        tieBlastOrigin = GameObject.FindGameObjectWithTag("tieFighterMissleOrigin");
+        float x = tieBlastOrigin.transform.position.x;
+        float y = tieBlastOrigin.transform.position.y;
+        float z = tieBlastOrigin.transform.position.z;
+        GameObject go = (GameObject)Instantiate(tieMisslePrefab, new Vector3(x, y, z), tieBlastOrigin.transform.rotation);
+        go.GetComponent<Rigidbody>().velocity = 3f * this.transform.forward;
+    }
+
     void spawnNewBlasterBolt()
     {
 
@@ -219,20 +245,29 @@ public class miniHothTieBehaviour : MonoBehaviour
         }
     }
 
+    void handleShootMissle()
+    {
+
+        if (!shootingMissle)
+        {
+            shootingMissle = true;
+            shootMissle();
+
+            onDifferentThread_PauseAfterShootingMissle();
+        }
+
+    }
+
     void handleRoar()
     {
         if (!roarSoundIsPlaying)
             playRoarOnDifferentThread();
     }
 
-
     void setMovingLeft()
     {
         movingLeft = true;
     }
-
-
-
 
     void setMovingRight()
     {
@@ -242,7 +277,6 @@ public class miniHothTieBehaviour : MonoBehaviour
     void setMovingUp()
     {
         movingUp = true;
-
 
     }
     void setMovingDown()
@@ -299,17 +333,19 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         }
 
-
-
         if (Input.GetKey("f"))
         {
             handleShoot();
 
         }
 
+        if (Input.GetKey("m"))
+        {
+            handleShootMissle();
+
+        }
 
     }
-
 
     private void FixedUpdate()
     {
@@ -319,10 +355,9 @@ public class miniHothTieBehaviour : MonoBehaviour
         else
             handleWindowsInput();
 
-        float x = 0f;// this.transform.rotation.eulerAngles.x;
-        float y = 0f;//this.transform.rotation.eulerAngles.y;
-        float z = 0f;//this.transform.rotation.eulerAngles.z;
-
+        float x = 0f; // this.transform.rotation.eulerAngles.x;
+        float y = 0f; //this.transform.rotation.eulerAngles.y;
+        float z = 0f; //this.transform.rotation.eulerAngles.z;
 
         if (movingLeft)
         {
@@ -333,14 +368,12 @@ public class miniHothTieBehaviour : MonoBehaviour
             z = -20f;
         }
 
-
         float angleMovementSpeed = 5.0f;
         Vector3 targetAngles = new Vector3(x, y, z);
         Quaternion targetRotation = Quaternion.Euler(targetAngles);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * angleMovementSpeed);
 
     }
-
 
     // void letsStartTheAnimation()
     // {
@@ -424,10 +457,19 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     }
 
+    void PlayMissleLaunchSound_Immediately()
+    {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        missleSource.PlayOneShot(missle, blastVolume * 4f);
+
+    }
+
     // public bool shouldPerformLoop() {
     //     return performLoop;
     // }
-
 
     void handleInputAndroid()
     {
@@ -469,6 +511,11 @@ public class miniHothTieBehaviour : MonoBehaviour
         {
             MyDebug("Fire");
             handleShoot();
+        }
+        else if (rightJoyStick.Vertical <= -0.7f)
+        {
+            MyDebug("Fire Missle");
+            handleShootMissle();
         }
 
     }
@@ -566,10 +613,24 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     }
 
+    void onDifferentThread_PauseAfterShootingMissle()
+    {
+
+        StartCoroutine(DoThePausingForMissle());
+
+    }
+
     IEnumerator DoThePausing()
     {
         yield return new WaitForSeconds(pauseAfterShooting);
         shooting = false;
+
+    }
+
+    IEnumerator DoThePausingForMissle()
+    {
+        yield return new WaitForSeconds(pauseAfterShootingMissle);
+        shootingMissle = false;
 
     }
 

@@ -54,6 +54,12 @@ TagManager:
   - emperorLaugh_Sound
   - emperorDesign_Sound
   - emperorEndOfAlliance_Sound
+  - miniTieMissle
+  - missleTarget
+  - tieFighterMissleOrigin
+  - tantiveIV
+  - launchMissle_Sound
+  - energyExplosion_Sound
   layers:
   - Default
   - TransparentFX
