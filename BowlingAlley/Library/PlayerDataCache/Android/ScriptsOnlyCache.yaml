@@ -51,7 +51,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.SpatialTracking.dll:
     - UnityEngine.SpatialTracking.TrackedPoseDriver
     UnityEngine.UI.dll:
@@ -163,11 +162,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13232}
     - Class: 114
-      Script: {instanceID: 13378}
+      Script: {instanceID: 13250}
     - Class: 114
-      Script: {instanceID: 13500}
+      Script: {instanceID: 13380}
     - Class: 114
-      Script: {instanceID: 29760}
+      Script: {instanceID: 13502}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1159,6 +1158,12 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnergyExplosionLifeCycle
+  - hash:
+      serializedVersion: 2
       Hash: 7b3216bb34fdd4bb3a48518a010216c7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1283,12 +1288,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualEffectGraph.Runtime.dll
     namespaceName: UnityEngine.Experimental.VFX.Utility
     className: VFXUISliderBinder
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: EnergyExplosionLifeCycle
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity
