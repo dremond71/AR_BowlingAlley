@@ -88,6 +88,23 @@ The tiny spec in some of the pictures above is a Tie Fighter from my shooting ga
 
 In the video, however, I made it 1/10 the scale of the pictures.
 
+
+### Detailed Millennium Falcon (Just finished)
+
+I just added this detailed Millennium Falcon to the game. (No video yet)
+
+![](./falconTop.png)
+
+![](./falconBottom.png)
+
+![](./falconBack.png)
+
+![](./falconSide.png)
+
+![](./falconFront.png)
+
+The falcon will be invulnerable because it has never exploded in the movies! ;)
+
 ## Still In Progress
 
 I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
