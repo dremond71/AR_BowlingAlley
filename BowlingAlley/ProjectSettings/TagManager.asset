@@ -60,6 +60,13 @@ TagManager:
   - tantiveIV
   - launchMissle_Sound
   - energyExplosion_Sound
+  - mfTopBlasterPosition
+  - falconBlast
+  - falconRoar_Sound
+  - falconBlasts_Sound
+  - falcon
+  - hanSoloSituationNormal_Sound
+  - chewyRoar_Sound
   layers:
   - Default
   - TransparentFX

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetXWingBehaviour : MonoBehaviour {
+public class TargetXWingBehaviour : MonoBehaviour
+{
 
     /*
 
@@ -66,296 +67,346 @@ public class TargetXWingBehaviour : MonoBehaviour {
 
     public float roarVolume = 0.7f;
 
-    float GetRandomStartDelay () {
-        return Random.Range (1.5f, 3.5f);
+    float GetRandomStartDelay()
+    {
+        return Random.Range(1.5f, 3.5f);
 
     }
 
-    float GetRandomShootingPauseAmount () {
+    float GetRandomShootingPauseAmount()
+    {
 
-        return Random.Range (0.8f, 1.75f);
+        return Random.Range(0.8f, 1.75f);
 
     }
-    void shootIfTime () {
+    void shootIfTime()
+    {
 
         shootingPauseTimer -= Time.deltaTime;
-        if (shootingPauseTimer <= 0f) {
-            shoot ();
-            shootingPauseTimer = GetRandomShootingPauseAmount ();
+        if (shootingPauseTimer <= 0f)
+        {
+            shoot();
+            shootingPauseTimer = GetRandomShootingPauseAmount();
 
         }
     }
-    void Awake () {
-        xwingBlastPrefab = PrefabFactory.getPrefab ("miniXWingBlast");
-        blasterSource = GameObject.FindGameObjectWithTag ("xwingFighterBlasts_Sound").GetComponent<AudioSource> ();
+    void Awake()
+    {
+        xwingBlastPrefab = PrefabFactory.getPrefab("miniXWingBlast");
+        blasterSource = GameObject.FindGameObjectWithTag("xwingFighterBlasts_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
-        roarSource = GameObject.FindGameObjectWithTag ("xwingFighterRoar_Sound").GetComponent<AudioSource> ();
+        roarSource = GameObject.FindGameObjectWithTag("xwingFighterRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
-    }
-    void Start () {
+        //debugText = GameObject.Find ("debugText").GetComponent<TextMesh> ();
 
-        try {
-            debugText = GameObject.Find ("debugText").GetComponent<TextMesh> ();
+    }
+    void Start()
+    {
+
+        try
+        {
+            debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
             //MyDebug("box stuff");
 
-            explosionSource = GameObject.FindGameObjectWithTag ("swExplosion_Sound").GetComponent<AudioSource> ();
+            explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
             explosion = explosionSource.clip;
 
-            metalHitSource = GameObject.FindGameObjectWithTag ("swMetalHit_Sound").GetComponent<AudioSource> ();
+            metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
             metalHit = metalHitSource.clip;
 
-            shootingPauseTimer = GetRandomShootingPauseAmount (); //pause between each shot
+            shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
 
-            delayBeforeFirstShot = GetRandomStartDelay (); // pause before starting to shoot
+            delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
 
-            pauseBeforeShootingOnDifferentThread (); // start the pause (before starting to shoot)
-        } catch (System.Exception e) {
+            pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
+        }
+        catch (System.Exception e)
+        {
 
-            MyDebug ("box stuff, error: " + e.ToString ());
+            MyDebug("box stuff, error: " + e.ToString());
         }
     }
 
-    void playRoaringSoundIfItIsTime () {
+    void playRoaringSoundIfItIsTime()
+    {
 
         if (!roarSoundIsPlaying)
-            playRoarOnDifferentThread ();
+            playRoarOnDifferentThread();
 
     }
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
-        playRoaringSoundIfItIsTime ();
+        playRoaringSoundIfItIsTime();
 
         // enemy must have a delay before starting to shoot
-        if (shootingAllowed) {
-            shootIfTime ();
+        if (shootingAllowed)
+        {
+            shootIfTime();
         }
         //  MyDebug("Health is : " + health + " and allowDamage :" + allowDamage);
 
         // BUT, they can receive damage right away
-        if (health <= 0f) {
-            Explode ();
+        if (health <= 0f)
+        {
+            Explode();
         }
 
-        destroyIfIrrelevantNow ();
+        destroyIfIrrelevantNow();
     }
 
-    private void OnCollisionEnter (Collision collision) {
+    private void OnCollisionEnter(Collision collision)
+    {
 
         ContactPoint cp = collision.contacts[0];
         contactPoint = cp.point;
 
-        if (collision.gameObject.tag == "miniTieBlast") {
+        if (collision.gameObject.tag == "miniTieBlast")
+        {
 
-            if (allowDamage) {
+            if (allowDamage)
+            {
                 health -= 1f;
-                handleHit ();
+                handleHit();
             }
-            pauseDamageIfNecessary ();
-        } else if (collision.gameObject.tag == "PlayerShooter") {
+            pauseDamageIfNecessary();
+        }
+        else if (collision.gameObject.tag == "PlayerShooter")
+        {
             health = 0f; // immediately explode if box hits player shooter
-        } else if (collision.gameObject.tag == "miniXWingBlast") {
+        }
+        else if (collision.gameObject.tag == "miniXWingBlast")
+        {
             // do nothing. My own blaster appeared within my collider. 
             // it hasn't been hit by a blaster...its mine
-        } else {
+        }
+        else
+        {
             health = 0f; // something unexpected
         }
 
-        MyDebug ("box collided with : " + collision.gameObject.tag);
+        MyDebug("box collided with : " + collision.gameObject.tag);
     }
 
-    void destroyIfIrrelevantNow () {
+    void destroyIfIrrelevantNow()
+    {
         // this object becomes irrelevant if it has flown past the shooter 
 
-        GameObject shooter = GameObject.FindGameObjectWithTag ("PlayerShooter");
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
         float shooterZ = shooter.transform.position.z;
 
         float myZ = transform.position.z;
 
-        if (myZ < (shooterZ - 3f)) {
-            LevelManager.decrementNumSpawned (); //since player one didn't kill me, get LevelManager to spawn me again
-            destroySelf ();
+        if (myZ < (shooterZ - 3f))
+        {
+            LevelManager.decrementNumSpawned(); //since player one didn't kill me, get LevelManager to spawn me again
+            destroySelf();
         }
 
     }
-    void Explode () {
+    void Explode()
+    {
         //show effect 
 
-        try {
-            GameObject explosion = Instantiate (explosionEffect, contactPoint, transform.rotation);
-            PlayExplosionSound_Immediately ();
+        try
+        {
+            GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
+            PlayExplosionSound_Immediately();
 
-            destroySelf ();
+            destroySelf();
 
-        } catch (System.Exception e) {
+        }
+        catch (System.Exception e)
+        {
 
-            MyDebug ("Explode error: " + e.ToString ());
+            MyDebug("Explode error: " + e.ToString());
         }
 
     }
 
-    void destroySelf () {
-        Destroy (gameObject);
+    void destroySelf()
+    {
+        Destroy(gameObject);
     }
-    void MyDebug (string someText) {
+    void MyDebug(string someText)
+    {
 
-        if (debugText != null & debug) {
+        if (debugText != null & debug)
+        {
             debugText.text = someText;
         }
 
     }
 
-    void pauseDamageIfNecessary () {
-        if (allowDamage) {
+    void pauseDamageIfNecessary()
+    {
+        if (allowDamage)
+        {
             allowDamage = false;
-            StartCoroutine (performDamagePause ());
+            StartCoroutine(performDamagePause());
         }
 
     }
 
-    IEnumerator performDamagePause () {
+    IEnumerator performDamagePause()
+    {
 
         float myDelay = 0.1f;
-        yield return new WaitForSeconds (myDelay);
+        yield return new WaitForSeconds(myDelay);
 
         allowDamage = true;
 
     }
 
-    IEnumerator pauseBeforeStartingToShoot () {
-        yield return new WaitForSeconds (delayBeforeFirstShot);
+    IEnumerator pauseBeforeStartingToShoot()
+    {
+        yield return new WaitForSeconds(delayBeforeFirstShot);
         shootingAllowed = true;
     }
 
-    IEnumerator performPauseAndPlayHitSound () {
+    IEnumerator performPauseAndPlayHitSound()
+    {
 
         float myDelay = 0.3f;
-        yield return new WaitForSeconds (myDelay);
-        PlayMetalHitSound_Immediately ();
+        yield return new WaitForSeconds(myDelay);
+        PlayMetalHitSound_Immediately();
     }
 
-    void handleDamage () {
+    void handleDamage()
+    {
 
-        GameObject damageObject = Instantiate (damageSparksPrefab, contactPoint, transform.rotation);
-        damageObject.transform.SetParent (this.transform);
+        GameObject damageObject = Instantiate(damageSparksPrefab, contactPoint, transform.rotation);
+        damageObject.transform.SetParent(this.transform);
 
-        damageObject = Instantiate (damageDustPrefab, contactPoint, transform.rotation);
-        damageObject.transform.SetParent (this.transform);
-
-    }
-
-    void handleHit () {
-
-        handleDamage ();
-
-        StartCoroutine (performPauseAndPlayHitSound ());
+        damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+        damageObject.transform.SetParent(this.transform);
 
     }
 
-    void PlayExplosionSound_Immediately () {
-        explosionSource.PlayOneShot (explosion, blasterVolume * 3.0f);
+    void handleHit()
+    {
+
+        handleDamage();
+
+        StartCoroutine(performPauseAndPlayHitSound());
 
     }
 
-    void PlayMetalHitSound_Immediately () {
-        metalHitSource.PlayOneShot (metalHit, blasterVolume); //0.8
+    void PlayExplosionSound_Immediately()
+    {
+        explosionSource.PlayOneShot(explosion, blasterVolume * 3.0f);
 
     }
 
-    void pauseBeforeShootingOnDifferentThread () {
-
-        StartCoroutine (pauseBeforeStartingToShoot ());
-
-    }
-
-    void playHitOnDifferentThread () {
-
-        StartCoroutine (PlayHitSound ());
+    void PlayMetalHitSound_Immediately()
+    {
+        metalHitSource.PlayOneShot(metalHit, blasterVolume); //0.8
 
     }
 
-    IEnumerator PlayHitSound () {
+    void pauseBeforeShootingOnDifferentThread()
+    {
+
+        StartCoroutine(pauseBeforeStartingToShoot());
+
+    }
+
+    void playHitOnDifferentThread()
+    {
+
+        StartCoroutine(PlayHitSound());
+
+    }
+
+    IEnumerator PlayHitSound()
+    {
         //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
 
-        metalHitSource.PlayOneShot (metalHit, blasterVolume);
-        yield return new WaitForSeconds (metalHit.length);
+        metalHitSource.PlayOneShot(metalHit, blasterVolume);
+        yield return new WaitForSeconds(metalHit.length);
 
     }
 
-    void spawnNewBlasterBolt () {
+    void spawnNewBlasterBolt()
+    {
         // recreating ball
 
         // bolt 1
 
-        xwingBlastOrigin1 = PrefabFactory.GetChildWithName (gameObject, "xwingBlasterPosition1");
+        xwingBlastOrigin1 = PrefabFactory.GetChildWithName(gameObject, "xwingBlasterPosition1");
         float x = xwingBlastOrigin1.transform.position.x;
         float y = xwingBlastOrigin1.transform.position.y;
         float z = xwingBlastOrigin1.transform.position.z;
 
-        GameObject go = (GameObject) Instantiate (xwingBlastPrefab, new Vector3 (x, y, z), xwingBlastOrigin1.transform.rotation);
-        GameObject bolt1 = PrefabFactory.GetChildWithName (go, "miniXWingBlast2");
+        GameObject go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), xwingBlastOrigin1.transform.rotation);
+        GameObject bolt1 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
         // bolt 2
-        xwingBlastOrigin2 = PrefabFactory.GetChildWithName (gameObject, "xwingBlasterPosition2");
+        xwingBlastOrigin2 = PrefabFactory.GetChildWithName(gameObject, "xwingBlasterPosition2");
         x = xwingBlastOrigin2.transform.position.x;
         y = xwingBlastOrigin2.transform.position.y;
         z = xwingBlastOrigin2.transform.position.z;
 
-        go = (GameObject) Instantiate (xwingBlastPrefab, new Vector3 (x, y, z), xwingBlastOrigin2.transform.rotation);
+        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), xwingBlastOrigin2.transform.rotation);
 
-        GameObject bolt2 = PrefabFactory.GetChildWithName (go, "miniXWingBlast2");
+        GameObject bolt2 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
         // bolt 3
-        xwingBlastOrigin3 = PrefabFactory.GetChildWithName (gameObject, "xwingBlasterPosition3");
+        xwingBlastOrigin3 = PrefabFactory.GetChildWithName(gameObject, "xwingBlasterPosition3");
         x = xwingBlastOrigin3.transform.position.x;
         y = xwingBlastOrigin3.transform.position.y;
         z = xwingBlastOrigin3.transform.position.z;
 
-        go = (GameObject) Instantiate (xwingBlastPrefab, new Vector3 (x, y, z), xwingBlastOrigin3.transform.rotation);
-        GameObject bolt3 = PrefabFactory.GetChildWithName (go, "miniXWingBlast2");
+        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), xwingBlastOrigin3.transform.rotation);
+        GameObject bolt3 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
         // bolt 4
-        xwingBlastOrigin4 = PrefabFactory.GetChildWithName (gameObject, "xwingBlasterPosition4");
+        xwingBlastOrigin4 = PrefabFactory.GetChildWithName(gameObject, "xwingBlasterPosition4");
         x = xwingBlastOrigin4.transform.position.x;
         y = xwingBlastOrigin4.transform.position.y;
         z = xwingBlastOrigin4.transform.position.z;
 
-        go = (GameObject) Instantiate (xwingBlastPrefab, new Vector3 (x, y, z), xwingBlastOrigin4.transform.rotation);
-        GameObject bolt4 = PrefabFactory.GetChildWithName (go, "miniXWingBlast2");
+        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), xwingBlastOrigin4.transform.rotation);
+        GameObject bolt4 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
-        bolt1.GetComponent<Rigidbody> ().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
-        bolt2.GetComponent<Rigidbody> ().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
-        bolt3.GetComponent<Rigidbody> ().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
-        bolt4.GetComponent<Rigidbody> ().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt3.GetComponent<Rigidbody>().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt4.GetComponent<Rigidbody>().velocity = blasterSpeed * xwingBlastOrigin1.transform.forward * Time.deltaTime;
 
     }
 
-    void PlayBlasterSound_Immediately () {
+    void PlayBlasterSound_Immediately()
+    {
         // we want a seperate object for each fire; so we can handle multi blasts in quick succession
 
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
-        blasterSource.PlayOneShot (blaster, blasterVolume);
+        blasterSource.PlayOneShot(blaster, blasterVolume);
 
     }
 
-    void shoot () {
-        spawnNewBlasterBolt ();
-        PlayBlasterSound_Immediately ();
+    void shoot()
+    {
+        spawnNewBlasterBolt();
+        PlayBlasterSound_Immediately();
     }
 
-    void playRoarOnDifferentThread () {
+    void playRoarOnDifferentThread()
+    {
 
-        StartCoroutine (PlayRoarSound ());
+        StartCoroutine(PlayRoarSound());
 
     }
 
-    IEnumerator PlayRoarSound () {
+    IEnumerator PlayRoarSound()
+    {
         //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
         roarSoundIsPlaying = true;
-        roarSource.PlayOneShot (roar, roarVolume);
-        yield return new WaitForSeconds (roar.length);
+        roarSource.PlayOneShot(roar, roarVolume);
+        yield return new WaitForSeconds(roar.length);
         roarSoundIsPlaying = false;
 
     }

@@ -15,7 +15,8 @@ public class TieFighterBlastLifeCycle : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if ((collision.gameObject.tag == "box") ||
-             (collision.gameObject.tag == "targetXWing")
+             (collision.gameObject.tag == "targetXWing") ||
+              (collision.gameObject.tag == "falcon")
         )
         {
             destroySelf();

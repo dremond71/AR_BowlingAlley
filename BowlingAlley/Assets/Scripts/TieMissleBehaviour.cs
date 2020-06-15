@@ -22,6 +22,10 @@ public class TieMissleBehaviour : MonoBehaviour
 
         target = GameObject.FindGameObjectWithTag("tantiveIV");
 
+        if (target == null)
+            target = GameObject.FindGameObjectWithTag("falcon");
+
+
         //this.GetComponent<Rigidbody> ().velocity = 2f * this.transform.forward;
 
     }
@@ -68,8 +72,10 @@ public class TieMissleBehaviour : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "tantiveIV")
-
+        if (
+            (collision.gameObject.tag == "tantiveIV") ||
+            (collision.gameObject.tag == "falcon")
+        )
         {
             destroySelf();
         }

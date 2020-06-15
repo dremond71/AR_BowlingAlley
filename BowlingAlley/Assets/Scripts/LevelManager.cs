@@ -159,6 +159,11 @@ public class LevelManager : MonoBehaviour
         GameObject go = (GameObject)Instantiate(rebelStarshipPrefab, new Vector3(x, y, z), starshipSpawner.transform.rotation);
 
     }
+
+    void Update22()
+    {
+
+    }
     void Update()
     {
 
@@ -173,6 +178,7 @@ public class LevelManager : MonoBehaviour
                 starshipExists = true;
                 spawnRebelStarship();
             }
+
 
             if (targetsExist())
             {

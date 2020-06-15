@@ -7,6 +7,8 @@ ScriptsOnlyBuild:
     - FlyingXWingBlastBoltLifecycle
     - LevelManager
     - TantiveIVShipBehaviour
+    - TargetMilleniumFalconBlastLifeCycle
+    - TargetMilleniumFalconScript
     - TargetXWingBehaviour
     - TargetXWingBlastLifeCycle
     - TieFighterBlastLifeCycle
@@ -51,6 +53,7 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.SpatialTracking.dll:
     - UnityEngine.SpatialTracking.TrackedPoseDriver
     UnityEngine.UI.dll:
@@ -118,55 +121,59 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10334}
     - Class: 114
-      Script: {instanceID: 10848}
+      Script: {instanceID: 10632}
     - Class: 114
-      Script: {instanceID: 11000}
+      Script: {instanceID: 10850}
     - Class: 114
-      Script: {instanceID: 11054}
+      Script: {instanceID: 11002}
     - Class: 114
-      Script: {instanceID: 11152}
+      Script: {instanceID: 11056}
     - Class: 114
-      Script: {instanceID: 11194}
+      Script: {instanceID: 11076}
     - Class: 114
-      Script: {instanceID: 11644}
+      Script: {instanceID: 11156}
     - Class: 114
-      Script: {instanceID: 11646}
+      Script: {instanceID: 11198}
     - Class: 114
-      Script: {instanceID: 12150}
+      Script: {instanceID: 11648}
     - Class: 114
-      Script: {instanceID: 12174}
+      Script: {instanceID: 11650}
     - Class: 114
-      Script: {instanceID: 12192}
+      Script: {instanceID: 12154}
     - Class: 114
-      Script: {instanceID: 12222}
+      Script: {instanceID: 12178}
     - Class: 114
-      Script: {instanceID: 12288}
+      Script: {instanceID: 12196}
     - Class: 114
-      Script: {instanceID: 12290}
+      Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 12442}
+      Script: {instanceID: 12292}
     - Class: 114
-      Script: {instanceID: 12628}
+      Script: {instanceID: 12294}
     - Class: 114
-      Script: {instanceID: 12670}
+      Script: {instanceID: 12446}
     - Class: 114
-      Script: {instanceID: 12966}
+      Script: {instanceID: 12632}
     - Class: 114
-      Script: {instanceID: 12982}
+      Script: {instanceID: 12674}
     - Class: 114
-      Script: {instanceID: 12984}
+      Script: {instanceID: 12970}
     - Class: 114
-      Script: {instanceID: 13064}
+      Script: {instanceID: 12986}
     - Class: 114
-      Script: {instanceID: 13206}
+      Script: {instanceID: 12988}
     - Class: 114
-      Script: {instanceID: 13232}
+      Script: {instanceID: 13068}
     - Class: 114
-      Script: {instanceID: 13250}
+      Script: {instanceID: 13210}
     - Class: 114
-      Script: {instanceID: 13380}
+      Script: {instanceID: 13236}
     - Class: 114
-      Script: {instanceID: 13502}
+      Script: {instanceID: 13254}
+    - Class: 114
+      Script: {instanceID: 13384}
+    - Class: 114
+      Script: {instanceID: 13506}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -457,6 +464,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetMilleniumFalconBlastLifeCycle
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualEffectGraph.Runtime.dll
     namespaceName: UnityEditor.VFX
     className: VFXCustomSpawnerSample
@@ -592,6 +605,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAsset
+  - hash:
+      serializedVersion: 2
+      Hash: da548f0a900cf26ef59032466970900b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetMilleniumFalconScript
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
