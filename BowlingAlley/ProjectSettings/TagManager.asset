@@ -67,6 +67,12 @@ TagManager:
   - falcon
   - hanSoloSituationNormal_Sound
   - chewyRoar_Sound
+  - falconSpawnPoint1
+  - matrix_item
+  - falconIntro_NotForLong_Sound
+  - falconIntro_MeteorShower_Sound
+  - falconIntro_PartOfConvoy_Sound
+  - falconIntro_ThatsNoMoon_Sound
   layers:
   - Default
   - TransparentFX

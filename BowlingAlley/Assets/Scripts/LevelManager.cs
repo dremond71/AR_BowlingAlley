@@ -23,17 +23,22 @@ public class LevelManager : MonoBehaviour
     private bool empireMode = true;
     static int numberOfSpawnedItems = 0;
 
+    static bool tieFighterAllowedToAttack = true;
     public float enemySpeed = 35.0f;
 
     private GameObject boxPrefab;
 
+    private int numberOfTimesXWingsSpawned = 0;
     private GameObject xwingPrefab;
 
     private GameObject rebelStarshipPrefab;
 
+    private GameObject falconPrefab;
+    private bool falconExists = false;
+
     private bool starshipExists = false;
 
-    public int totalSpawnsBeforeClip = 3;
+    public int totalSpawnsBeforeClip = 8;
     private int numberOfSpawnsSinceLastClip = 0;
 
     private bool clipIsPlaying = false;
@@ -41,6 +46,8 @@ public class LevelManager : MonoBehaviour
 
     private float startGamePauseDuration = 10.0f;
     private float startGameTimer;
+
+    public static int falconIntroIndex = 2;
 
     void load_EmpireSounds()
     {
@@ -119,6 +126,7 @@ public class LevelManager : MonoBehaviour
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
         //rebelStarshipPrefab = PrefabFactory.getPrefab ("rebelTantiveIV");
         rebelStarshipPrefab = PrefabFactory.getPrefab("newTantiveIV");
+        falconPrefab = PrefabFactory.getPrefab("falcon");
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
         if (empireMode)
@@ -131,22 +139,36 @@ public class LevelManager : MonoBehaviour
     bool targetsExist()
     {
         GameObject[] tvs;
+        GameObject[] falcons;
 
         if (empireMode)
         {
             tvs = GameObject.FindGameObjectsWithTag("targetXWing");
+            falcons = GameObject.FindGameObjectsWithTag("falcon");
         }
         else
         {
             tvs = new GameObject[0];
+            falcons = new GameObject[0];
         }
 
-        return (tvs.Length > 0);
+        return (tvs.Length > 0) || (falcons.Length > 0);
     }
     void Start()
     {
         numberOfSpawnsSinceLastClip = totalSpawnsBeforeClip; //we want to play a clip at the start
         startGameTimer = startGamePauseDuration;
+    }
+
+    void spawnFalconAtSpawnPosition1()
+    {
+
+        GameObject falconSpawner = GameObject.FindGameObjectWithTag("falconSpawnPoint1");
+        float x = falconSpawner.transform.position.x;
+        float y = falconSpawner.transform.position.y;
+        float z = falconSpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(falconPrefab, new Vector3(x, y, z), falconSpawner.transform.rotation);
+
     }
 
     void spawnRebelStarship()
@@ -163,6 +185,13 @@ public class LevelManager : MonoBehaviour
     void Update22()
     {
 
+        if (!falconExists)
+        {
+            falconExists = true;
+            setTieFighterAllowedToShoot(false); // let hero say something before battle starts
+            spawnFalconAtSpawnPosition1();
+        }
+
     }
     void Update()
     {
@@ -173,12 +202,12 @@ public class LevelManager : MonoBehaviour
         if (startGameTimer <= 0f)
         {
 
+            MyDebug("numberOfSpawnsSinceLastClip==" + numberOfSpawnsSinceLastClip);
             if (!starshipExists)
             {
                 starshipExists = true;
                 spawnRebelStarship();
             }
-
 
             if (targetsExist())
             {
@@ -209,10 +238,51 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    void handleSpawning()
+    void spawnSquadronOfXWings()
     {
         setRandomSpawnAmount(); //determine amount to spawn
-        spawnNewTargets();
+        spawnNewTargets(); // this updates numberOfSpawnsSinceLastClip++;
+        numberOfTimesXWingsSpawned++;
+    }
+
+    void spawnHero()
+    {
+
+        setTieFighterAllowedToShoot(false); // let hero say something before battle starts
+        spawnFalconAtSpawnPosition1();
+        numberOfTimesXWingsSpawned++;
+        numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
+
+    }
+    void handleSpawning()
+    {
+
+        // spawn a group of xwings, or spawn a hero
+
+        if (numberOfTimesXWingsSpawned == 0)
+        {
+            // we don't want a HERO to be the 1st thing to shoot at, so ensure it is a group of xwings
+            spawnSquadronOfXWings();
+        }
+        else
+        {
+            // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
+
+            // randon number generator for a choice of two things
+            bool value = ((numberOfTimesXWingsSpawned % 3) == 0);
+
+            if (value)
+            {
+                spawnHero();
+            }
+            else
+            {
+                spawnSquadronOfXWings();
+
+            }
+
+        }
+
     }
     void spawnNewXWingAtPosition(int position)
     {
@@ -233,6 +303,33 @@ public class LevelManager : MonoBehaviour
         lock (olock)
         {
             numberOfSpawnedItems++;
+        }
+    }
+
+    public static int getFalconIntroIndex()
+    {
+        if (falconIntroIndex == 5)
+        {
+            falconIntroIndex = 1;
+        }
+        int value = falconIntroIndex;
+        falconIntroIndex++;
+
+        return value;
+    }
+    public static bool getTieFighterAllowedToShoot()
+    {
+        lock (olock)
+        {
+            return tieFighterAllowedToAttack;
+        }
+    }
+
+    public static void setTieFighterAllowedToShoot(bool value)
+    {
+        lock (olock)
+        {
+            tieFighterAllowedToAttack = value;
         }
     }
 
@@ -259,12 +356,14 @@ public class LevelManager : MonoBehaviour
     void spawnNewTargets()
     {
         getRandomSpawnPositions();
-        numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
+
         foreach (var pos in randomSpawnPositions)
         {
             //spawnNewBoxAtPosition(pos);
             spawnNewXWingAtPosition(pos);
         }
+
+        numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
 
     }
 

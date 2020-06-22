@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TieMissleBehaviour : MonoBehaviour
-{
+public class TieMissleBehaviour : MonoBehaviour {
 
     GameObject target;
     bool okToTurn = false;
@@ -12,73 +11,101 @@ public class TieMissleBehaviour : MonoBehaviour
 
     private float pauseDuration = 0.1f;
     private float pauseTimer;
+    System.Random rnd = new System.Random ();
+    private TextMesh debugText;
+    private bool debug = true;
 
+    void chooseTarget () {
+
+        GameObject tantive = GameObject.FindGameObjectWithTag ("tantiveIV");
+        GameObject falcon = GameObject.FindGameObjectWithTag ("falcon");
+
+        if ((tantive != null) && (falcon != null)) {
+
+            //both ships are there; randomly choose
+            bool value = (rnd.NextDouble () >= 0.5);
+
+            if (value) {
+                target = tantive;
+            } else {
+                target = falcon;
+            }
+
+        } else {
+
+            // perhaps one ship is there
+            // or neither
+            if (tantive != null) {
+                target = tantive;
+            } else if (falcon != null) {
+                target = falcon;
+            } else {
+                target = null;
+            }
+        }
+
+    }
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start () {
+
+        debugText = GameObject.Find ("debugText").GetComponent<TextMesh> ();
 
         lifeTimer = lifeDuration;
         pauseTimer = pauseDuration;
 
-        target = GameObject.FindGameObjectWithTag("tantiveIV");
-
-        if (target == null)
-            target = GameObject.FindGameObjectWithTag("falcon");
-
-
-        //this.GetComponent<Rigidbody> ().velocity = 2f * this.transform.forward;
+        chooseTarget ();
 
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate () {
 
-        this.GetComponent<Rigidbody>().velocity = 3f * this.transform.forward;
+        this.GetComponent<Rigidbody> ().velocity = 3f * this.transform.forward;
 
-        if (!okToTurn)
-        {
+        if (!okToTurn) {
             pauseTimer -= Time.deltaTime;
-            if (pauseTimer <= 0f)
-            {
-                Debug.Log("ok to turn now");
+            if (pauseTimer <= 0f) {
                 okToTurn = true;
             }
         }
 
-        if (target != null && okToTurn)
-        {
+        if (target != null && okToTurn) {
 
             // float i = turnSpeed * Time.deltaTime;
             //  transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i);
 
-            Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - this.transform.position);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, 2f * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - this.transform.position);
+            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, targetRotation, 2f * Time.deltaTime);
             //this.GetComponent<Rigidbody> ().MoveRotation (Quaternion.RotateTowards (this.transform.rotation, targetRotation, 2f));
         }
 
         lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0f)
-        {
+        if (lifeTimer <= 0f) {
 
-            destroySelf();
+            destroySelf ();
         }
     }
 
-    void destroySelf()
-    {
-        Debug.Log("missle dead");
-        Destroy(gameObject);
+    void destroySelf () {
+
+        Destroy (gameObject);
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
+    void OnCollisionEnter (Collision collision) {
         if (
             (collision.gameObject.tag == "tantiveIV") ||
             (collision.gameObject.tag == "falcon")
-        )
-        {
-            destroySelf();
+        ) {
+            destroySelf ();
         }
 
     }
+
+    void MyDebug (string someText) {
+
+        if (debugText != null & debug) {
+            debugText.text = someText;
+        }
+
+    }
+
 }

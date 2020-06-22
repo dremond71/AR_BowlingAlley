@@ -158,14 +158,20 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     void shootMissle()
     {
-        spawnNewMissle();
-        PlayMissleLaunchSound_Immediately();
+        if (LevelManager.getTieFighterAllowedToShoot())
+        {
+            spawnNewMissle();
+            PlayMissleLaunchSound_Immediately();
+        }
     }
 
     void shoot()
     {
-        spawnNewBlasterBolt();
-        PlayBlasterSound_Immediately();
+        if (LevelManager.getTieFighterAllowedToShoot())
+        {
+            spawnNewBlasterBolt();
+            PlayBlasterSound_Immediately();
+        }
     }
 
     void spawnNewBox()

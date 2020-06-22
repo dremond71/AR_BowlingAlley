@@ -20,10 +20,10 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     */
 
+    private Animator anim;
     private float energyExplosionVolume = 0.75f;
 
     public GameObject energyExplosionEffect;
-
 
     public GameObject explosionEffect;
 
@@ -33,8 +33,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     private AudioSource energyExplosionSource;
     private AudioClip energyExplosion;
 
-
-    public float health = 2f;
+    public float health = 40000f;
     bool hasExploded = false;
     public float blastRadius = 5f;
     public float explosionForce = 700f;
@@ -61,6 +60,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     private AudioSource explosionSource;
     private AudioClip explosion;
 
+
     public bool facingTieFighter = false;
     public float roarVolume = 0.7f;
 
@@ -69,7 +69,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     private float metalHitVolume = 0.1f;
     public float blastVolume = 0.3f;
     private GameObject blastPrefab;
-    private float blasterSpeed = 180.0f;
+    private float blasterSpeed = 720.0f;
 
     private AudioSource metalHitSource;
     private AudioClip metalHit;
@@ -78,21 +78,36 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     private GameObject topBlasterOrigin;
 
-
     private float shootingPauseTimer;
     bool shootingAllowed = false;
 
     private float delayBeforeFirstShot;
 
     private bool playingEnergyExplosion = false;
-    private bool playingPostEnergyExplosionSounds = false;
+
+    private bool receivedFirstHitFromEnemy = false;
+    private bool startTaunting1Animation = false;
+
+    private AudioSource introNotForLongSource;
+    private AudioClip introNotForLong;
+
+
+    private AudioSource introMeteorShowerSource;
+    private AudioClip introMeteorShower;
+
+    private AudioSource introPartOfConvoySource;
+    private AudioClip introPartOfConvoy;
+
+    private AudioSource introNoMoonSource;
+    private AudioClip introNoMoon;
 
     void Awake()
     {
 
+        anim = GetComponent<Animator>();
+
         //  MyDebug("MF : beginning of Awake");
         blastPrefab = PrefabFactory.getPrefab("falconBlast");
-
 
         roarSource = GameObject.FindGameObjectWithTag("falconRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
@@ -109,14 +124,23 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
         explosion = explosionSource.clip;
 
-
         situationNormalSource = GameObject.FindGameObjectWithTag("hanSoloSituationNormal_Sound").GetComponent<AudioSource>();
         situationNormal = situationNormalSource.clip;
-
 
         chewyRoarSource = GameObject.FindGameObjectWithTag("chewyRoar_Sound").GetComponent<AudioSource>();
         chewyRoar = chewyRoarSource.clip;
 
+        introNotForLongSource = GameObject.FindGameObjectWithTag("falconIntro_NotForLong_Sound").GetComponent<AudioSource>();
+        introNotForLong = introNotForLongSource.clip;
+
+        introMeteorShowerSource = GameObject.FindGameObjectWithTag("falconIntro_MeteorShower_Sound").GetComponent<AudioSource>();
+        introMeteorShower = introMeteorShowerSource.clip;
+
+        introPartOfConvoySource = GameObject.FindGameObjectWithTag("falconIntro_PartOfConvoy_Sound").GetComponent<AudioSource>();
+        introPartOfConvoy = introPartOfConvoySource.clip;
+
+        introNoMoonSource = GameObject.FindGameObjectWithTag("falconIntro_ThatsNoMoon_Sound").GetComponent<AudioSource>();
+        introNoMoon = introNoMoonSource.clip;
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
@@ -125,26 +149,68 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
 
-        delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
 
-        pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
 
+        // shootingPauseTimer = GetRandomShootingPauseAmount (); //pause between each shot
+        // delayBeforeFirstShot = GetRandomStartDelay (); // pause before starting to shoot
+        // pauseBeforeShootingOnDifferentThread (); // start the pause (before starting to shoot)
+
+        // Level Manager stops the Tie Fighter's ability to shoot
+        // when a hero gets spawned. 
+
+        // play intro sound for the MF
+        //    - Once it is finished, call LevelManager.setTieFighterAllowedToShoot(true);
+        //    - start the animation of your choice 
+        int introToPlay = LevelManager.getFalconIntroIndex();
+        switch (introToPlay)
+        {
+            case 1:
+                playIntro1AndAnimation1OnDifferentThread();
+                break;
+            case 2:
+                playIntro2AndAnimation1OnDifferentThread();
+                break;
+            case 3:
+                playIntro3AndAnimation1OnDifferentThread();
+                break;
+            case 4:
+                playIntro4AndAnimation1OnDifferentThread();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    public void disappearWithoutATrace()
+    {
+        destroySelf();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
         playRoaringSoundIfItIsTime();
 
-        // enemy must have a delay before starting to shoot
-        if (shootingAllowed)
-        {
-            shootIfTime();
-        }
+        // if (receivedFirstHitFromEnemy)
+        // {
+
+        //     //
+        //     // if (!startTaunting1Animation)
+        //     // {
+        //     //     startTaunting1Animation = true;
+        //     //     anim.SetBool("shouldPerformManoever1", true);
+        //     // }
+        // }
+
+        // // enemy must have a delay before starting to shoot
+        // if (shootingAllowed)
+        // {
+        //     shootIfTime();
+        // }
 
         // BUT, they can receive damage right away
         if (health <= 0f)
@@ -152,7 +218,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
             Explode();
         }
 
-        destroyIfIrrelevantNow();
+        //        destroyIfIrrelevantNow();
 
     }
 
@@ -230,14 +296,76 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     }
 
+    void playIntro1AndAnimation1OnDifferentThread()
+    {
+        StartCoroutine(PlayIntro1SoundAndStartAnimation1());
+    }
+
+    void playIntro2AndAnimation1OnDifferentThread()
+    {
+        StartCoroutine(PlayIntro2SoundAndStartAnimation1());
+    }
+
+    void playIntro3AndAnimation1OnDifferentThread()
+    {
+        StartCoroutine(PlayIntro3SoundAndStartAnimation1());
+    }
+
+    void playIntro4AndAnimation1OnDifferentThread()
+    {
+        StartCoroutine(PlayIntro4SoundAndStartAnimation1());
+    }
+
+    void startAnimation1()
+    {
+        anim.SetBool("shouldPerformManoever1", true);
+    }
+    void allowTieFighterTheRightToShoot()
+    {
+        LevelManager.setTieFighterAllowedToShoot(true);
+    }
+    IEnumerator PlayIntro2SoundAndStartAnimation1()
+    {
+
+        PlayIntro_NotForLong_Sound_Immediately();
+        yield return new WaitForSeconds(introNotForLong.length);
+        allowTieFighterTheRightToShoot();
+        startAnimation1();
+    }
+
+    IEnumerator PlayIntro3SoundAndStartAnimation1()
+    {
+
+        PlayIntro_PartOfConvoy_Sound_Immediately();
+        yield return new WaitForSeconds(introPartOfConvoy.length);
+        allowTieFighterTheRightToShoot();
+        startAnimation1();
+    }
+
+    IEnumerator PlayIntro4SoundAndStartAnimation1()
+    {
+        PlayIntro_ThatsNoMoon_Sound_Immediately();
+        yield return new WaitForSeconds(introNoMoon.length);
+        allowTieFighterTheRightToShoot();
+        startAnimation1();
+    }
+
+    IEnumerator PlayIntro1SoundAndStartAnimation1()
+    {
+
+        PlayIntro_MeteorShower_Sound_Immediately();
+        yield return new WaitForSeconds(introMeteorShower.length);
+        allowTieFighterTheRightToShoot();
+        startAnimation1();
+    }
+
     IEnumerator PlaySituationNormalSound()
     {
-        playingPostEnergyExplosionSounds = true;
+
         PlaySituationNormalSound_Immediately();
         yield return new WaitForSeconds(situationNormal.length);
         PlayChewyRoar_Immediately();
         yield return new WaitForSeconds(chewyRoar.length);
-        playingPostEnergyExplosionSounds = false;
 
 
     }
@@ -265,7 +393,6 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     {
         // recreating ball
 
-
         topBlasterOrigin = GameObject.FindGameObjectWithTag("mfTopBlasterPosition");
         float x = topBlasterOrigin.transform.position.x;
         float y = topBlasterOrigin.transform.position.y;
@@ -280,8 +407,6 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
         bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * topBlasterOrigin.transform.forward * Time.deltaTime;
         bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * topBlasterOrigin.transform.forward * Time.deltaTime;
-
-
 
     }
     IEnumerator shoot()
@@ -348,7 +473,47 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
-        situationNormalSource.PlayOneShot(situationNormal, blastVolume * 2.0f);
+        situationNormalSource.PlayOneShot(situationNormal, blastVolume * 3.0f);
+
+    }
+
+    void PlayIntro_NotForLong_Sound_Immediately()
+    {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        introNotForLongSource.PlayOneShot(introNotForLong, blastVolume * 3.0f);
+
+    }
+
+    void PlayIntro_MeteorShower_Sound_Immediately()
+    {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        introMeteorShowerSource.PlayOneShot(introMeteorShower, blastVolume * 3.0f);
+
+    }
+
+    void PlayIntro_PartOfConvoy_Sound_Immediately()
+    {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        introPartOfConvoySource.PlayOneShot(introPartOfConvoy, blastVolume * 3.0f);
+
+    }
+
+    void PlayIntro_ThatsNoMoon_Sound_Immediately()
+    {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        introNoMoonSource.PlayOneShot(introNoMoon, blastVolume * 3.0f);
 
     }
 
@@ -358,10 +523,9 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
-        chewyRoarSource.PlayOneShot(chewyRoar, blastVolume * 2.0f);
+        chewyRoarSource.PlayOneShot(chewyRoar, blastVolume * 3.0f);
 
     }
-
 
     float GetRandomStartDelay()
     {
@@ -385,12 +549,20 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     bool okToShoot()
     {
-        return (shootingAllowed && !playingEnergyExplosion && !playingPostEnergyExplosionSounds);
+        return (shootingAllowed && !playingEnergyExplosion);
     }
     IEnumerator pauseBeforeStartingToShoot()
     {
         yield return new WaitForSeconds(delayBeforeFirstShot);
         shootingAllowed = true;
+    }
+
+    /**
+    * Called from animation
+    */
+    public void shootNow()
+    {
+        StartCoroutine(shoot());
     }
 
     void shootIfTime()
@@ -452,7 +624,6 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     }
 
-
     IEnumerator performDamagePause()
     {
 
@@ -474,6 +645,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
             if (allowDamage)
             {
+                receivedFirstHitFromEnemy = true;
                 health -= 1f;
                 handleHit();
             }
@@ -481,7 +653,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         }
         else if (collision.gameObject.tag == "PlayerShooter")
         {
-            health = 0f; // immediately explode if box hits player shooter
+            health -= 100f; // take of a bit of health if player shooter
         }
         else if (collision.gameObject.tag == "falconBlast")
         {
@@ -494,12 +666,16 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
             receivedContact = true;
         }
+        else if (collision.gameObject.tag == "matrix_item")
+        {
+            // do nothing
+        }
         else
         {
-            health = 0f; // something unexpected
+
+            health -= 100f; // something unexpected
+            // MF sometimes gets close to tie fighter and explodes. To lazy to find out why, so not putting health to 0
         }
-
-
 
         //MyDebug("box collided with : " + collision.gameObject.tag);
     }
@@ -512,10 +688,10 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         //show effect 
         GameObject explosion = Instantiate(energyExplosionEffect, missleContactPoint, transform.rotation);
 
-        explosion.transform.parent = this.transform;//make explosion the child of ship - to make it stick and move with ship in same spot
+        explosion.transform.parent = this.transform; //make explosion the child of ship - to make it stick and move with ship in same spot
 
         //then scale it down
-        float value = 0.6f;// sweet spot. see cloud and lightning best
+        float value = 0.6f; // sweet spot. see cloud and lightning best
         float x = value;
         float y = value;
         float z = value;
@@ -539,10 +715,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         PlayEnergyExplosionSound_Immediately();
         yield return new WaitForSeconds(energyExplosion.length);
         playingEnergyExplosion = false;
-        if (!playingPostEnergyExplosionSounds)
-        {
-            StartCoroutine(PlaySituationNormalSound());
-        }
+
     }
 
     void MyDebug(string someText)
