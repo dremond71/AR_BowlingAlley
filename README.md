@@ -74,7 +74,7 @@ Added ion torpedo and ion explosion as well.
 
 ![](./shootingGame.png)
 
-[Link to the video](https://photos.app.goo.gl/cn8Sc2ZoKZkBWoJn9)
+[Link to the video](https://www.youtube.com/watch?v=prQ8P_4_pXQ&t=17s)
 
 ### Detailed Tantive IV (Just finished)
 
@@ -104,6 +104,11 @@ I just added this detailed Millennium Falcon to the game. (No video yet)
 ![](./falconFront.png)
 
 The falcon will be invulnerable because it has never exploded in the movies! ;)
+
+[Falcon Hover Test #1](https://www.youtube.com/watch?v=1zfCrN85P5w)
+[Falcon Hover Test #2](https://www.youtube.com/watch?v=iILT7N6IbtY)
+
+
 
 ## Still In Progress
 
