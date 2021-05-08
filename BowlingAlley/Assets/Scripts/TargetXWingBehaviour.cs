@@ -280,8 +280,8 @@ public class TargetXWingBehaviour : MonoBehaviour
         GameObject damageObject = Instantiate(damageSparksPrefab, contactPoint, transform.rotation);
         damageObject.transform.SetParent(this.transform);
 
-        damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
-        damageObject.transform.SetParent(this.transform);
+       // damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+       // damageObject.transform.SetParent(this.transform);
 
     }
 

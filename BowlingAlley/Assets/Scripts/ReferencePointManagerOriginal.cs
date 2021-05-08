@@ -7,7 +7,7 @@ using UnityEngine.XR.ARSubsystems;
 using System;
 
 [RequireComponent(typeof(ARRaycastManager))]
-[RequireComponent(typeof(ARReferencePointManager))]
+[RequireComponent(typeof(ARAnchorManager))]
 [RequireComponent(typeof(ARPlaneManager))]
 public class ReferencePointManagerOriginal : MonoBehaviour
 {
@@ -22,15 +22,15 @@ public class ReferencePointManagerOriginal : MonoBehaviour
 
 
     private ARRaycastManager arRayCastManager;
-    private ARReferencePointManager arReferencePointManager;
+    private ARAnchorManager arReferencePointManager;
     private ARPlaneManager arPlaneManager;
-    private List<ARReferencePoint> referencePointList = new List<ARReferencePoint>();
+    private List<ARAnchor> referencePointList = new List<ARAnchor>();
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
      void Awake()
     {
         arRayCastManager        = GetComponent<ARRaycastManager>();
-        arReferencePointManager = GetComponent<ARReferencePointManager>();
+        arReferencePointManager = GetComponent<ARAnchorManager>();
         arPlaneManager          = GetComponent<ARPlaneManager>();
         toggleButton.onClick.AddListener(TogglePlaneDetection);
     }
@@ -64,7 +64,7 @@ public class ReferencePointManagerOriginal : MonoBehaviour
                   if (arRayCastManager.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
                    {
                        Pose hitPose = hits[0].pose;
-                       ARReferencePoint referencePoint = arReferencePointManager.AddReferencePoint(hitPose);
+                       ARAnchor referencePoint = arReferencePointManager.AddAnchor(hitPose);
 
                        if (referencePoint == null){
                             string msg = "The reference point is null\n";

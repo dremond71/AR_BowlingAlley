@@ -127,6 +127,22 @@ I learnt C# on the fly (I am a Java, Javascript, TypeScript, NodeJS programmer b
 
 I plan on creating a score board on the left (opposite the control panel) to keep proper score of single player or two player game.
 
+## Upgraded to a new version of Unity Editor
+
+### May 7th, 2021
+
+I started these projects with 2019.2 and my Pixel 3 (with Android 9?).
+Then my phone updated a few times during a pause in coding. Now my phone has Android 11.
+When I came back to coding, I noticed that the AR portion wasn't working on my phone; the objects weren't overlaying onto what my camera was seeing. The application was deploying with no AR and a black background.
+
+Long story short, I had to perform these steps to get things working again:
+- upgraded to Unity Editor 2019.4.25f1 LTS
+- set minimum and maximum android to 10 (not 11) in settings (Despite the fact my Pixel 3 is Android 11. The 'Google Play Services for AR' app on my phone complained that my Unity app could not play on my phone.)
+- used custom directory for gradle ( e.g. C:/gradle-5.6.4) 
+- Created BowlingAlley\Assets\Plugins\Android\launcherTemplate.gradle
+- Created BowlingAlley\Assets\Plugins\Android\mainTemplate.gradle
+- upgraded to (AR Foundation, AR Subsystems, ARCode XR Plugin) 3.1.10
+
 ## Conclusion
 
 I had a lot of fun using the [Unity Editor](https://unity.com/products/core-platform), the [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) programming language, and [Google's AR Core API](https://developers.google.com/ar) to make these apps.

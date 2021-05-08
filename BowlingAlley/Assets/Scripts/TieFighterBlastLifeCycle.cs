@@ -16,7 +16,8 @@ public class TieFighterBlastLifeCycle : MonoBehaviour
     {
         if ((collision.gameObject.tag == "box") ||
              (collision.gameObject.tag == "targetXWing") ||
-              (collision.gameObject.tag == "falcon")
+              (collision.gameObject.tag == "falcon") ||
+              (collision.gameObject.tag == "targetMeteorite")
         )
         {
             destroySelf();

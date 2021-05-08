@@ -7,7 +7,7 @@ using UnityEngine.XR.ARSubsystems;
 using System;
 
 [RequireComponent(typeof(ARRaycastManager))]
-[RequireComponent(typeof(ARReferencePointManager))]
+[RequireComponent(typeof(ARAnchorManager))]
 [RequireComponent(typeof(ARPlaneManager))]
 public class ReferencePointManager : MonoBehaviour
 {
@@ -38,20 +38,20 @@ public class ReferencePointManager : MonoBehaviour
     private Button donePositioningButton;
 
     private ARRaycastManager arRayCastManager;
-    private ARReferencePointManager arReferencePointManager;
+    private ARAnchorManager arReferencePointManager;
     private ARPlaneManager arPlaneManager;
-    private List<ARReferencePoint> referencePointList = new List<ARReferencePoint>();
+    private List<ARAnchor> referencePointList = new List<ARAnchor>();
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     private int fakeY=77;
 
     private Pose currentPose;
-    private ARReferencePoint currentRP=null;
+    private ARAnchor currentRP=null;
 
 
      void Awake()
     {
         arRayCastManager        = GetComponent<ARRaycastManager>();
-        arReferencePointManager = GetComponent<ARReferencePointManager>();
+        arReferencePointManager = GetComponent<ARAnchorManager>();
         arPlaneManager          = GetComponent<ARPlaneManager>();
 
         yMinus =  GameObject.Find("YMinus").GetComponent<Button>();
@@ -125,11 +125,11 @@ public class ReferencePointManager : MonoBehaviour
 
           if (currentRP !=null){
 
-            arReferencePointManager.RemoveReferencePoint(currentRP);
+            arReferencePointManager.RemoveAnchor(currentRP);
             
             Quaternion newQ = new Quaternion(newX,newY,newZ,existingW);
             currentPose.rotation = newQ;
-            currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+            currentRP = arReferencePointManager.AddAnchor(currentPose);
             show_Rotation_Values();
           };
 
@@ -140,9 +140,9 @@ public class ReferencePointManager : MonoBehaviour
    void increaseZvalue() {
 
         if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.z+=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
         }
       
     }
@@ -150,9 +150,9 @@ public class ReferencePointManager : MonoBehaviour
    void decreaseZvalue() {
 
       if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.z-=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
       }        
   
     }
@@ -160,9 +160,9 @@ public class ReferencePointManager : MonoBehaviour
    void increaseXvalue() {
 
         if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.x+=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
         }
       
     }
@@ -171,9 +171,9 @@ public class ReferencePointManager : MonoBehaviour
     void decreaseXvalue() {
 
       if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.x-=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
       }        
   
     }
@@ -181,9 +181,9 @@ public class ReferencePointManager : MonoBehaviour
     void increaseYvalue() {
 
         if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.y+=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
         }
       
     }
@@ -191,9 +191,9 @@ public class ReferencePointManager : MonoBehaviour
     void decreaseYvalue() {
 
       if (currentRP !=null){
-          arReferencePointManager.RemoveReferencePoint(currentRP);
+          arReferencePointManager.RemoveAnchor(currentRP);
           currentPose.position.y-=0.1f;
-          currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+          currentRP = arReferencePointManager.AddAnchor(currentPose);
       }        
   
     }
@@ -264,7 +264,7 @@ void show_Z_value() {
                   if (arRayCastManager.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
                    {
                        currentPose = hits[0].pose;
-                       currentRP = arReferencePointManager.AddReferencePoint(currentPose);
+                       currentRP = arReferencePointManager.AddAnchor(currentPose);
                        
                        if (currentRP != null){
 

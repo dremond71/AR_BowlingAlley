@@ -73,6 +73,7 @@ TagManager:
   - falconIntro_MeteorShower_Sound
   - falconIntro_PartOfConvoy_Sound
   - falconIntro_ThatsNoMoon_Sound
+  - targetMeteorite
   layers:
   - Default
   - TransparentFX
