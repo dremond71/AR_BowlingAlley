@@ -5,13 +5,13 @@ using UnityEngine;
 public class MeteoriteBehaviour : MonoBehaviour
 {
 
-    public ParticleSystem particleSystemExplosionEffect;
+    public GameObject damageDustPrefab;
     private Rigidbody rb;
     private float Speed;
     private float AngularSpeed;
     private float hitVolume = 0.1f;
 
-    public GameObject muzzleFlashEffect;
+    //public GameObject muzzleFlashEffect;
     private AudioSource metalHitSource;
     private AudioClip metalHit;
     public float health = 2f;
@@ -90,9 +90,12 @@ public class MeteoriteBehaviour : MonoBehaviour
 
     void handleDamage()
     {
-        GameObject damageObject = Instantiate(muzzleFlashEffect, contactPoint, muzzleFlashEffect.transform.rotation);
-        damageObject.transform.Rotate(0f, 45f, 0f);
-        damageObject.transform.SetParent(this.transform);
+        //GameObject damageObject = Instantiate(muzzleFlashEffect, contactPoint, muzzleFlashEffect.transform.rotation);
+        //damageObject.transform.Rotate(0f, 45f, 0f);
+        //damageObject.transform.SetParent(this.transform);
+
+        GameObject damageObject2 = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+        damageObject2.transform.SetParent(this.transform);
 
     }
 
@@ -179,9 +182,14 @@ public class MeteoriteBehaviour : MonoBehaviour
 
         try
         {
-           
-            ParticleSystem explosion = Instantiate(particleSystemExplosionEffect, contactPoint, transform.rotation);
-            explosion.Play(true);
+
+            GameObject damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+            // produce a dust explosion that is larger than the small
+            // ones we do on impact
+            float x = 150.0f;
+            float y = 150.0f;
+            float z = 0.0f;
+            damageObject.transform.localScale += new Vector3(x, y, z);
 
             PlayExplosionSound_Immediately();
 

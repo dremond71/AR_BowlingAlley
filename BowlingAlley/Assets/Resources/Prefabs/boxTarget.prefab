@@ -57,6 +57,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -112,7 +113,7 @@ MonoBehaviour:
     type: 3}
   damageDustPrefab: {fileID: 7888770888129590201, guid: 86c4f79fa460823478dab88f9b4992b8,
     type: 3}
-  health: 2
+  health: 100
   blastRadius: 5
   explosionForce: 700
 --- !u!54 &2401398669889382515

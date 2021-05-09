@@ -91,7 +91,7 @@ public class TieFighterBoxBehaviour : MonoBehaviour
         ContactPoint cp = collision.contacts[0];
         contactPoint = cp.point;
 
-        if (collision.gameObject.tag == "starwars_weapon_blast")
+        if (collision.gameObject.tag == "miniTieBlast")
         {
 
             if (allowDamage)

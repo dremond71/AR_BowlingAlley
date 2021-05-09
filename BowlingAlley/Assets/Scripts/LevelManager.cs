@@ -396,7 +396,7 @@ public class LevelManager : MonoBehaviour
 
         // get an integer: 1, or 2
         int vehicleType = GetRandomVehicleType();
-
+        
         foreach (var pos in randomSpawnPositions)
         {
             if (vehicleType == 1){

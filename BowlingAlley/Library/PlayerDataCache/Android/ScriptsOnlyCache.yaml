@@ -930,7 +930,7 @@ ScriptsOnlyBuild:
     className: VisualEffectActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: 6ae0242216d939274b77b73d97cb42cc
+      Hash: 2b14d7f2af2de15a2fa06b8789356fe1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MeteoriteBehaviour
@@ -1771,4 +1771,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity
-  playerPath: C:/Users/domin/Documents/BowlingAlley/meteorite3.apk
+  playerPath: C:/Users/domin/Documents/git_stuff/AR_BowlingAlley/BowlingAlley/meteorite3.apk
