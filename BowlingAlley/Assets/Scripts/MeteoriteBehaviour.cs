@@ -5,6 +5,7 @@ using UnityEngine;
 public class MeteoriteBehaviour : MonoBehaviour
 {
 
+    public ParticleSystem particleSystemExplosionEffect;
     private Rigidbody rb;
     private float Speed;
     private float AngularSpeed;
@@ -14,17 +15,31 @@ public class MeteoriteBehaviour : MonoBehaviour
     private AudioSource metalHitSource;
     private AudioClip metalHit;
     public float health = 2f;
-    
+
+    bool hasExploded = false;
+
     Vector3 contactPoint;
     private bool allowDamage = true;
 
+    private TextMesh debugText;
+    private bool debug = false;
 
+    private AudioSource explosionSource;
+    private AudioClip explosion;
+    private float explosionVolume = 0.1f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
         metalHit = metalHitSource.clip;
+
+        debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
+
+        explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
+        explosion = explosionSource.clip;
+
+        
     }
   
     void FixedUpdate()
@@ -39,7 +54,13 @@ public class MeteoriteBehaviour : MonoBehaviour
         q.ToAngleAxis(out angle, out axis);
 
         rb.angularVelocity = axis * angle * Mathf.Deg2Rad;
+
+        if (health <= 0f)
+        {
+            Explode();
+        }
        
+        destroyIfIrrelevantNow();
     }
 
 
@@ -112,19 +133,81 @@ public class MeteoriteBehaviour : MonoBehaviour
         }
         else if (collision.gameObject.tag == "PlayerShooter")
         {
-            health = 0f; // immediately explode if box hits player shooter
+            health = 0f; // immediately explode if meteorite hits player shooter
         }
-        else if (collision.gameObject.tag == "miniXWingBlast")
+        else if (collision.gameObject.tag == "falcon")
         {
-            // do nothing. My own blaster appeared within my collider. 
-            // it hasn't been hit by a blaster...its mine
+            health = 0f; // immediately explode if falcon hits meteorite
         }
-        else
+        else if (collision.gameObject.tag == "targetXWing")
         {
-            health = 0f; // something unexpected
+            health = 0f; // immediately explode if falcon hits meteorite
+        }
+        else if (collision.gameObject.tag == "miniTieMissle")
+        {
+            health = 0f; // immediately explode if falcon hits meteorite
         }
 
     }
 
+    void destroyIfIrrelevantNow()
+    {
+        // this object becomes irrelevant if it has flown past the shooter 
 
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+        float shooterZ = shooter.transform.position.z;
+
+        float myZ = transform.position.z;
+
+        if (myZ < (shooterZ - 3f))
+        {
+            LevelManager.decrementNumSpawned(); //since player one didn't kill me, get LevelManager to spawn me again
+            destroySelf();
+        }
+
+    }
+
+   void PlayExplosionSound_Immediately()
+    {
+        explosionSource.PlayOneShot(explosion, explosionVolume * 3.0f);
+
+    }
+
+    void Explode()
+    {
+        //show effect 
+
+        try
+        {
+           
+            ParticleSystem explosion = Instantiate(particleSystemExplosionEffect, contactPoint, transform.rotation);
+            explosion.Play(true);
+
+            PlayExplosionSound_Immediately();
+
+            destroySelf();
+
+        }
+        catch (System.Exception e)
+        {
+
+            MyDebug("Explode error: " + e.ToString());
+        }
+
+    }
+
+    void destroySelf()
+    {
+        Destroy(gameObject);
+    }
+
+    void MyDebug(string someText)
+    {
+
+        if (debugText != null & debug)
+        {
+            debugText.text = someText;
+        }
+
+    }
 }

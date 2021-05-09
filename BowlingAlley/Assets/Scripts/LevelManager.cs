@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
 
     private int numberOfTimesXWingsSpawned = 0;
     private GameObject xwingPrefab;
+    private GameObject meteorite1Prefab;
 
     private GameObject rebelStarshipPrefab;
 
@@ -120,9 +121,24 @@ public class LevelManager : MonoBehaviour
         return rnd.Next(1, totalSpawnPositionsAvailable);
     }
 
+    int GetRandomVehicleType()
+    {
+        // let's return only 2 possible values right now
+
+        // Random.value returns a number between 0 and 1
+        if(Random.value<0.5f){
+          return 1;
+        }
+        else {
+          return 2;
+        }
+    }
+
     void Awake()
     {
         xwingPrefab = PrefabFactory.getPrefab("miniTargetXWingFighter");
+        meteorite1Prefab = PrefabFactory.getPrefab("meteorite1");
+
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
         //rebelStarshipPrefab = PrefabFactory.getPrefab ("rebelTantiveIV");
         rebelStarshipPrefab = PrefabFactory.getPrefab("newTantiveIV");
@@ -139,20 +155,26 @@ public class LevelManager : MonoBehaviour
     bool targetsExist()
     {
         GameObject[] tvs;
+        GameObject[] boxes;
+        GameObject[] meteorites;
         GameObject[] falcons;
 
         if (empireMode)
         {
             tvs = GameObject.FindGameObjectsWithTag("targetXWing");
+            meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
+            boxes = GameObject.FindGameObjectsWithTag("box");
             falcons = GameObject.FindGameObjectsWithTag("falcon");
         }
         else
         {
             tvs = new GameObject[0];
+            meteorites = new GameObject[0];
+            boxes = new GameObject[0];
             falcons = new GameObject[0];
         }
 
-        return (tvs.Length > 0) || (falcons.Length > 0);
+        return (tvs.Length > 0) || (meteorites.Length > 0) || (boxes.Length > 0) || (falcons.Length > 0);
     }
     void Start()
     {
@@ -352,15 +374,37 @@ public class LevelManager : MonoBehaviour
         GameObject go = (GameObject)Instantiate(boxPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
         incrementNumSpawned();
+
     }
+
+    void spawnNewMeteoriteAtPosition(int position)
+    {
+
+        string spawnPositionNumber = "spawn" + position;
+        GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        float x = enemySpawner.transform.position.x;
+        float y = enemySpawner.transform.position.y;
+        float z = enemySpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(meteorite1Prefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+        go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+        incrementNumSpawned();
+    }
+
     void spawnNewTargets()
     {
         getRandomSpawnPositions();
 
+        // get an integer: 1, or 2
+        int vehicleType = GetRandomVehicleType();
+
         foreach (var pos in randomSpawnPositions)
         {
-            //spawnNewBoxAtPosition(pos);
-            spawnNewXWingAtPosition(pos);
+            if (vehicleType == 1){
+              spawnNewXWingAtPosition(pos);
+            }
+            else if (vehicleType == 2) {
+              spawnNewMeteoriteAtPosition(pos);
+            }
         }
 
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)

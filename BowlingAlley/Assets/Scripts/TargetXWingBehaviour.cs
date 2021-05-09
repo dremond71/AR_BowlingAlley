@@ -25,7 +25,7 @@ public class TargetXWingBehaviour : MonoBehaviour
     public GameObject damageSparksPrefab;
     public GameObject damageDustPrefab;
 
-    public float health = 2f;
+    public float health = 3f;
     bool hasExploded = false;
 
     public float blastRadius = 5f;

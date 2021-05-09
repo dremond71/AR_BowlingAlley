@@ -1,7 +1,5 @@
 ScriptsOnlyBuild:
   usedScripts:
-    Assembly-CSharp-Editor.dll:
-    - ReadmeEditor
     Assembly-CSharp.dll:
     - DustExplosionLifeCycle
     - EnergyExplosionLifeCycle
@@ -10,7 +8,6 @@ ScriptsOnlyBuild:
     - FlyingXWingBlastBoltLifecycle
     - LevelManager
     - MeteoriteBehaviour
-    - Readme
     - TantiveIVShipBehaviour
     - TargetMilleniumFalconBlastLifeCycle
     - TargetMilleniumFalconScript
@@ -23,6 +20,8 @@ ScriptsOnlyBuild:
     - miniHothTieBehaviour
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.RenderPipelines.Core.Runtime.dll:
@@ -931,7 +930,7 @@ ScriptsOnlyBuild:
     className: VisualEffectActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: e121639755c9c3365678209f877e066d
+      Hash: 6ae0242216d939274b77b73d97cb42cc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MeteoriteBehaviour
