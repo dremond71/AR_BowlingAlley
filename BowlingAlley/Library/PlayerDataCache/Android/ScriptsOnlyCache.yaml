@@ -930,7 +930,7 @@ ScriptsOnlyBuild:
     className: VisualEffectActivationTrack
   - hash:
       serializedVersion: 2
-      Hash: 2b14d7f2af2de15a2fa06b8789356fe1
+      Hash: 8b358497a7287608994893943869db77
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MeteoriteBehaviour

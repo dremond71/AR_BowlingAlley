@@ -8582,7 +8582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 1337198075554910, guid: 25c7aa9ad705fe143a4d71c1c8deb7d4,
     type: 3}
-  damageSparksPrefab: {fileID: 265068509164365671, guid: 10fb00ea3701c8944a795ee612efd27a,
+  damageSparksPrefab: {fileID: 5274769158959289776, guid: 10fb00ea3701c8944a795ee612efd27a,
     type: 3}
   damageDustPrefab: {fileID: 7888770888129590201, guid: 86c4f79fa460823478dab88f9b4992b8,
     type: 3}

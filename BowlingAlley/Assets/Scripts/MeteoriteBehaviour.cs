@@ -6,6 +6,7 @@ public class MeteoriteBehaviour : MonoBehaviour
 {
 
     public GameObject damageDustPrefab;
+    public GameObject sparkExplosionPrefab;
     private Rigidbody rb;
     private float Speed;
     private float AngularSpeed;
@@ -183,7 +184,11 @@ public class MeteoriteBehaviour : MonoBehaviour
         try
         {
 
-            GameObject damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
+            // show sparks
+            GameObject damageObject = Instantiate(sparkExplosionPrefab, contactPoint, sparkExplosionPrefab.transform.rotation);
+
+            // show large dust explosion
+            damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
             // produce a dust explosion that is larger than the small
             // ones we do on impact
             float x = 150.0f;
