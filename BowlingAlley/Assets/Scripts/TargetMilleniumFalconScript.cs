@@ -29,6 +29,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     public GameObject damageSparksPrefab;
     public GameObject damageDustPrefab;
+    public GameObject muzzleFlashEffect;
 
     private AudioSource energyExplosionSource;
     private AudioClip energyExplosion;
@@ -583,7 +584,11 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     void handleDamage()
     {
 
-        GameObject damageObject = Instantiate(damageSparksPrefab, contactPoint, transform.rotation);
+        GameObject damageObject = Instantiate(muzzleFlashEffect, contactPoint, muzzleFlashEffect.transform.rotation);
+        damageObject.transform.Rotate(0f, 45f, 0f);
+        damageObject.transform.SetParent(this.transform);
+
+        damageObject = Instantiate(damageSparksPrefab, contactPoint, transform.rotation);
         damageObject.transform.SetParent(this.transform);
 
         damageObject = Instantiate(damageDustPrefab, contactPoint, transform.rotation);
