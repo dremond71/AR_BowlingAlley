@@ -85,6 +85,7 @@
      <Compile Include="Assets\Scripts\ReferencePointManagerOriginal.cs" />
      <Compile Include="Assets\Scripts\SceneHandler.cs" />
      <Compile Include="Assets\Scripts\TantiveIVShipBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TargetAWingBehaviour.cs" />
      <Compile Include="Assets\Scripts\TargetMilleniumFalconBlastLifeCycle.cs" />
      <Compile Include="Assets\Scripts\TargetMilleniumFalconScript.cs" />
      <Compile Include="Assets\Scripts\TargetXWingBehaviour.cs" />

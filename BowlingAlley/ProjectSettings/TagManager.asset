@@ -74,6 +74,9 @@ TagManager:
   - falconIntro_PartOfConvoy_Sound
   - falconIntro_ThatsNoMoon_Sound
   - targetMeteorite
+  - targetAWing
+  - aWingBlasterPosition1
+  - aWingBlasterPosition2
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - LevelManager
     - MeteoriteBehaviour
     - TantiveIVShipBehaviour
+    - TargetAWingBehaviour
     - TargetMilleniumFalconBlastLifeCycle
     - TargetMilleniumFalconScript
     - TargetXWingBehaviour
@@ -258,39 +259,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15680}
     - Class: 114
-      Script: {instanceID: 16030}
+      Script: {instanceID: 15730}
     - Class: 114
-      Script: {instanceID: 16090}
+      Script: {instanceID: 16032}
     - Class: 114
-      Script: {instanceID: 16116}
+      Script: {instanceID: 16092}
     - Class: 114
-      Script: {instanceID: 16120}
+      Script: {instanceID: 16118}
     - Class: 114
-      Script: {instanceID: 16226}
+      Script: {instanceID: 16122}
     - Class: 114
-      Script: {instanceID: 16254}
+      Script: {instanceID: 16228}
     - Class: 114
-      Script: {instanceID: 16324}
+      Script: {instanceID: 16256}
     - Class: 114
-      Script: {instanceID: 16428}
+      Script: {instanceID: 16326}
     - Class: 114
-      Script: {instanceID: 16460}
+      Script: {instanceID: 16430}
     - Class: 114
-      Script: {instanceID: 16486}
+      Script: {instanceID: 16462}
     - Class: 114
-      Script: {instanceID: 16638}
+      Script: {instanceID: 16488}
     - Class: 114
-      Script: {instanceID: 16642}
+      Script: {instanceID: 16640}
     - Class: 114
-      Script: {instanceID: 16690}
+      Script: {instanceID: 16644}
     - Class: 114
-      Script: {instanceID: 16722}
+      Script: {instanceID: 16692}
     - Class: 114
-      Script: {instanceID: 16872}
+      Script: {instanceID: 16724}
     - Class: 114
-      Script: {instanceID: 16890}
+      Script: {instanceID: 16874}
     - Class: 114
-      Script: {instanceID: 16896}
+      Script: {instanceID: 16892}
+    - Class: 114
+      Script: {instanceID: 16898}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1378,6 +1381,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerValue
+  - hash:
+      serializedVersion: 2
+      Hash: b277a309a5658b2ede762cbebf67dceb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetAWingBehaviour
   - hash:
       serializedVersion: 2
       Hash: e980908e28aa1c9352fdd4137b6babd7

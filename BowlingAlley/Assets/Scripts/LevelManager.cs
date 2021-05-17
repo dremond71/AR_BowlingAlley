@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
 
     private int numberOfTimesXWingsSpawned = 0;
     private GameObject xwingPrefab;
+    private GameObject awingPrefab;
     private GameObject meteorite1Prefab;
 
     private GameObject rebelStarshipPrefab;
@@ -89,7 +90,7 @@ public class LevelManager : MonoBehaviour
         // choose a random amount between 1 and 9
         //currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
         currentAllowedSpawnPositions = rnd.Next(1, 7); // nine enemies is too much ;S
-        MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
+      //  MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
     }
     void getRandomSpawnPositions()
     {
@@ -100,6 +101,9 @@ public class LevelManager : MonoBehaviour
         while (totalCollected < currentAllowedSpawnPositions)
         {
             int someNumber = GetRandomSpawnPosition();
+            // if ((someNumber > 9) || (someNumber < 1)) {
+            //   MyDebug("Unexpected Spawn Position");
+            // }
             if (!randomSpawnPositions.Contains(someNumber))
             {
                 randomSpawnPositions.Add(someNumber);
@@ -118,25 +122,32 @@ public class LevelManager : MonoBehaviour
     }
     int GetRandomSpawnPosition()
     {
-        return rnd.Next(1, totalSpawnPositionsAvailable);
+
+        // return a number (1,2,3,4,5,6,7,8,9) - does not include 10
+        return Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
+        //return rnd.Next(1, totalSpawnPositionsAvailable);//OLD WAY
     }
 
     int GetRandomVehicleType()
     {
-        // let's return only 2 possible values right now
 
-        // Random.value returns a number between 0 and 1
-        if(Random.value<0.5f){
-          return 1;
-        }
-        else {
-          return 2;
-        }
+        // return a number (1,2, or 3) - does not include 4
+        return Random.Range(1, 4); 
+
+        // // let's return only 2 possible values right now
+        // // Random.value returns a number between 0 and 1
+        // if(Random.value<0.5f){
+        //   return 1;
+        // }
+        // else {
+        //   return 2;
+        // }
     }
 
     void Awake()
     {
         xwingPrefab = PrefabFactory.getPrefab("miniTargetXWingFighter");
+        awingPrefab = PrefabFactory.getPrefab("a-wing");
         meteorite1Prefab = PrefabFactory.getPrefab("meteorite1");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
@@ -157,12 +168,14 @@ public class LevelManager : MonoBehaviour
         GameObject[] tvs;
         GameObject[] boxes;
         GameObject[] meteorites;
+        GameObject[] awings;
         GameObject[] falcons;
 
         if (empireMode)
         {
             tvs = GameObject.FindGameObjectsWithTag("targetXWing");
             meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
+            awings = GameObject.FindGameObjectsWithTag("targetAWing");
             boxes = GameObject.FindGameObjectsWithTag("box");
             falcons = GameObject.FindGameObjectsWithTag("falcon");
         }
@@ -170,11 +183,12 @@ public class LevelManager : MonoBehaviour
         {
             tvs = new GameObject[0];
             meteorites = new GameObject[0];
+            awings = new GameObject[0];
             boxes = new GameObject[0];
             falcons = new GameObject[0];
         }
 
-        return (tvs.Length > 0) || (meteorites.Length > 0) || (boxes.Length > 0) || (falcons.Length > 0);
+        return (tvs.Length > 0) || (meteorites.Length > 0) || (awings.Length > 0)|| (boxes.Length > 0) || (falcons.Length > 0);
     }
     void Start()
     {
@@ -224,7 +238,7 @@ public class LevelManager : MonoBehaviour
         if (startGameTimer <= 0f)
         {
 
-            MyDebug("numberOfSpawnsSinceLastClip==" + numberOfSpawnsSinceLastClip);
+           // MyDebug("numberOfSpawnsSinceLastClip==" + numberOfSpawnsSinceLastClip);
             if (!starshipExists)
             {
                 starshipExists = true;
@@ -291,7 +305,7 @@ public class LevelManager : MonoBehaviour
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
             // randon number generator for a choice of two things
-            bool value = ((numberOfTimesXWingsSpawned % 3) == 0);
+            bool value = ((numberOfTimesXWingsSpawned % 15) == 0);
 
             if (value)
             {
@@ -315,6 +329,20 @@ public class LevelManager : MonoBehaviour
         float y = enemySpawner.transform.position.y;
         float z = enemySpawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(xwingPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+        go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+        go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+        incrementNumSpawned();
+    }
+
+    void spawnNewAWingAtPosition(int position)
+    {
+
+        string spawnPositionNumber = "spawn" + position;
+        GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        float x = enemySpawner.transform.position.x;
+        float y = enemySpawner.transform.position.y;
+        float z = enemySpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(awingPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
         go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
         go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
         incrementNumSpawned();
@@ -395,16 +423,30 @@ public class LevelManager : MonoBehaviour
         getRandomSpawnPositions();
 
         // get an integer: 1, or 2
-        int vehicleType = GetRandomVehicleType();
         
+        //int vehicleType = 2;
         foreach (var pos in randomSpawnPositions)
         {
+            int vehicleType = GetRandomVehicleType();
+            //int vehicleType = 3;
             if (vehicleType == 1){
               spawnNewXWingAtPosition(pos);
             }
             else if (vehicleType == 2) {
+              spawnNewAWingAtPosition(pos);
+            }
+            else if (vehicleType == 3) {
               spawnNewMeteoriteAtPosition(pos);
             }
+
+
+            // if (vehicleType>=1 && vehicleType<=3) {
+            //     MyDebug("Expected integer");
+            // }
+            // else {
+            //     MyDebug("Unexpected integer");
+            // }   
+
         }
 
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
