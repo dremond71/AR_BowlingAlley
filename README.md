@@ -89,9 +89,9 @@ The tiny spec in some of the pictures above is a Tie Fighter from my shooting ga
 In the video, however, I made it 1/10 the scale of the pictures.
 
 
-### Detailed Millennium Falcon (Just finished)
+### Detailed Millennium Falcon
 
-I just added this detailed Millennium Falcon to the game. (No video yet)
+I just added this detailed Millennium Falcon to the game.
 
 ![](./falconTop.png)
 
@@ -108,7 +108,17 @@ The falcon will be invulnerable because it has never exploded in the movies! ;)
 [Falcon Hover Test #1](https://www.youtube.com/watch?v=1zfCrN85P5w)
 [Falcon Hover Test #2](https://www.youtube.com/watch?v=iILT7N6IbtY)
 
+### Detailed A-Wing (Just finished)
 
+I just added this detailed A-Wing to the game.
+
+![](./A-Wing-Front.jpg)
+
+![](./A-Wing-Top.jpg)
+
+![](./A-Wing-Side.jpg)
+
+![](./A-Wing-Back.jpg)
 
 ## Still In Progress
 
