@@ -326,7 +326,7 @@ public class LevelManager : MonoBehaviour
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
             // randon number generator for a choice of two things
-            bool value = ((numberOfTimesXWingsSpawned % 15) == 0);
+            bool value = ((numberOfTimesXWingsSpawned % 10) == 0);
 
             if (value)
             {
