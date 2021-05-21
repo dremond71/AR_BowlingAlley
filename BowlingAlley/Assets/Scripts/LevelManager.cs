@@ -36,7 +36,6 @@ public class LevelManager : MonoBehaviour
     private GameObject rebelStarshipPrefab;
 
     private GameObject falconPrefab;
-    private bool falconExists = false;
 
     private bool starshipExists = false;
 
@@ -50,6 +49,15 @@ public class LevelManager : MonoBehaviour
     private float startGameTimer;
 
     public static int falconIntroIndex = 2;
+
+    private int[] targetRebelVehicleTypes = new[] {1,2};
+
+    // determine what mixture we want of rebel vehicles
+    // 1 - swarm of specific vehicle type 
+    // 2 - swarm of mixture of all types
+    // 3 - asteroid swarm
+    private int[] targetRebelVehicleMixture = new[] { 1, 2, 3 };
+    private int vehicleMixtureLevel = 1;//default
 
     void load_EmpireSounds()
     {
@@ -88,9 +96,11 @@ public class LevelManager : MonoBehaviour
     void setRandomSpawnAmount()
     {
         // choose a random amount between 1 and 9
-        //currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
-        currentAllowedSpawnPositions = rnd.Next(1, 7); // nine enemies is too much ;S
-      //  MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
+        // OLD WAY - currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
+        // Random.Range(1, 10);
+        // return a number (1,2,3,4,5,6,7,8,9 ) - does not include 10
+        currentAllowedSpawnPositions = Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
+        //  MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
     }
     void getRandomSpawnPositions()
     {
@@ -128,11 +138,33 @@ public class LevelManager : MonoBehaviour
         //return rnd.Next(1, totalSpawnPositionsAvailable);//OLD WAY
     }
 
+    int GetRandomMixtureOfVehiclesValue()
+    {
+        int firstIndex = 0;
+        int lastIndex = targetRebelVehicleMixture.Length - 1;
+
+        int rangeBeginningValue = targetRebelVehicleMixture[firstIndex];    // e.g. 1
+        int rangeEndingValue = targetRebelVehicleMixture[lastIndex] + 1; // e.g. 2 + 1
+
+        // Random.Range(1, 3);
+        // return a number (1, or 2) - does not include 3
+        return Random.Range(rangeBeginningValue, rangeEndingValue);
+
+    }
+
     int GetRandomVehicleType()
     {
 
-        // return a number (1,2, or 3) - does not include 4
-        return Random.Range(1, 4); 
+        
+        int firstIndex = 0;
+        int lastIndex = targetRebelVehicleTypes.Length - 1;
+
+        int rangeBeginningValue = targetRebelVehicleTypes[firstIndex];    // e.g. 1
+        int rangeEndingValue    = targetRebelVehicleTypes[lastIndex] + 1; // e.g. 2 + 1
+
+        // Random.Range(1, 3);
+        // return a number (1, or 2) - does not include 3
+        return Random.Range(rangeBeginningValue, rangeEndingValue); 
 
         // // let's return only 2 possible values right now
         // // Random.value returns a number between 0 and 1
@@ -218,17 +250,6 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    void Update22()
-    {
-
-        if (!falconExists)
-        {
-            falconExists = true;
-            setTieFighterAllowedToShoot(false); // let hero say something before battle starts
-            spawnFalconAtSpawnPosition1();
-        }
-
-    }
     void Update()
     {
 
@@ -422,30 +443,66 @@ public class LevelManager : MonoBehaviour
     {
         getRandomSpawnPositions();
 
-        // get an integer: 1, or 2
+        // determine the mixture level of target vehicles
+        vehicleMixtureLevel = GetRandomMixtureOfVehiclesValue();
         
-        //int vehicleType = 2;
-        foreach (var pos in randomSpawnPositions)
+        if (vehicleMixtureLevel == 1)
         {
+            //
+            // swarm of specific vehicle type
+            //
+
+            // get specific vehicle type up front
             int vehicleType = GetRandomVehicleType();
-            //int vehicleType = 3;
-            if (vehicleType == 1){
-              spawnNewXWingAtPosition(pos);
+
+            foreach (var pos in randomSpawnPositions)
+            {
+
+                if (vehicleType == 1)
+                {
+                    spawnNewXWingAtPosition(pos);
+                }
+                else if (vehicleType == 2)
+                {
+                    spawnNewAWingAtPosition(pos);
+                }
+
             }
-            else if (vehicleType == 2) {
-              spawnNewAWingAtPosition(pos);
-            }
-            else if (vehicleType == 3) {
-              spawnNewMeteoriteAtPosition(pos);
+        }
+        else if (vehicleMixtureLevel == 2)
+        {
+            //
+            // mixture of all vehicle types
+            //
+
+            foreach (var pos in randomSpawnPositions)
+            {
+                //
+                // get random vehicle type within loop
+                //
+                int vehicleType = GetRandomVehicleType();
+                
+                if (vehicleType == 1)
+                {
+                    spawnNewXWingAtPosition(pos);
+                }
+                else if (vehicleType == 2)
+                {
+                    spawnNewAWingAtPosition(pos);
+                }
+
             }
 
-
-            // if (vehicleType>=1 && vehicleType<=3) {
-            //     MyDebug("Expected integer");
-            // }
-            // else {
-            //     MyDebug("Unexpected integer");
-            // }   
+        }
+        else if (vehicleMixtureLevel == 3)
+        {
+            //
+            // asteroid swarm (no vehicles)
+            //
+            foreach (var pos in randomSpawnPositions)
+            {
+               spawnNewMeteoriteAtPosition(pos);
+            }
 
         }
 
