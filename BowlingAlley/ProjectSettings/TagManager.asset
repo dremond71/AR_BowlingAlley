@@ -77,6 +77,8 @@ TagManager:
   - targetAWing
   - aWingBlasterPosition1
   - aWingBlasterPosition2
+  - deathStarMissleLauncher
+  - deathStarMissle
   layers:
   - Default
   - TransparentFX

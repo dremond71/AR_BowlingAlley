@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\CameraMotor.cs" />
      <Compile Include="Assets\Scripts\CatchPlaneBehaviour.cs" />
      <Compile Include="Assets\Scripts\ControlPanelShowcase.cs" />
+     <Compile Include="Assets\Scripts\DeathStarMissleBehaviour.cs" />
      <Compile Include="Assets\Scripts\DustExplosionLifeCycle.cs" />
      <Compile Include="Assets\Scripts\EnergyExplosionLifeCycle.cs" />
      <Compile Include="Assets\Scripts\ExplosionLifeCycle.cs" />

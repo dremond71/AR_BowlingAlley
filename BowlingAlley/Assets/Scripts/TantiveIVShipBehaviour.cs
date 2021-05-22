@@ -49,7 +49,7 @@ public class TantiveIVShipBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter (Collision collision) {
 
-        if (collision.gameObject.tag == "miniTieMissle") {
+        if ( (collision.gameObject.tag == "miniTieMissle") || (collision.gameObject.tag == "deathStarMissle")) {
 
             // use collision.gameObject.tag === "bullet" to figure 
             // out which object collided with you. 

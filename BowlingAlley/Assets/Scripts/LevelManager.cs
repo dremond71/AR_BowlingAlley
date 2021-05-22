@@ -7,7 +7,11 @@ public class LevelManager : MonoBehaviour
 
     private static object olock = new object();
 
-    private bool debug = false;
+    static string launchTheDSAttack = "";
+    
+    private float pauseAfterShootingMissle = 3.00f;
+
+    private bool debug = true;
 
     private TextMesh debugText;
 
@@ -36,6 +40,7 @@ public class LevelManager : MonoBehaviour
     private GameObject rebelStarshipPrefab;
 
     private GameObject falconPrefab;
+    private GameObject deathStarMisslePrefab;
 
     private bool starshipExists = false;
 
@@ -186,6 +191,8 @@ public class LevelManager : MonoBehaviour
         //rebelStarshipPrefab = PrefabFactory.getPrefab ("rebelTantiveIV");
         rebelStarshipPrefab = PrefabFactory.getPrefab("newTantiveIV");
         falconPrefab = PrefabFactory.getPrefab("falcon");
+        deathStarMisslePrefab = PrefabFactory.getPrefab("deathStarMissle");
+
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
         if (empireMode)
@@ -250,8 +257,50 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void spawnNewDeathStarMissle()
+    {
+
+        //missleLauncher
+        GameObject weaponOrigin = GameObject.FindGameObjectWithTag("deathStarMissleLauncher");
+        float x = weaponOrigin.transform.position.x;
+        float y = weaponOrigin.transform.position.y;
+        float z = weaponOrigin.transform.position.z;
+        GameObject go = (GameObject)Instantiate(deathStarMisslePrefab, new Vector3(x, y, z), weaponOrigin.transform.rotation);
+        go.GetComponent<Rigidbody>().velocity = 9f * this.transform.forward;
+    }
+
+    void onDifferentThread_PauseAfterShootingMissle()
+    {
+
+        StartCoroutine(DoThePausingForMissle());
+
+    }
+
+    IEnumerator DoThePausingForMissle()
+    {
+        yield return new WaitForSeconds(pauseAfterShootingMissle);
+        launchTheDSAttack = "";
+    }
+
+    void handleLaunchingDeathStarAttack()
+    {
+        launchTheDSAttack = "launched";// we only want launch the attack once for the initial request
+
+        spawnNewDeathStarMissle();
+
+        onDifferentThread_PauseAfterShootingMissle();
+
+    }
+
     void Update()
     {
+
+        
+        if (launchTheDSAttack == "launch")
+        {
+            handleLaunchingDeathStarAttack();
+        }
+        
 
         if (startGameTimer > 0.0f)
             startGameTimer -= Time.deltaTime;
@@ -394,6 +443,21 @@ public class LevelManager : MonoBehaviour
         {
             return tieFighterAllowedToAttack;
         }
+    }
+
+
+    public static void launchDeathStarAttack()
+    {
+
+        lock (olock)
+        {
+            if (launchTheDSAttack == "")
+            {
+                launchTheDSAttack = "launch";
+            }
+        }
+       
+       
     }
 
     public static void setTieFighterAllowedToShoot(bool value)

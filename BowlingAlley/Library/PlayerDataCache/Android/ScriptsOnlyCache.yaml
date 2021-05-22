@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - DeathStarMissleBehaviour
     - DustExplosionLifeCycle
     - EnergyExplosionLifeCycle
     - ExplosionLifeCycle
@@ -273,27 +274,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16256}
     - Class: 114
-      Script: {instanceID: 16326}
+      Script: {instanceID: 16304}
     - Class: 114
-      Script: {instanceID: 16430}
+      Script: {instanceID: 16328}
     - Class: 114
-      Script: {instanceID: 16462}
+      Script: {instanceID: 16432}
     - Class: 114
-      Script: {instanceID: 16488}
+      Script: {instanceID: 16464}
     - Class: 114
-      Script: {instanceID: 16640}
+      Script: {instanceID: 16490}
     - Class: 114
-      Script: {instanceID: 16644}
+      Script: {instanceID: 16642}
     - Class: 114
-      Script: {instanceID: 16692}
+      Script: {instanceID: 16646}
     - Class: 114
-      Script: {instanceID: 16724}
+      Script: {instanceID: 16694}
     - Class: 114
-      Script: {instanceID: 16874}
+      Script: {instanceID: 16726}
     - Class: 114
-      Script: {instanceID: 16892}
+      Script: {instanceID: 16876}
     - Class: 114
-      Script: {instanceID: 16898}
+      Script: {instanceID: 16894}
+    - Class: 114
+      Script: {instanceID: 16900}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1507,6 +1510,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerEnumHistory
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DeathStarMissleBehaviour
   - hash:
       serializedVersion: 2
       Hash: d5630f96bd5a6a6eed7e1754c3fb8703

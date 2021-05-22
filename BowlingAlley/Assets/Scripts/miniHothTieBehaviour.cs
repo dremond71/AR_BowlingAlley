@@ -55,7 +55,7 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     private float horizontalMove = 0.0f;
     private float verticalMove = 0.0f;
-    private bool debug = false;
+    
     public bool androidDevice = false;
 
     bool roarSoundIsPlaying = false;
@@ -80,6 +80,8 @@ public class miniHothTieBehaviour : MonoBehaviour
     private bool playingHover1 = true; // flag used to determine which of 2 sounds to play to create a continuous hover sound for tie fighter
 
     public float increment = 0.001f;
+
+    private bool debug = false;
 
     void Start()
     {
@@ -117,7 +119,7 @@ public class miniHothTieBehaviour : MonoBehaviour
     {
 
         switchHoverSoundTimer -= Time.deltaTime;
-        MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
+        //MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
         if (switchHoverSoundTimer <= 0f)
         {
             //start duplicate sound 
@@ -156,6 +158,11 @@ public class miniHothTieBehaviour : MonoBehaviour
         // }    
     }
 
+    void askDeathStarToLaunchAttack()
+    {
+        LevelManager.launchDeathStarAttack();
+    }
+
     void shootMissle()
     {
         if (LevelManager.getTieFighterAllowedToShoot())
@@ -190,7 +197,7 @@ public class miniHothTieBehaviour : MonoBehaviour
         try
         {
             hoverSource1.PlayOneShot(hover1, hoverSoundVolume);
-            MyDebug("Hover 1 started");
+            //MyDebug("Hover 1 started");
         }
         catch (System.Exception e)
         {
@@ -204,7 +211,7 @@ public class miniHothTieBehaviour : MonoBehaviour
         try
         {
             hoverSource2.PlayOneShot(hover2, hoverSoundVolume);
-            MyDebug("Hover 2 started");
+            //MyDebug("Hover 2 started");
         }
         catch (System.Exception e)
         {
@@ -351,6 +358,18 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         }
 
+        if (Input.GetKey("d"))
+        {
+            MyDebug("Deathstar Attack");
+            askDeathStarToLaunchAttack();
+
+        }
+
+        if (Input.GetKey("c"))
+        {
+            MyDebug("Cavalry Attack");
+
+        }
     }
 
     private void FixedUpdate()
@@ -511,6 +530,18 @@ public class miniHothTieBehaviour : MonoBehaviour
             setMovingDown();
             decreaseYvalue();
             //handleRoar();
+        }
+
+
+        if (rightJoyStick.Horizontal >= 0.5f)
+        {
+            MyDebug("Cavalry Attack");
+
+        }
+        else if (rightJoyStick.Horizontal <= -0.5f)
+        {
+            MyDebug("DeathStar Attack");
+            askDeathStarToLaunchAttack();
         }
 
         if (rightJoyStick.Vertical >= 0.5f)
