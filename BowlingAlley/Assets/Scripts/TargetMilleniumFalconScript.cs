@@ -240,9 +240,54 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     }
 
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+           audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+    void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+            stopAudioSource(roarSource);
+
+            stopAudioSource(energyExplosionSource);
+
+            stopAudioSource(blasterSource);
+
+            stopAudioSource(metalHitSource);
+
+            stopAudioSource(situationNormalSource);
+
+            stopAudioSource(chewyRoarSource);
+
+            stopAudioSource(introNotForLongSource);
+
+            stopAudioSource(introMeteorShowerSource);
+
+            stopAudioSource(introPartOfConvoySource);
+
+            stopAudioSource(introNoMoonSource);
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
     void Explode()
     {
         //show effect 
+
+        stopAllSoundsBeforeIExplode();
 
         try
         {
