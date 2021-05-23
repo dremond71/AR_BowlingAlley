@@ -108,7 +108,7 @@ The falcon will be invulnerable because it has never exploded in the movies! ;)
 [Falcon Hover Test #1](https://www.youtube.com/watch?v=1zfCrN85P5w)
 [Falcon Hover Test #2](https://www.youtube.com/watch?v=iILT7N6IbtY)
 
-### Detailed A-Wing (Just finished)
+### Detailed A-Wing
 
 I just added this detailed A-Wing to the game.
 
@@ -119,6 +119,10 @@ I just added this detailed A-Wing to the game.
 ![](./A-Wing-Side.jpg)
 
 ![](./A-Wing-Back.jpg)
+
+### DeathStar Attack (Just finished)
+
+Move the right joystick to the left, and the DeathStar will destroy every target vehicule with a green DeathStar missle dedicated to each.
 
 ## Still In Progress
 
