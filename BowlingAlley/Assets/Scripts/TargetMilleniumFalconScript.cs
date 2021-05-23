@@ -671,6 +671,10 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
             receivedContact = true;
         }
+        else if (collision.gameObject.tag == "deathStarMissle")
+        {
+            health -= 100f; // something unexpected
+        }
         else if (collision.gameObject.tag == "matrix_item")
         {
             // do nothing

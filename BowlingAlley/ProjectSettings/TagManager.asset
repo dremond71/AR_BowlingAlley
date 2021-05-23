@@ -79,6 +79,7 @@ TagManager:
   - aWingBlasterPosition2
   - deathStarMissleLauncher
   - deathStarMissle
+  - deathStarBlast_Sound
   layers:
   - Default
   - TransparentFX

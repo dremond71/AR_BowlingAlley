@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     static string launchTheDSAttack = "";
     
-    private float pauseAfterShootingMissle = 3.00f;
+    private float pauseAfterShootingMissle = 0.01f;
 
     private bool debug = true;
 
@@ -23,6 +23,10 @@ public class LevelManager : MonoBehaviour
 
     private AudioSource[] empireSources;
     private AudioClip[] empireClips;
+
+    private AudioSource deathStarBlastSource;
+    private AudioClip deathStarBlast;
+    private float deathStarBlastVolume = 0.8f;
 
     private bool empireMode = true;
     static int numberOfSpawnedItems = 0;
@@ -195,11 +199,54 @@ public class LevelManager : MonoBehaviour
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
+        deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
+        deathStarBlast = deathStarBlastSource.clip;
+
+
         if (empireMode)
         {
             load_EmpireSounds();
         }
 
+    }
+
+    GameObject[] getAllTargetVehicles()
+    {
+
+        GameObject[] xwings;
+        GameObject[] awings;
+        GameObject[] meteorites;
+        GameObject[] falcons;
+        //GameObject[] tantiveIV;
+
+        if (empireMode)
+        {
+            xwings     = GameObject.FindGameObjectsWithTag("targetXWing");
+            meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
+            awings     = GameObject.FindGameObjectsWithTag("targetAWing");
+            falcons    = GameObject.FindGameObjectsWithTag("falcon");
+           // tantiveIV  = GameObject.FindGameObjectsWithTag("tantiveIV");
+        }
+        else
+        {
+            xwings     = new GameObject[0];
+            meteorites = new GameObject[0];
+            awings     = new GameObject[0];
+            falcons    = new GameObject[0];
+            //tantiveIV  = new GameObject[0];
+        }
+
+         List<GameObject> list  = new List<GameObject>();
+         list.AddRange(xwings);
+         list.AddRange(awings);
+         list.AddRange(meteorites);
+         list.AddRange(falcons);
+         //list.AddRange(tantiveIV);
+
+        GameObject[] allTargetVehicles = list.ToArray();
+
+        return allTargetVehicles;
+        
     }
 
     bool targetsExist()
@@ -257,7 +304,34 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    void spawnNewDeathStarMissle()
+    void shootAllMisslesNow()
+    {
+        StartCoroutine(shootAllTargetVehicles());
+    }
+
+    IEnumerator shootAllTargetVehicles()
+    {
+        
+        float shotDelay = 0.20f;
+
+        GameObject[] allTargets = getAllTargetVehicles();
+
+        if (allTargets.Length > 0)
+        {
+            PlayDeathStarBlastSound_Immediately();
+        }
+
+        for (int i = 0; i < allTargets.Length; i++)
+        {
+            spawnNewDeathStarMissle(allTargets[i]);
+            yield return new WaitForSeconds(shotDelay);
+        }
+
+        onDifferentThread_PauseAfterShootingMissle();
+
+    }
+
+        void spawnNewDeathStarMissle(GameObject targetGameObject)
     {
 
         //missleLauncher
@@ -266,6 +340,10 @@ public class LevelManager : MonoBehaviour
         float y = weaponOrigin.transform.position.y;
         float z = weaponOrigin.transform.position.z;
         GameObject go = (GameObject)Instantiate(deathStarMisslePrefab, new Vector3(x, y, z), weaponOrigin.transform.rotation);
+
+        // pass a parameter to an instantiated prefab : https://answers.unity.com/questions/254003/instantiate-gameobject-with-parameters.html 
+        // https://docs.unity3d.com/ScriptReference/GameObject.SendMessage.html
+        go.SendMessage("setTargetObject", targetGameObject);
         go.GetComponent<Rigidbody>().velocity = 9f * this.transform.forward;
     }
 
@@ -286,10 +364,9 @@ public class LevelManager : MonoBehaviour
     {
         launchTheDSAttack = "launched";// we only want launch the attack once for the initial request
 
-        spawnNewDeathStarMissle();
+        shootAllMisslesNow();
 
-        onDifferentThread_PauseAfterShootingMissle();
-
+       
     }
 
     void Update()
@@ -354,7 +431,7 @@ public class LevelManager : MonoBehaviour
     void spawnHero()
     {
 
-        setTieFighterAllowedToShoot(false); // let hero say something before battle starts
+        //setTieFighterAllowedToShoot(false); // let hero say something before battle starts
         spawnFalconAtSpawnPosition1();
         numberOfTimesXWingsSpawned++;
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
@@ -375,7 +452,7 @@ public class LevelManager : MonoBehaviour
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
             // randon number generator for a choice of two things
-            bool value = ((numberOfTimesXWingsSpawned % 10) == 0);
+            bool value = ((numberOfTimesXWingsSpawned % 7) == 0);
 
             if (value)
             {
@@ -581,6 +658,12 @@ public class LevelManager : MonoBehaviour
         {
             debugText.text = someText;
         }
+
+    }
+
+    void PlayDeathStarBlastSound_Immediately()
+    {
+        deathStarBlastSource.PlayOneShot(deathStarBlast, deathStarBlastVolume);
 
     }
 

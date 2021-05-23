@@ -6,75 +6,27 @@ public class DeathStarMissleBehaviour : MonoBehaviour
 {
 
     GameObject target;
-    bool okToTurn = true;
-
+   
     private float speedFactor = 30f;
 
-    private float lifeDuration = 12.0f;
+    private float lifeDuration = 5.0f;
     private float lifeTimer;
 
-    private float pauseDuration = 0.1f;
-    private float pauseTimer;
-    System.Random rnd = new System.Random();
     private TextMesh debugText;
     private bool debug = true;
 
-    void chooseTarget()
+    public void setTargetObject(GameObject targetObject)
     {
-
-        //GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
-        //GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
-        GameObject tantive = GameObject.FindGameObjectWithTag("targetXWing");
-        GameObject falcon = GameObject.FindGameObjectWithTag("targetAWing");
-
-
-        if ((tantive != null) && (falcon != null))
-        {
-
-            //both ships are there; randomly choose
-            bool value = (rnd.NextDouble() >= 0.5);
-
-            if (value)
-            {
-                target = tantive;
-            }
-            else
-            {
-                target = falcon;
-            }
-
-        }
-        else
-        {
-
-            // perhaps one ship is there
-            // or neither
-            if (tantive != null)
-            {
-                target = tantive;
-            }
-            else if (falcon != null)
-            {
-                target = falcon;
-            }
-            else
-            {
-                target = null;
-            }
-        }
-
+        target = targetObject;
     }
+
+
     // Start is called before the first frame update
     void Start()
     {
-
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
         lifeTimer = lifeDuration;
-        pauseTimer = pauseDuration;
-
-        chooseTarget();
-
     }
 
     void FixedUpdate()
@@ -82,25 +34,12 @@ public class DeathStarMissleBehaviour : MonoBehaviour
 
         this.GetComponent<Rigidbody>().velocity = speedFactor * this.transform.forward;
 
-/*
-        if (!okToTurn)
-        {
-            pauseTimer -= Time.deltaTime;
-            if (pauseTimer <= 0f)
-            {
-                okToTurn = true;
-            }
-        }
-*/
-        if (target != null && okToTurn)
-        {
 
-            // float i = turnSpeed * Time.deltaTime;
-            //  transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i);
-
+        // if there is a target, keep following it with turns
+        if (target != null )
+        {
             Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - this.transform.position);
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, speedFactor * Time.deltaTime);
-            //this.GetComponent<Rigidbody> ().MoveRotation (Quaternion.RotateTowards (this.transform.rotation, targetRotation, 2f));
         }
 
         lifeTimer -= Time.deltaTime;
@@ -123,7 +62,9 @@ public class DeathStarMissleBehaviour : MonoBehaviour
             (collision.gameObject.tag == "tantiveIV") ||
             (collision.gameObject.tag == "falcon") ||
             (collision.gameObject.tag == "targetXWing") ||
-            (collision.gameObject.tag == "targetAWing") 
+            (collision.gameObject.tag == "targetAWing") ||
+            (collision.gameObject.tag == "PlayerShooter") ||
+            (collision.gameObject.tag == "targetMeteorite")
         )
         {
             destroySelf();
