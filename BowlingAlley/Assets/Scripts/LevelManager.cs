@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
     System.Random rnd = new System.Random();
 
     List<int> randomSpawnPositions = new List<int>();
+    private int randomSpawnMatrixNumber = 0;
+    private int numberOfSpawnMatrices = 5;
 
     private AudioSource[] empireSources;
     private AudioClip[] empireClips;
@@ -32,7 +34,8 @@ public class LevelManager : MonoBehaviour
     static int numberOfSpawnedItems = 0;
 
     static bool tieFighterAllowedToAttack = true;
-    public float enemySpeed = 35.0f;
+
+    public float enemySpeed = 15.0f;
 
     private GameObject boxPrefab;
 
@@ -96,11 +99,6 @@ public class LevelManager : MonoBehaviour
         return value;
     }
 
-    float getSlightlyRandomizedSpeed()
-    {
-        return enemySpeed + GetRandomSpeedAdjustment();
-
-    }
 
     void setRandomSpawnAmount()
     {
@@ -133,12 +131,77 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    float getSlightlyRandomizedSpeed()
+    {
+        
+        return enemySpeed + GetRandomSpeedAdjustment();
+
+        /*
+                float speed = 1.0f;
+
+                if (randomSpawnMatrixNumber == 1) // front straight
+                {
+                    //         15.0f
+                    speed = enemySpeed + GetRandomSpeedAdjustment();
+                }
+                else if (randomSpawnMatrixNumber == 2)
+                {
+                    speed = 5.0f + GetRandomSpeedAdjustment();
+                }
+                else if (randomSpawnMatrixNumber == 3)
+                {
+                    speed = 5.0f + GetRandomSpeedAdjustment();
+                }
+                else if (randomSpawnMatrixNumber == 4) // front pointed down
+                {
+                    speed = 5.0f + GetRandomSpeedAdjustment();
+                }
+                else if (randomSpawnMatrixNumber == 5) // front pointed down
+                {
+                    speed = 5.0f + GetRandomSpeedAdjustment();
+                }
+                return speed;
+        */
+    }
+
     float GetRandomSpeedAdjustment()
     {
-
         return Random.Range(0.0f, 20.0f);
 
+        /*
+                float adjustment = 1.0f;
+
+                if (randomSpawnMatrixNumber == 1) //front straight
+                {
+                    adjustment = Random.Range(0.0f, 20.0f);
+                }
+                else if (randomSpawnMatrixNumber == 2)
+                {
+                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
+                }
+                else if (randomSpawnMatrixNumber == 3)
+                {
+                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
+                }
+                else if (randomSpawnMatrixNumber == 4) // front pointed down
+                {
+                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
+                }
+                else if (randomSpawnMatrixNumber == 5) // front pointed up
+                {
+                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
+                }
+
+                return adjustment;
+        */
     }
+
+    void getRandomMatrixNumber()
+    {
+        randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
+        //randomSpawnMatrixNumber = 5;
+    }
+
     int GetRandomSpawnPosition()
     {
 
@@ -452,7 +515,7 @@ public class LevelManager : MonoBehaviour
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
             // randon number generator for a choice of two things
-            bool value = ((numberOfTimesXWingsSpawned % 7) == 0);
+            bool value = ((numberOfTimesXWingsSpawned % 50) == 0);
 
             if (value)
             {
@@ -470,8 +533,9 @@ public class LevelManager : MonoBehaviour
     void spawnNewXWingAtPosition(int position)
     {
 
-        string spawnPositionNumber = "spawn" + position;
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
         GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        //GameObject enemySpawner = GameObject.Find("specialSpawn1");
         float x = enemySpawner.transform.position.x;
         float y = enemySpawner.transform.position.y;
         float z = enemySpawner.transform.position.z;
@@ -484,7 +548,7 @@ public class LevelManager : MonoBehaviour
     void spawnNewAWingAtPosition(int position)
     {
 
-        string spawnPositionNumber = "spawn" + position;
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
         GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
         float x = enemySpawner.transform.position.x;
         float y = enemySpawner.transform.position.y;
@@ -522,7 +586,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-
     public static void launchDeathStarAttack()
     {
 
@@ -556,7 +619,7 @@ public class LevelManager : MonoBehaviour
     void spawnNewBoxAtPosition(int position)
     {
 
-        string spawnPositionNumber = "spawn" + position;
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
         GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
         float x = enemySpawner.transform.position.x;
         float y = enemySpawner.transform.position.y;
@@ -570,7 +633,7 @@ public class LevelManager : MonoBehaviour
     void spawnNewMeteoriteAtPosition(int position)
     {
 
-        string spawnPositionNumber = "spawn" + position;
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
         GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
         float x = enemySpawner.transform.position.x;
         float y = enemySpawner.transform.position.y;
@@ -580,8 +643,16 @@ public class LevelManager : MonoBehaviour
         incrementNumSpawned();
     }
 
-    void spawnNewTargets()
+    void spawnNewTargets2()
     {
+        // spawn at specialSpawn1
+        spawnNewXWingAtPosition(1);
+    }
+
+        void spawnNewTargets()
+    {
+        getRandomMatrixNumber(); // sets matrix number to 1 or 2
+
         getRandomSpawnPositions();
 
         // determine the mixture level of target vehicles
