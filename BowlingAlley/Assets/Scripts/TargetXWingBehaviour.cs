@@ -183,6 +183,14 @@ public class TargetXWingBehaviour : MonoBehaviour
             // do nothing. My own blaster appeared within my collider. 
             // it hasn't been hit by a blaster...its mine
         }
+        else if (collision.gameObject.tag == "miniTieMissle")
+        {
+            health = 0f; 
+        }
+        else if (collision.gameObject.tag == "deathStarMissle")
+        {
+            health = 0f;
+        }
         else
         {
             health = 0f; // something unexpected

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TieMissleBehaviour : MonoBehaviour {
 
     GameObject target;
-    bool okToTurn = false;
+    bool okToTurn = true;
     private float lifeDuration = 12.0f;
     private float lifeTimer;
 
@@ -17,9 +17,55 @@ public class TieMissleBehaviour : MonoBehaviour {
 
     void chooseTarget () {
 
-        GameObject tantive = GameObject.FindGameObjectWithTag ("tantiveIV");
-        GameObject falcon = GameObject.FindGameObjectWithTag ("falcon");
+        target = null;
 
+        GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
+        GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
+        GameObject[] xwings     = GameObject.FindGameObjectsWithTag("targetXWing");
+        GameObject[] meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
+        GameObject[] awings     = GameObject.FindGameObjectsWithTag("targetAWing");
+
+        if (target == null)
+        {
+            if (xwings.Length > 0)
+            {
+                target = xwings[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (awings.Length > 0)
+            {
+                target = awings[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (meteorites.Length > 0)
+            {
+                target = meteorites[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (falcon !=null)
+            {
+                target = falcon;
+            }
+        }
+
+        if (target == null)
+        {
+            if (tantive != null)
+            {
+                target = tantive;
+            }
+        }
+
+        /*
         if ((tantive != null) && (falcon != null)) {
 
             //both ships are there; randomly choose
@@ -43,6 +89,7 @@ public class TieMissleBehaviour : MonoBehaviour {
                 target = null;
             }
         }
+        */
 
     }
     // Start is called before the first frame update
@@ -61,12 +108,14 @@ public class TieMissleBehaviour : MonoBehaviour {
 
         this.GetComponent<Rigidbody> ().velocity = 3f * this.transform.forward;
 
+/*
         if (!okToTurn) {
             pauseTimer -= Time.deltaTime;
             if (pauseTimer <= 0f) {
                 okToTurn = true;
             }
         }
+*/
 
         if (target != null && okToTurn) {
 
@@ -74,7 +123,7 @@ public class TieMissleBehaviour : MonoBehaviour {
             //  transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i);
 
             Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - this.transform.position);
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, targetRotation, 2f * Time.deltaTime);
+            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, targetRotation, 15f * Time.deltaTime);
             //this.GetComponent<Rigidbody> ().MoveRotation (Quaternion.RotateTowards (this.transform.rotation, targetRotation, 2f));
         }
 
@@ -91,9 +140,15 @@ public class TieMissleBehaviour : MonoBehaviour {
     }
 
     void OnCollisionEnter (Collision collision) {
+      
         if (
             (collision.gameObject.tag == "tantiveIV") ||
-            (collision.gameObject.tag == "falcon")
+            (collision.gameObject.tag == "falcon") ||
+            (collision.gameObject.tag == "targetXWing") ||
+             (collision.gameObject.tag == "targetAWing") ||
+              (collision.gameObject.tag == "targetMeteorite") 
+
+
         ) {
             destroySelf ();
         }

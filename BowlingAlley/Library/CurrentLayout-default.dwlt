@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 8}
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 17476
+  m_LastSelectedObjectID: -5634
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -582,20 +582,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Prefabs
+    - Assets/EffectExamples/Fire & Explosion Effects/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Resources/Prefabs
+  - Assets/EffectExamples/Fire & Explosion Effects/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\domin\Documents\git_stuff\AR_BowlingAlley\BowlingAlley
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 8c620000
-    m_LastClickedID: 25228
-    m_ExpandedIDs: 000000003a6200003c6200003e62000040620000426200004462000046620000486200004a6200004c62000000ca9a3b
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: 9e6b0000
+    m_LastClickedID: 27550
+    m_ExpandedIDs: 00000000726400007464000076640000786400007a6400007c6400007e640000806400008264000084640000a869000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -623,7 +623,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 943}
     m_SelectedIDs: cc3c0000
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003a6200003c6200003e62000040620000426200004462000046620000486200004a6200004c620000
+    m_ExpandedIDs: 00000000726400007464000076640000786400007a6400007c6400007e640000806400008264000084640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -675,7 +675,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 3}
+    m_ScrollPosition: {x: 0, y: 21}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 550
@@ -710,21 +710,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0cc6e8ffa8c6e8ffc2c6e8ff8ac8e8ff8ef1e8ff2af2e8ff44f2e8ff0cf4e8ff5681ebff5881ebff5c81ebff6081ebff6281ebff6c81ebff6e81ebff7081ebff7281ebff7481ebff7681ebff7881ebff06aceeff08aceeff0caceeff10aceeff12aceeff1caceeff1eaceeff20aceeff22aceeff24aceeff26aceeff28aceeffe01ef3ffe21ef3ffe61ef3ffea1ef3ffee1ef3fff01ef3fff81ef3fffa1ef3fffe1ef3ff001ff3ff041ff3ff081ff3ff0cbdfeff0ebdfeff12bdfeff16bdfeff18bdfeff22bdfeff24bdfeff26bdfeff28bdfeff2abdfeff2cbdfeff2ebdfeffb2d6ffff22fbffffe8430000fa4300002c440000364400005a4400007e440000f2440000124500006a4500006e450000724500002a460000
+      m_ExpandedIDs: 3026f3ffcc26f3ffe626f3ffae28f3ff22fbffff684400008c440000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: miniTieFighter
-        m_OriginalName: miniTieFighter
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 17428
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 6}
       m_SearchString: 
@@ -770,9 +770,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.0064624995, y: 4.5634203, z: -0.22071141}
+    m_Target: {x: 2.1090312, y: 8.739, z: 13.101561}
     speed: 2
-    m_Value: {x: -0.0064624995, y: 4.5634203, z: -0.22071141}
+    m_Value: {x: 2.1090312, y: 8.739, z: 13.101561}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -818,13 +818,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.012900335, y: 0.009673103, z: -0.000108778004, w: 0.9999933}
+    m_Target: {x: -0.11881764, y: 0.07360793, z: 0.008606649, w: 0.990273}
     speed: 2
-    m_Value: {x: -0.012898745, y: 0.009671911, z: -0.000108764594, w: 0.99987006}
+    m_Value: {x: -0.11880277, y: 0.07359872, z: 0.008605571, w: 0.9901491}
   m_Size:
-    m_Target: 0.7000782
+    m_Target: 8.885607
     speed: 2
-    m_Value: 0.7000782
+    m_Value: 8.885607
   m_Ortho:
     m_Target: 0
     speed: 2

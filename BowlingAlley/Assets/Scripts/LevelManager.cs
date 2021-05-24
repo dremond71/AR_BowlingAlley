@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
     List<int> randomSpawnPositions = new List<int>();
     private int randomSpawnMatrixNumber = 0;
-    private int numberOfSpawnMatrices = 5;
+    private int numberOfSpawnMatrices = 3;
 
     private AudioSource[] empireSources;
     private AudioClip[] empireClips;
@@ -199,7 +199,6 @@ public class LevelManager : MonoBehaviour
     void getRandomMatrixNumber()
     {
         randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
-        //randomSpawnMatrixNumber = 5;
     }
 
     int GetRandomSpawnPosition()
@@ -280,7 +279,7 @@ public class LevelManager : MonoBehaviour
         GameObject[] awings;
         GameObject[] meteorites;
         GameObject[] falcons;
-        //GameObject[] tantiveIV;
+        GameObject[] tantiveIV;
 
         if (empireMode)
         {
@@ -288,7 +287,7 @@ public class LevelManager : MonoBehaviour
             meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
             awings     = GameObject.FindGameObjectsWithTag("targetAWing");
             falcons    = GameObject.FindGameObjectsWithTag("falcon");
-           // tantiveIV  = GameObject.FindGameObjectsWithTag("tantiveIV");
+            tantiveIV  = GameObject.FindGameObjectsWithTag("tantiveIV");
         }
         else
         {
@@ -296,7 +295,7 @@ public class LevelManager : MonoBehaviour
             meteorites = new GameObject[0];
             awings     = new GameObject[0];
             falcons    = new GameObject[0];
-            //tantiveIV  = new GameObject[0];
+            tantiveIV  = new GameObject[0];
         }
 
          List<GameObject> list  = new List<GameObject>();
@@ -304,7 +303,7 @@ public class LevelManager : MonoBehaviour
          list.AddRange(awings);
          list.AddRange(meteorites);
          list.AddRange(falcons);
-         //list.AddRange(tantiveIV);
+         list.AddRange(tantiveIV);
 
         GameObject[] allTargetVehicles = list.ToArray();
 
@@ -515,7 +514,7 @@ public class LevelManager : MonoBehaviour
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
             // randon number generator for a choice of two things
-            bool value = ((numberOfTimesXWingsSpawned % 50) == 0);
+            bool value = ((numberOfTimesXWingsSpawned % 15) == 0);
 
             if (value)
             {
