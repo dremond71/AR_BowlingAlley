@@ -80,6 +80,8 @@ TagManager:
   - deathStarMissleLauncher
   - deathStarMissle
   - deathStarBlast_Sound
+  - deathStarTriangle
+  - deathStarTriangleStem
   layers:
   - Default
   - TransparentFX

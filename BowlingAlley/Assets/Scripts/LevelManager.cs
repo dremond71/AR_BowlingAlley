@@ -371,25 +371,46 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(shootAllTargetVehicles());
     }
 
+    void makeDeathStarTriangleStemsVisible(bool visible)
+    {
+        Renderer rend = null;
+        GameObject[] stems = GameObject.FindGameObjectsWithTag("deathStarTriangleStem");
+        for (int i = 0; i < stems.Length; i++)
+        {
+            rend = stems[i].GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.enabled = visible;
+            }
+        }
+    }
+
     IEnumerator shootAllTargetVehicles()
     {
-        
+
         float shotDelay = 0.20f;
 
         GameObject[] allTargets = getAllTargetVehicles();
 
         if (allTargets.Length > 0)
         {
+
+            makeDeathStarTriangleStemsVisible(true);
+
             PlayDeathStarBlastSound_Immediately();
+            for (int i = 0; i < allTargets.Length; i++)
+            {
+                spawnNewDeathStarMissle(allTargets[i]);
+                yield return new WaitForSeconds(shotDelay);
+            }
+
+            makeDeathStarTriangleStemsVisible(false);
+
+            onDifferentThread_PauseAfterShootingMissle();
+
         }
 
-        for (int i = 0; i < allTargets.Length; i++)
-        {
-            spawnNewDeathStarMissle(allTargets[i]);
-            yield return new WaitForSeconds(shotDelay);
-        }
-
-        onDifferentThread_PauseAfterShootingMissle();
+ 
 
     }
 
