@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     static string launchTheDSAttack = "";
     
-    private float pauseAfterShootingMissle = 0.01f;
+    private float pauseAfterShootingMissles = 1.5f;
 
     private bool debug = true;
 
@@ -132,68 +132,13 @@ public class LevelManager : MonoBehaviour
     }
 
     float getSlightlyRandomizedSpeed()
-    {
-        
+    {    
         return enemySpeed + GetRandomSpeedAdjustment();
-
-        /*
-                float speed = 1.0f;
-
-                if (randomSpawnMatrixNumber == 1) // front straight
-                {
-                    //         15.0f
-                    speed = enemySpeed + GetRandomSpeedAdjustment();
-                }
-                else if (randomSpawnMatrixNumber == 2)
-                {
-                    speed = 5.0f + GetRandomSpeedAdjustment();
-                }
-                else if (randomSpawnMatrixNumber == 3)
-                {
-                    speed = 5.0f + GetRandomSpeedAdjustment();
-                }
-                else if (randomSpawnMatrixNumber == 4) // front pointed down
-                {
-                    speed = 5.0f + GetRandomSpeedAdjustment();
-                }
-                else if (randomSpawnMatrixNumber == 5) // front pointed down
-                {
-                    speed = 5.0f + GetRandomSpeedAdjustment();
-                }
-                return speed;
-        */
     }
 
     float GetRandomSpeedAdjustment()
     {
         return Random.Range(0.0f, 20.0f);
-
-        /*
-                float adjustment = 1.0f;
-
-                if (randomSpawnMatrixNumber == 1) //front straight
-                {
-                    adjustment = Random.Range(0.0f, 20.0f);
-                }
-                else if (randomSpawnMatrixNumber == 2)
-                {
-                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
-                }
-                else if (randomSpawnMatrixNumber == 3)
-                {
-                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
-                }
-                else if (randomSpawnMatrixNumber == 4) // front pointed down
-                {
-                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
-                }
-                else if (randomSpawnMatrixNumber == 5) // front pointed up
-                {
-                    adjustment = Random.Range(0.0f, 10.0f);// slow down speed  of enemy coming on angles (harder to shoot, so slow them down)
-                }
-
-                return adjustment;
-        */
     }
 
     void getRandomMatrixNumber()
@@ -389,20 +334,63 @@ public class LevelManager : MonoBehaviour
     {
 
         float shotDelay = 0.20f;
+        float stemDelay = 0.05f;
 
         GameObject[] allTargets = getAllTargetVehicles();
 
         if (allTargets.Length > 0)
         {
 
-            makeDeathStarTriangleStemsVisible(true);
-
+            // play firing sound
             PlayDeathStarBlastSound_Immediately();
+
+            //
+            // show firing stems with slight delay before each (like in the movies ;) )
+            //
+            Renderer rend = null;
+            GameObject[] stems = GameObject.FindGameObjectsWithTag("deathStarTriangleStem");
+            for (int i = 0; i < stems.Length; i++)
+            {
+                rend = stems[i].GetComponent<Renderer>();
+                if (rend != null)
+                {
+                    rend.enabled = true;
+                    yield return new WaitForSeconds(stemDelay);
+                }
+            }
+
+            //
+            // fire all missles
+            //
             for (int i = 0; i < allTargets.Length; i++)
             {
-                spawnNewDeathStarMissle(allTargets[i]);
+                try
+                {
+                    spawnNewDeathStarMissle(allTargets[i]);
+                }
+                catch (System.Exception e)
+                {
+                    MyDebug("shootAllTargetVehicles() error: " + e.ToString());
+                }
+                
                 yield return new WaitForSeconds(shotDelay);
             }
+
+            yield return new WaitForSeconds(0.2f);
+
+            //
+            // turn off firing stems - all at once (no delay)
+            //
+            for (int i = 0; i < stems.Length; i++)
+            {
+                rend = stems[i].GetComponent<Renderer>();
+                if (rend != null)
+                {
+                    rend.enabled = false;
+                }
+            }
+
+           
 
             makeDeathStarTriangleStemsVisible(false);
 
@@ -439,7 +427,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator DoThePausingForMissle()
     {
-        yield return new WaitForSeconds(pauseAfterShootingMissle);
+        yield return new WaitForSeconds(pauseAfterShootingMissles);
         launchTheDSAttack = "";
     }
 

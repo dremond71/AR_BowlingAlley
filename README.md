@@ -124,6 +124,9 @@ I just added this detailed A-Wing to the game.
 
 Move the right joystick to the left, and the DeathStar will destroy every target vehicule with a green DeathStar missle dedicated to each.
 
+![](./deathstar_shooting.png)
+
+
 ## Still In Progress
 
 I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
