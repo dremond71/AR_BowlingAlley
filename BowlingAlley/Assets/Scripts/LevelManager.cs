@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
 
     private int totalSpawnPositionsAvailable = 9;
     private int currentAllowedSpawnPositions = 0;
+    private int previous_currentAllowedSpawnPositions = -1;
     System.Random rnd = new System.Random();
 
     List<int> randomSpawnPositions = new List<int>();
@@ -71,6 +72,7 @@ public class LevelManager : MonoBehaviour
     // 4 - millenium falcon only
     private int[] targetRebelVehicleMixture = new[] { 1, 2, 3, 4 };
     private int vehicleMixtureLevel = 1;//default
+    private int previous_vehicleMixtureLevel=-1;
 
     void load_EmpireSounds()
     {
@@ -107,8 +109,13 @@ public class LevelManager : MonoBehaviour
         // OLD WAY - currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
         // Random.Range(1, 10);
         // return a number (1,2,3,4,5,6,7,8,9 ) - does not include 10
-        currentAllowedSpawnPositions = Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
-        //  MyDebug("Chosen amount : " + currentAllowedSpawnPositions);
+        int newNumber = Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
+        while(newNumber == previous_currentAllowedSpawnPositions) {
+          newNumber =  Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
+        }        
+       currentAllowedSpawnPositions=newNumber;
+       previous_currentAllowedSpawnPositions = currentAllowedSpawnPositions;
+
     }
     void getRandomSpawnPositions()
     {
@@ -170,8 +177,14 @@ public class LevelManager : MonoBehaviour
 
         // Random.Range(1, 3);
         // return a number (1, or 2) - does not include 3
-        return Random.Range(rangeBeginningValue, rangeEndingValue);
+        int newNumber =  Random.Range(rangeBeginningValue, rangeEndingValue);
 
+        // make sure we don't return a similar value as before
+        while(newNumber == previous_vehicleMixtureLevel) {
+          newNumber =  Random.Range(rangeBeginningValue, rangeEndingValue);
+        }
+        previous_vehicleMixtureLevel = newNumber;        
+        return newNumber;
     }
 
     int GetRandomVehicleType()
