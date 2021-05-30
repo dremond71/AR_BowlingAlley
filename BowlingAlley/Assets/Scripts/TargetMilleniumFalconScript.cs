@@ -22,6 +22,8 @@ public class TargetMilleniumFalconScript : MonoBehaviour
 
     private Animator anim;
     private float energyExplosionVolume = 0.75f;
+     
+    private bool playAnimation = true;
 
     public GameObject energyExplosionEffect;
 
@@ -102,6 +104,21 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     private AudioSource introNoMoonSource;
     private AudioClip introNoMoon;
 
+    public void setAnimationScenario(bool animationScenario)
+    {
+        //
+        // when using falcon with animator turned on, it spawns but doesn't not rotate or move.
+        // I had to add functionality to turn it on or off.
+        // when turned off, the falcon behaves normally again
+        //
+
+        playAnimation = animationScenario;
+        // how to enable or disable the animator programmatically
+        // https://answers.unity.com/questions/665146/how-to-enabledisable-animator-by-script.html
+        //
+        anim.enabled = playAnimation;
+    }
+
     void Awake()
     {
 
@@ -151,36 +168,45 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     void Start()
     {
 
+        if (playAnimation) {
 
+             shootingPauseTimer = GetRandomShootingPauseAmount (); //pause between each shot
+            // delayBeforeFirstShot = GetRandomStartDelay (); // pause before starting to shoot
+            // pauseBeforeShootingOnDifferentThread (); // start the pause (before starting to shoot)
 
-        // shootingPauseTimer = GetRandomShootingPauseAmount (); //pause between each shot
-        // delayBeforeFirstShot = GetRandomStartDelay (); // pause before starting to shoot
-        // pauseBeforeShootingOnDifferentThread (); // start the pause (before starting to shoot)
+            // Level Manager stops the Tie Fighter's ability to shoot
+            // when a hero gets spawned. 
 
-        // Level Manager stops the Tie Fighter's ability to shoot
-        // when a hero gets spawned. 
+            // play intro sound for the MF
+            //    - Once it is finished, call LevelManager.setTieFighterAllowedToShoot(true);
+            //    - start the animation of your choice 
+            int introToPlay = LevelManager.getFalconIntroIndex();
+            switch (introToPlay)
+            {
+                case 1:
+                    playIntro1AndAnimation1OnDifferentThread();
+                    break;
+                case 2:
+                    playIntro2AndAnimation1OnDifferentThread();
+                    break;
+                case 3:
+                    playIntro3AndAnimation1OnDifferentThread();
+                    break;
+                case 4:
+                    playIntro4AndAnimation1OnDifferentThread();
+                    break;
+                default:
+                    break;
+            }
 
-        // play intro sound for the MF
-        //    - Once it is finished, call LevelManager.setTieFighterAllowedToShoot(true);
-        //    - start the animation of your choice 
-        int introToPlay = LevelManager.getFalconIntroIndex();
-        switch (introToPlay)
-        {
-            case 1:
-                playIntro1AndAnimation1OnDifferentThread();
-                break;
-            case 2:
-                playIntro2AndAnimation1OnDifferentThread();
-                break;
-            case 3:
-                playIntro3AndAnimation1OnDifferentThread();
-                break;
-            case 4:
-                playIntro4AndAnimation1OnDifferentThread();
-                break;
-            default:
-                break;
         }
+        else {
+            // normal vehicle mode
+
+            pauseBeforeShootingOnDifferentThread();
+
+        } // endif
+
 
 
     }
@@ -195,6 +221,14 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     {
 
         playRoaringSoundIfItIsTime();
+
+        if (!playAnimation){
+            // enemy must have a delay before starting to shoot
+            if (shootingAllowed)
+            {
+                shootIfTime();
+            }
+        }
 
         // if (receivedFirstHitFromEnemy)
         // {
@@ -219,7 +253,9 @@ public class TargetMilleniumFalconScript : MonoBehaviour
             Explode();
         }
 
-        //        destroyIfIrrelevantNow();
+        if (!playAnimation){
+           destroyIfIrrelevantNow();
+        }
 
     }
 
@@ -582,7 +618,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     float GetRandomShootingPauseAmount()
     {
 
-        return Random.Range(6.0f, 8.0f);
+        return Random.Range(3.0f, 4.0f);
 
     }
 

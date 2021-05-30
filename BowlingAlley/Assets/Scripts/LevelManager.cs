@@ -68,7 +68,8 @@ public class LevelManager : MonoBehaviour
     // 1 - swarm of specific vehicle type 
     // 2 - swarm of mixture of all types
     // 3 - asteroid swarm
-    private int[] targetRebelVehicleMixture = new[] { 1, 2, 3 };
+    // 4 - millenium falcon only
+    private int[] targetRebelVehicleMixture = new[] { 1, 2, 3, 4 };
     private int vehicleMixtureLevel = 1;//default
 
     void load_EmpireSounds()
@@ -134,6 +135,11 @@ public class LevelManager : MonoBehaviour
     float getSlightlyRandomizedSpeed()
     {    
         return enemySpeed + GetRandomSpeedAdjustment();
+    }
+
+    float getFalconSpeed()
+    {    
+        return enemySpeed + 30.0f;
     }
 
     float GetRandomSpeedAdjustment()
@@ -297,6 +303,8 @@ public class LevelManager : MonoBehaviour
         float y = falconSpawner.transform.position.y;
         float z = falconSpawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(falconPrefab, new Vector3(x, y, z), falconSpawner.transform.rotation);
+        go.SendMessage("setAnimationScenario", true);
+        
 
     }
 
@@ -499,7 +507,7 @@ public class LevelManager : MonoBehaviour
         numberOfTimesXWingsSpawned++;
     }
 
-    void spawnHero()
+    void spawnHeroWithAnimation()
     {
 
         //setTieFighterAllowedToShoot(false); // let hero say something before battle starts
@@ -508,6 +516,7 @@ public class LevelManager : MonoBehaviour
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
 
     }
+
     void handleSpawning()
     {
 
@@ -522,12 +531,12 @@ public class LevelManager : MonoBehaviour
         {
             // after user has shot first squadron of xwings, it is fine to introduce a HERO, or another squadron of xwings
 
-            // randon number generator for a choice of two things
+            // let's do it after 15 swarms of target vehicles
             bool value = ((numberOfTimesXWingsSpawned % 15) == 0);
 
             if (value)
             {
-                spawnHero();
+                spawnHeroWithAnimation();
             }
             else
             {
@@ -538,6 +547,23 @@ public class LevelManager : MonoBehaviour
         }
 
     }
+
+    
+        void spawnNormalFalcon()
+    {
+        int position=5; // middle position of any matrix
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
+        GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        float x = enemySpawner.transform.position.x;
+        float y = enemySpawner.transform.position.y;
+        float z = enemySpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(falconPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+        go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+        go.SendMessage("setAnimationScenario", false);// <=== normal falcon
+        go.GetComponent<Rigidbody>().velocity = getFalconSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+        incrementNumSpawned();
+    }
+
     void spawnNewXWingAtPosition(int position)
     {
 
@@ -663,9 +689,9 @@ public class LevelManager : MonoBehaviour
 
         getRandomSpawnPositions();
 
-        // determine the mixture level of target vehicles
+        // determine the mixture level of target vehicles, or special hero flyby
         vehicleMixtureLevel = GetRandomMixtureOfVehiclesValue();
-        
+
         if (vehicleMixtureLevel == 1)
         {
             //
@@ -725,9 +751,12 @@ public class LevelManager : MonoBehaviour
             }
 
         }
+        else if (vehicleMixtureLevel == 4) {
+          // falcon flyby
+          spawnNormalFalcon();
+        }
 
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
-
     }
 
     void MyDebug(string someText)
