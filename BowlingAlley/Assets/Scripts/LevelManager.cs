@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     
     private float pauseAfterShootingMissles = 1.5f;
 
-    private bool debug = true;
+    private bool debug = false;
 
     private TextMesh debugText;
 
@@ -599,6 +599,31 @@ public class LevelManager : MonoBehaviour
         {
             numberOfSpawnedItems++;
         }
+    }
+
+    public static GameObject[] filterGameObjectsInFrontOfPlayer(GameObject[] given) {
+
+       List<GameObject> list  = new List<GameObject>();
+         
+        // get player's Z position
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+        float shooterZ = shooter.transform.position.z;
+
+        if (given != null) {
+            for (int i = 0; i < given.Length; i++)
+            {
+                if (given[i] != null) {
+                    float givenZ = given[i].transform.position.z;
+                    // opposite logic to vehicles destroying themselves
+                    // shortly after passing shooter.
+                    if (givenZ >= (shooterZ + 0.5f)){
+                        list.Add(given[i]);
+                    }
+                }
+            }
+        }//if
+
+      return list.ToArray();
     }
 
     public static int getFalconIntroIndex()

@@ -21,9 +21,23 @@ public class TieMissleBehaviour : MonoBehaviour {
 
         GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
         GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
-        GameObject[] xwings     = GameObject.FindGameObjectsWithTag("targetXWing");
-        GameObject[] meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
-        GameObject[] awings     = GameObject.FindGameObjectsWithTag("targetAWing");
+
+        GameObject[] tantives= new GameObject[]{};
+        GameObject[] falcons= new GameObject[]{};
+    
+        if (tantive != null){
+            tantives = new GameObject[] {tantive};
+            tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+        }
+
+        if (falcons != null){
+            falcons = new GameObject[] {falcon};
+            falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+        }
+
+        GameObject[] xwings    = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing")); 
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings     = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
 
         if (target == null)
         {
@@ -51,45 +65,19 @@ public class TieMissleBehaviour : MonoBehaviour {
 
         if (target == null)
         {
-            if (falcon !=null)
+            if (falcons !=null && falcons.Length>0)
             {
-                target = falcon;
+                target = falcons[0];
             }
         }
 
         if (target == null)
         {
-            if (tantive != null)
+            if (tantives != null && tantives.Length>0)
             {
-                target = tantive;
+                target = tantives[0];
             }
         }
-
-        /*
-        if ((tantive != null) && (falcon != null)) {
-
-            //both ships are there; randomly choose
-            bool value = (rnd.NextDouble () >= 0.5);
-
-            if (value) {
-                target = tantive;
-            } else {
-                target = falcon;
-            }
-
-        } else {
-
-            // perhaps one ship is there
-            // or neither
-            if (tantive != null) {
-                target = tantive;
-            } else if (falcon != null) {
-                target = falcon;
-            } else {
-                target = null;
-            }
-        }
-        */
 
     }
     // Start is called before the first frame update
