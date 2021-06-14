@@ -127,6 +127,17 @@ Move the right joystick to the left, and the DeathStar will destroy every target
 ![](./deathstar_shooting.png)
 
 
+### Star Destroyer
+
+I want the Tie-Fighter to be able to call in a Star Destroyer to come and destroy all the target vehicles on screen.
+
+![](./star-destroyer-topside-view1.png)
+
+![](./star-destroyer-backside-view1.png)
+
+![](./star-destroyer-underbelly.png)
+
+
 ## Still In Progress
 
 I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
