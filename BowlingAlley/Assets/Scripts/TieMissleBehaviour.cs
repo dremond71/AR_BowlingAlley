@@ -112,6 +112,7 @@ public class TieMissleBehaviour : MonoBehaviour {
 
             Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - this.transform.position);
             this.transform.rotation = Quaternion.Slerp (this.transform.rotation, targetRotation, 15f * Time.deltaTime);
+            
             //this.GetComponent<Rigidbody> ().MoveRotation (Quaternion.RotateTowards (this.transform.rotation, targetRotation, 2f));
         }
 

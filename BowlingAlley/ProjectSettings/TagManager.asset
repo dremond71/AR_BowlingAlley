@@ -82,6 +82,8 @@ TagManager:
   - deathStarBlast_Sound
   - deathStarTriangle
   - deathStarTriangleStem
+  - starDestroyerTurboLaserSwivel
+  - sdTopLeftTurboLaserSwivel
   layers:
   - Default
   - TransparentFX
