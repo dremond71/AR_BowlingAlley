@@ -84,9 +84,35 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
 
     }
+
+    
+    void destroyIfIrrelevantNow()
+    {
+        // this object becomes irrelevant 
+        // IF it has flown past the death star; having been spawned from starDestroyerSpawnPoint1
+        // some other condition if spawned from somewhere else
+
+        GameObject deathStar = GameObject.FindGameObjectWithTag("deathStar");
+        float deathStarZ = deathStar.transform.position.z;
+
+        float myZ = transform.position.z;
+
+        if (myZ > (deathStarZ + 10f))
+        {
+            LevelManager.starDestroyerAttackFinished(); // tells LevelManager that the cavalry attack is finished
+            destroySelf();
+        }
+
+    }
+    void destroySelf()
+    {
+        Destroy(gameObject);
+    }
     void FixedUpdate()
     {
            
+           destroyIfIrrelevantNow();
+
             GameObject[] allSwivels = GameObject.FindGameObjectsWithTag("sdTopLeftTurboLaserSwivel");
             if (allSwivels.Length > 0) {
                 GameObject target         = GameObject.FindGameObjectWithTag ("PlayerShooter");

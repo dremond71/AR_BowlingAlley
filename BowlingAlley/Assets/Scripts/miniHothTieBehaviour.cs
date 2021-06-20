@@ -163,6 +163,11 @@ public class miniHothTieBehaviour : MonoBehaviour
         LevelManager.launchDeathStarAttack();
     }
 
+    void askForCavalryAttack()
+    {
+        LevelManager.launchCavalryAttack();
+    }
+
     void shootMissle()
     {
         if (LevelManager.getTieFighterAllowedToShoot())
@@ -368,6 +373,7 @@ public class miniHothTieBehaviour : MonoBehaviour
         if (Input.GetKey("c"))
         {
             MyDebug("Cavalry Attack");
+            askForCavalryAttack();
 
         }
     }
@@ -533,9 +539,10 @@ public class miniHothTieBehaviour : MonoBehaviour
         }
 
 
-        if (rightJoyStick.Horizontal >= 0.5f)
+        if (rightJoyStick.Horizontal >= 0.7f)
         {
             MyDebug("Cavalry Attack");
+            askForCavalryAttack();
 
         }
         else if (rightJoyStick.Horizontal <= -0.7f)

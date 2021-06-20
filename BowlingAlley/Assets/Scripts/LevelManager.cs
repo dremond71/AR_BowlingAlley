@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     static string launchTheDSAttack = "";
     
+    static string launchTheCavalryAttack = "";
+
     private float pauseAfterShootingMissles = 1.5f;
 
     private bool debug = false;
@@ -46,6 +48,7 @@ public class LevelManager : MonoBehaviour
     private GameObject meteorite1Prefab;
 
     private GameObject rebelStarshipPrefab;
+    private GameObject starDestroyerPrefab;
 
     private GameObject falconPrefab;
     private GameObject deathStarMisslePrefab;
@@ -156,8 +159,7 @@ public class LevelManager : MonoBehaviour
 
     void getRandomMatrixNumber()
     {
-       // randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
-        randomSpawnMatrixNumber = 1;
+       randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
     }
 
     int GetRandomSpawnPosition()
@@ -219,8 +221,10 @@ public class LevelManager : MonoBehaviour
         meteorite1Prefab = PrefabFactory.getPrefab("meteorite1");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
-        //rebelStarshipPrefab = PrefabFactory.getPrefab ("rebelTantiveIV");
+        
         rebelStarshipPrefab = PrefabFactory.getPrefab("newTantiveIV");
+        starDestroyerPrefab = PrefabFactory.getPrefab ("starDestroyer");
+
         falconPrefab = PrefabFactory.getPrefab("falcon");
         deathStarMisslePrefab = PrefabFactory.getPrefab("deathStarMissle");
 
@@ -462,9 +466,22 @@ public class LevelManager : MonoBehaviour
        
     }
 
+    void handleLaunchingCavalryAttack()
+    {
+        launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
+
+         spawnStarDestroyer_AtPositionOne();
+
+       
+    }
+
     void Update()
     {
 
+        if (launchTheCavalryAttack == "launch")
+        {
+            handleLaunchingCavalryAttack();
+        }
         
         if (launchTheDSAttack == "launch")
         {
@@ -607,6 +624,20 @@ public class LevelManager : MonoBehaviour
         incrementNumSpawned();
     }
 
+    void spawnStarDestroyer_AtPositionOne()
+    {
+        
+        float theSpeed = 30.0f;
+        string spawnPositionNumber = "starDestroyerSpawnPoint" + 1;
+        GameObject spawner = GameObject.Find(spawnPositionNumber);
+        float x = spawner.transform.position.x;
+        float y = spawner.transform.position.y;
+        float z = spawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(starDestroyerPrefab, new Vector3(x, y, z), spawner.transform.rotation);
+        go.GetComponent<Rigidbody>().velocity = theSpeed * spawner.transform.forward * Time.deltaTime;
+        
+    }
+
     void incrementNumSpawned()
     {
         lock (olock)
@@ -659,6 +690,31 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
+
+    public static void starDestroyerAttackFinished() {
+        lock (olock)
+        {
+
+         // when star destroyer is finished its mission, it calls this method
+         // to allow the LevelManager to know it is done.
+         launchTheCavalryAttack = "";
+
+        }
+        
+    }    
+    public static void launchCavalryAttack() {
+        lock (olock)
+        {
+
+            if (launchTheCavalryAttack == "")
+            {
+                launchTheCavalryAttack = "launch";
+            }
+
+        }
+        
+    }
     public static void launchDeathStarAttack()
     {
 

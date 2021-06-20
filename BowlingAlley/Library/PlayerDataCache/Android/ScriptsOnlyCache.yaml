@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - FlyingXWingBlastBoltLifecycle
     - LevelManager
     - MeteoriteBehaviour
+    - StarDestroyerBehaviour
     - TantiveIVShipBehaviour
     - TargetAWingBehaviour
     - TargetMilleniumFalconBlastLifeCycle
@@ -206,97 +207,99 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13486}
     - Class: 114
-      Script: {instanceID: 13644}
+      Script: {instanceID: 13592}
     - Class: 114
-      Script: {instanceID: 13716}
+      Script: {instanceID: 13646}
     - Class: 114
-      Script: {instanceID: 13778}
+      Script: {instanceID: 13718}
     - Class: 114
-      Script: {instanceID: 13842}
+      Script: {instanceID: 13780}
     - Class: 114
-      Script: {instanceID: 13938}
+      Script: {instanceID: 13844}
     - Class: 114
-      Script: {instanceID: 14184}
+      Script: {instanceID: 13940}
     - Class: 114
       Script: {instanceID: 14186}
     - Class: 114
-      Script: {instanceID: 14366}
+      Script: {instanceID: 14188}
     - Class: 114
-      Script: {instanceID: 14394}
+      Script: {instanceID: 14368}
     - Class: 114
-      Script: {instanceID: 14504}
+      Script: {instanceID: 14396}
     - Class: 114
-      Script: {instanceID: 14602}
+      Script: {instanceID: 14506}
     - Class: 114
-      Script: {instanceID: 14838}
+      Script: {instanceID: 14604}
     - Class: 114
-      Script: {instanceID: 14902}
+      Script: {instanceID: 14840}
     - Class: 114
-      Script: {instanceID: 14928}
+      Script: {instanceID: 14904}
     - Class: 114
-      Script: {instanceID: 14932}
+      Script: {instanceID: 14930}
     - Class: 114
-      Script: {instanceID: 14948}
+      Script: {instanceID: 14934}
     - Class: 114
-      Script: {instanceID: 14956}
+      Script: {instanceID: 14950}
     - Class: 114
-      Script: {instanceID: 14994}
+      Script: {instanceID: 14958}
     - Class: 114
-      Script: {instanceID: 15080}
+      Script: {instanceID: 14996}
     - Class: 114
-      Script: {instanceID: 15084}
+      Script: {instanceID: 15082}
     - Class: 114
-      Script: {instanceID: 15120}
+      Script: {instanceID: 15086}
     - Class: 114
-      Script: {instanceID: 15156}
+      Script: {instanceID: 15122}
     - Class: 114
-      Script: {instanceID: 15166}
+      Script: {instanceID: 15158}
     - Class: 114
-      Script: {instanceID: 15336}
+      Script: {instanceID: 15168}
     - Class: 114
-      Script: {instanceID: 15596}
+      Script: {instanceID: 15338}
     - Class: 114
-      Script: {instanceID: 15666}
+      Script: {instanceID: 15598}
     - Class: 114
-      Script: {instanceID: 15680}
+      Script: {instanceID: 15668}
     - Class: 114
-      Script: {instanceID: 15730}
+      Script: {instanceID: 15682}
     - Class: 114
-      Script: {instanceID: 16032}
+      Script: {instanceID: 15732}
     - Class: 114
-      Script: {instanceID: 16092}
+      Script: {instanceID: 16034}
     - Class: 114
-      Script: {instanceID: 16118}
+      Script: {instanceID: 16094}
     - Class: 114
-      Script: {instanceID: 16122}
+      Script: {instanceID: 16120}
     - Class: 114
-      Script: {instanceID: 16228}
+      Script: {instanceID: 16124}
     - Class: 114
-      Script: {instanceID: 16256}
+      Script: {instanceID: 16230}
     - Class: 114
-      Script: {instanceID: 16304}
+      Script: {instanceID: 16258}
     - Class: 114
-      Script: {instanceID: 16328}
+      Script: {instanceID: 16306}
     - Class: 114
-      Script: {instanceID: 16432}
+      Script: {instanceID: 16330}
     - Class: 114
-      Script: {instanceID: 16464}
+      Script: {instanceID: 16434}
     - Class: 114
-      Script: {instanceID: 16490}
+      Script: {instanceID: 16466}
     - Class: 114
-      Script: {instanceID: 16642}
+      Script: {instanceID: 16492}
     - Class: 114
-      Script: {instanceID: 16646}
+      Script: {instanceID: 16644}
     - Class: 114
-      Script: {instanceID: 16694}
+      Script: {instanceID: 16648}
     - Class: 114
-      Script: {instanceID: 16726}
+      Script: {instanceID: 16696}
     - Class: 114
-      Script: {instanceID: 16876}
+      Script: {instanceID: 16728}
     - Class: 114
-      Script: {instanceID: 16894}
+      Script: {instanceID: 16878}
     - Class: 114
-      Script: {instanceID: 16900}
+      Script: {instanceID: 16896}
+    - Class: 114
+      Script: {instanceID: 16902}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -880,6 +883,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.XR.ARFoundation.dll
     namespaceName: UnityEngine.XR.ARFoundation
     className: ARParticipant
+  - hash:
+      serializedVersion: 2
+      Hash: feb9c1e892993264d91cd2d1bc895bc0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StarDestroyerBehaviour
   - hash:
       serializedVersion: 2
       Hash: ce669872a2be11bc686ea22961d8a3bb
