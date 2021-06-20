@@ -155,6 +155,10 @@ public class MeteoriteBehaviour : MonoBehaviour
         {
             health = 0f; // immediately explode if falcon hits meteorite
         }
+        else if (collision.gameObject.tag == "starDestroyer")
+        {
+            health = 0f; // immediately explode if falcon hits meteorite
+        }        
     }
 
     void destroyIfIrrelevantNow()

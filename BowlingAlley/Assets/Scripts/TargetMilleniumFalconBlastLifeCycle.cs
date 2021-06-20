@@ -15,9 +15,10 @@ public class TargetMilleniumFalconBlastLifeCycle : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if
-             (collision.gameObject.tag == "PlayerShooter")
-
+        if (
+              (collision.gameObject.tag  == "PlayerShooter") ||
+              (collision.gameObject.tag == "starDestroyer")
+        )
         {
             destroySelf();
         }

@@ -156,7 +156,8 @@ public class LevelManager : MonoBehaviour
 
     void getRandomMatrixNumber()
     {
-        randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
+       // randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
+        randomSpawnMatrixNumber = 1;
     }
 
     int GetRandomSpawnPosition()

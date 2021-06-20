@@ -84,6 +84,7 @@ TagManager:
   - deathStarTriangleStem
   - starDestroyerTurboLaserSwivel
   - sdTopLeftTurboLaserSwivel
+  - starDestroyer
   layers:
   - Default
   - TransparentFX

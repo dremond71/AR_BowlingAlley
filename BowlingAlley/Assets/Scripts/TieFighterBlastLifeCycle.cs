@@ -18,7 +18,10 @@ public class TieFighterBlastLifeCycle : MonoBehaviour
              (collision.gameObject.tag == "targetXWing") ||
              (collision.gameObject.tag == "targetAWing") ||
               (collision.gameObject.tag == "falcon") ||
-              (collision.gameObject.tag == "targetMeteorite")
+              (collision.gameObject.tag == "targetMeteorite") ||
+              (collision.gameObject.tag == "starDestroyer") 
+              
+
         )
         {
             destroySelf();

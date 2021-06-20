@@ -4,12 +4,86 @@ using UnityEngine;
 
 public class StarDestroyerBehaviour : MonoBehaviour
 {
+    private AudioSource metalHitSource;
+    private AudioClip metalHit;
+    private float blasterVolume = 0.1f;
+    
+    Vector3 contactPoint;
+
+    public float health = 999999999f;
+    public GameObject muzzleFlashEffect;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+            metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
+            metalHit = metalHitSource.clip;        
     }
 
+    void PlayMetalHitSound_Immediately()
+    {
+        metalHitSource.PlayOneShot(metalHit, blasterVolume); //0.8
+
+    }
+
+
+        private void OnCollisionEnter(Collision collision)
+    {
+
+        ContactPoint cp = collision.contacts[0];
+        contactPoint = cp.point;
+
+        if (collision.gameObject.tag == "miniTieBlast")
+        {          
+            health -= 1f;
+            handleHit();
+            
+        }
+        else if (collision.gameObject.tag == "miniXWingBlast")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else if (collision.gameObject.tag == "falconBlast")
+        {
+            health -= 1f;
+            handleHit();
+        }        
+        else if (collision.gameObject.tag == "miniTieMissle")
+        {
+            health -= 1f;
+            handleHit(); 
+        }
+        else if (collision.gameObject.tag == "deathStarMissle")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else
+        {
+            health -= 1f;
+            handleHit();
+        }
+
+       // MyDebug("box collided with : " + collision.gameObject.tag);
+   
+    }
+
+    void handleHit()
+    {
+
+        handleDamage();
+
+    }
+    void handleDamage()
+    {
+
+        GameObject damageObject = Instantiate(muzzleFlashEffect, contactPoint, muzzleFlashEffect.transform.rotation);
+        damageObject.transform.Rotate(0f, 45f, 0f);
+        damageObject.transform.SetParent(this.transform);
+
+
+    }
     void FixedUpdate()
     {
            

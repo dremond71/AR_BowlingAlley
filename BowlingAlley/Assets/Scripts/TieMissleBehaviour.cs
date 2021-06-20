@@ -135,7 +135,9 @@ public class TieMissleBehaviour : MonoBehaviour {
             (collision.gameObject.tag == "falcon") ||
             (collision.gameObject.tag == "targetXWing") ||
              (collision.gameObject.tag == "targetAWing") ||
-              (collision.gameObject.tag == "targetMeteorite") 
+              (collision.gameObject.tag == "targetMeteorite") ||
+              (collision.gameObject.tag == "starDestroyer") ||
+              (collision.gameObject.tag == "PlayerShooter") 
 
 
         ) {
