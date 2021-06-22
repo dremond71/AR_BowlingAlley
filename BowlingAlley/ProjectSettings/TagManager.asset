@@ -87,6 +87,11 @@ TagManager:
   - starDestroyer
   - starDestroyerSpawnPoint1
   - deathStar
+  - SD_TL_BR_BlasterPosition1
+  - SD_TL_BR_BlasterPosition2
+  - SD_TL_BR_BlasterPosition3
+  - SD_TL_BR_BlasterPosition4
+  - SD_TL_BR_Swivel
   layers:
   - Default
   - TransparentFX

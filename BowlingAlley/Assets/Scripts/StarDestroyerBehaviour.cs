@@ -13,16 +13,145 @@ public class StarDestroyerBehaviour : MonoBehaviour
     public float health = 999999999f;
     public GameObject muzzleFlashEffect;
 
+    GameObject target;
+    private float shootingPauseTimer;
+
+    bool shootingAllowed = false;
+
+    private GameObject turboLasterBlastPrefab;
+    private float blasterSpeed = 180.0f;
+    private float delayBeforeFirstShot;
+
+    private AudioSource deathStarBlastSource;
+    private AudioClip deathStarBlast;
+    private float deathStarBlastVolume = 0.8f;
+
+    private bool debug = true;
+    private TextMesh debugText;
+
     // Start is called before the first frame update
     void Start()
     {
             metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
-            metalHit = metalHitSource.clip;        
+            metalHit = metalHitSource.clip;   
+
+            turboLasterBlastPrefab = PrefabFactory.getPrefab("starDestroyerBlast");    
+
+            deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
+            deathStarBlast = deathStarBlastSource.clip;
+
+            shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
+
+            delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
+
+            pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
+            debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
+
     }
 
-    void PlayMetalHitSound_Immediately()
+    void MyDebug(string someText)
     {
-        metalHitSource.PlayOneShot(metalHit, blasterVolume); //0.8
+
+        if (debugText != null & debug)
+        {
+            debugText.text = someText;
+        }
+
+    }
+
+    void PlayDeathStarBlastSound_Immediately()
+    {
+        deathStarBlastSource.PlayOneShot(deathStarBlast, deathStarBlastVolume);
+
+    }
+
+    void pauseBeforeShootingOnDifferentThread()
+    {
+        StartCoroutine(pauseBeforeStartingToShoot());
+    }
+
+    IEnumerator pauseBeforeStartingToShoot()
+    {
+        yield return new WaitForSeconds(delayBeforeFirstShot);
+        shootingAllowed = true;
+    }
+
+    float GetRandomStartDelay()
+    {
+        return Random.Range(1.0f,3.0f);
+    }
+    float GetRandomShootingPauseAmount()
+    {
+        return Random.Range(3.0f, 4.0f);
+    }
+
+    void chooseTarget () {
+        target = GameObject.FindGameObjectWithTag("PlayerShooter");
+    }
+
+    void chooseTarget2 () {
+
+        target = null;
+
+        //GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
+        //GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
+
+        GameObject[] tantives= new GameObject[]{};
+        GameObject[] falcons= new GameObject[]{};
+    
+        // if (tantive != null){
+        //     tantives = new GameObject[] {tantive};
+        //     tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+        // }
+
+        // if (falcons != null){
+        //     falcons = new GameObject[] {falcon};
+        //     falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+        // }
+
+        GameObject[] xwings    = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing")); 
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings     = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+
+        if (target == null)
+        {
+            if (xwings.Length > 0)
+            {
+                target = xwings[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (awings.Length > 0)
+            {
+                target = awings[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (meteorites.Length > 0)
+            {
+                target = meteorites[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (falcons !=null && falcons.Length>0)
+            {
+                target = falcons[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (tantives != null && tantives.Length>0)
+            {
+                target = tantives[0];
+            }
+        }
 
     }
 
@@ -108,7 +237,89 @@ public class StarDestroyerBehaviour : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    void FixedUpdate()
+
+    void shoot()
+    {
+        spawnNewBlasterBolt();
+        PlayDeathStarBlastSound_Immediately();
+    }
+
+    void spawnNewBlasterBolt()
+    {
+
+try {
+        // bolt 1
+        GameObject sdTLBROrigin1 = GameObject.FindGameObjectWithTag("SD_TL_BR_BlasterPosition1");    
+        float x = sdTLBROrigin1.transform.position.x;
+        float y = sdTLBROrigin1.transform.position.y;
+        float z = sdTLBROrigin1.transform.position.z;
+
+        GameObject go = (GameObject)Instantiate(turboLasterBlastPrefab, new Vector3(x, y, z), sdTLBROrigin1.transform.rotation);
+        GameObject bolt1 = PrefabFactory.GetChildWithName(go, "sdTurboLaserBlast");
+
+        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * sdTLBROrigin1.transform.forward * Time.deltaTime;
+
+       }
+        catch (System.Exception e)
+        {
+
+            MyDebug("sd spawn bold, error: " + e.ToString());
+        }
+/*
+        // bolt 2
+        awingBlastOrigin2 = PrefabFactory.GetChildWithName(gameObject, "rightBlasterSpawner");
+        x = awingBlastOrigin2.transform.position.x;
+        y = awingBlastOrigin2.transform.position.y;
+        z = awingBlastOrigin2.transform.position.z;
+
+        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), awingBlastOrigin2.transform.rotation);
+
+        GameObject bolt2 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
+
+
+        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * awingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * awingBlastOrigin2.transform.forward * Time.deltaTime;
+*/
+    }
+    void shootIfTime()
+    {
+
+        shootingPauseTimer -= Time.deltaTime;
+        if (shootingPauseTimer <= 0f)
+        {
+            shoot();
+            target = null;
+            shootingPauseTimer = GetRandomShootingPauseAmount();
+
+        }
+    }
+     void FixedUpdate()
+    {
+           
+           destroyIfIrrelevantNow();
+
+           if (target == null){
+               chooseTarget();
+           }
+
+            // SD (Star Destroyer) TL (Turbo Laser) BR (Bottom Right) Swivel
+            GameObject swivel = GameObject.FindGameObjectWithTag("SD_TL_BR_Swivel");
+            if (swivel) {
+                
+                // move the turbo laser base left or right depending on the target's position
+                Vector3 targetPosition = new Vector3(target.transform.position.x, swivel.transform.position.y, target.transform.position.z);
+                swivel.transform.LookAt(targetPosition);
+           
+            } //if
+            
+            if (shootingAllowed)
+            {
+                shootIfTime();
+            }
+
+    } // FixedUpdate() 
+
+    void FixedUpdate2()
     {
            
            destroyIfIrrelevantNow();
@@ -175,5 +386,6 @@ public class StarDestroyerBehaviour : MonoBehaviour
             
 
 
-    }
+    } // FixedUpdate()
+
 }
