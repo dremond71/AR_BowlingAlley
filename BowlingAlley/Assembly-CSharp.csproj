@@ -86,6 +86,7 @@
      <Compile Include="Assets\Scripts\ReferencePointManagerOriginal.cs" />
      <Compile Include="Assets\Scripts\SceneHandler.cs" />
      <Compile Include="Assets\Scripts\StarDestroyerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\StarDestroyerBlastLifeCycle.cs" />
      <Compile Include="Assets\Scripts\TantiveIVShipBehaviour.cs" />
      <Compile Include="Assets\Scripts\TargetAWingBehaviour.cs" />
      <Compile Include="Assets\Scripts\TargetMilleniumFalconBlastLifeCycle.cs" />
@@ -98,6 +99,7 @@
      <Compile Include="Assets\Scripts\TieFighterBoxBehaviour.cs" />
      <Compile Include="Assets\Scripts\TieMissleBehaviour.cs" />
      <Compile Include="Assets\Scripts\TieMissleTargetBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TurboLaserTestBehaviour.cs" />
      <Compile Include="Assets\Scripts\XWingFighter.cs" />
      <Compile Include="Assets\Scripts\XWingFighterShowcase.cs" />
      <Compile Include="Assets\Scripts\XYZPositioningHandler.cs" />

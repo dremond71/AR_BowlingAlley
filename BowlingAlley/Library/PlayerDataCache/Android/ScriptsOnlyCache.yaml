@@ -10,6 +10,7 @@ ScriptsOnlyBuild:
     - LevelManager
     - MeteoriteBehaviour
     - StarDestroyerBehaviour
+    - StarDestroyerBlastLifeCycle
     - TantiveIVShipBehaviour
     - TargetAWingBehaviour
     - TargetMilleniumFalconBlastLifeCycle
@@ -20,6 +21,7 @@ ScriptsOnlyBuild:
     - TieFighterBoxBehaviour
     - TieMissleBehaviour
     - TieMissleTargetBehaviour
+    - TurboLaserTestBehaviour
     - miniHothTieBehaviour
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
@@ -300,6 +302,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16896}
     - Class: 114
       Script: {instanceID: 16902}
+    - Class: 114
+      Script: {instanceID: 114844}
+    - Class: 114
+      Script: {instanceID: 258826}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1795,6 +1801,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualEffectGraph.Runtime.dll
     namespaceName: UnityEngine.VFX.Utility
     className: VFXUISliderBinder
+  - hash:
+      serializedVersion: 2
+      Hash: feb9c1e892993264d91cd2d1bc895bc0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TurboLaserTestBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StarDestroyerBlastLifeCycle
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity

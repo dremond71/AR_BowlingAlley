@@ -756,6 +756,11 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         {
             health -= 100f; // something unexpected
         }
+        else if (collision.gameObject.tag == "starDestroyerBlast")
+        {
+            health -= 10f; 
+            handleHit();
+        }        
         else if (collision.gameObject.tag == "matrix_item")
         {
             // do nothing

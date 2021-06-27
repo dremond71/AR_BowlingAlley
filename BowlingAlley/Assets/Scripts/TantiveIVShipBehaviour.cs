@@ -74,6 +74,12 @@ public class TantiveIVShipBehaviour : MonoBehaviour {
             ionMissleContactPoint = cp.point;
             receivedContact = true;
         }
+        else if ( collision.gameObject.tag == "starDestroyerBlast") {
+            health -= 10;
+            ContactPoint cp = collision.contacts[0];
+            ionMissleContactPoint = cp.point;
+            receivedContact = true;
+        }    
         else if (collision.gameObject.tag == "deathStarMissle")
         {
             health -= 100;

@@ -13,9 +13,9 @@ public class LevelManager : MonoBehaviour
 
     private float pauseAfterShootingMissles = 1.5f;
 
-    private bool debug = false;
+    private static bool debug = false;
 
-    private TextMesh debugText;
+    private static TextMesh debugText;
 
     private int totalSpawnPositionsAvailable = 9;
     private int currentAllowedSpawnPositions = 0;
@@ -115,7 +115,7 @@ public class LevelManager : MonoBehaviour
         int newNumber = Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
         while(newNumber == previous_currentAllowedSpawnPositions) {
           newNumber =  Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
-        }        
+        }      
        currentAllowedSpawnPositions=newNumber;
        previous_currentAllowedSpawnPositions = currentAllowedSpawnPositions;
 
@@ -154,7 +154,7 @@ public class LevelManager : MonoBehaviour
 
     float GetRandomSpeedAdjustment()
     {
-        return Random.Range(0.0f, 20.0f);
+        return Random.Range(5.0f, 20.0f);
     }
 
     void getRandomMatrixNumber()
@@ -250,6 +250,8 @@ public class LevelManager : MonoBehaviour
         GameObject[] falcons;
         GameObject[] tantiveIV;
 
+        List<GameObject> list  = new List<GameObject>();
+
         if (empireMode)
         {
             xwings     = GameObject.FindGameObjectsWithTag("targetXWing");
@@ -267,7 +269,7 @@ public class LevelManager : MonoBehaviour
             tantiveIV  = new GameObject[0];
         }
 
-         List<GameObject> list  = new List<GameObject>();
+         
          list.AddRange(xwings);
          list.AddRange(awings);
          list.AddRange(meteorites);
@@ -362,8 +364,9 @@ public class LevelManager : MonoBehaviour
         float shotDelay = 0.20f;
         float stemDelay = 0.05f;
 
+        //MyDebug("shootAllTargetVehicles");
         GameObject[] allTargets = getAllTargetVehicles();
-
+        //MyDebug("shootAllTargetVehicles : " + allTargets.Length);
         if (allTargets.Length > 0)
         {
 
@@ -422,7 +425,10 @@ public class LevelManager : MonoBehaviour
 
             onDifferentThread_PauseAfterShootingMissle();
 
-        }
+        }//if
+        // else {
+        //     MyDebug("No targets found");
+        // }
 
  
 
@@ -461,6 +467,7 @@ public class LevelManager : MonoBehaviour
     {
         launchTheDSAttack = "launched";// we only want launch the attack once for the initial request
 
+        //MyDebug("About to shoot all missles");
         shootAllMisslesNow();
 
        
@@ -475,7 +482,7 @@ public class LevelManager : MonoBehaviour
        
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (launchTheCavalryAttack == "launch")
@@ -485,6 +492,7 @@ public class LevelManager : MonoBehaviour
         
         if (launchTheDSAttack == "launch")
         {
+            //MyDebug("calling: handleLaunchingDeathStarAttack ");
             handleLaunchingDeathStarAttack();
         }
         
@@ -720,6 +728,8 @@ public class LevelManager : MonoBehaviour
 
         lock (olock)
         {
+            
+            //MyDebug("deathstar attack requested");
             if (launchTheDSAttack == "")
             {
                 launchTheDSAttack = "launch";
@@ -854,7 +864,7 @@ public class LevelManager : MonoBehaviour
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
     }
 
-    void MyDebug(string someText)
+    static void MyDebug(string someText)
     {
 
         if (debugText != null & debug)
