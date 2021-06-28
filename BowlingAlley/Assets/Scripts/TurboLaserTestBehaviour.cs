@@ -7,6 +7,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     GameObject target = null;
     string targetTag = null;
 
+
     private AudioSource metalHitSource;
     private AudioClip metalHit;
     private float blasterVolume = 0.1f;
@@ -21,7 +22,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     bool shootingAllowed = false;
 
     private GameObject turboLasterBlastPrefab;
-    private float blasterSpeed = 180.0f * 2.0f;
+    private float blasterSpeed = 180.0f * 3.0f;
 
     private float delayBeforeFirstShot;
 
@@ -34,6 +35,11 @@ public class TurboLaserTestBehaviour : MonoBehaviour
 
     private float turboLaserSpeedFactor = 30f;
 
+    float matrix1_z_adjustment = -1.0f;
+    float matrix2_x_adjustment = 0.0f;
+    float matrix3_x_adjustment = 0.0f;
+    int shootTimes = 0;
+    int targetAttempt = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -54,38 +60,41 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     }
 
     void chooseTarget2()
-    
+
     {
-         if (target != null) return;
+        if (target != null) return;
 
         target = GameObject.FindGameObjectWithTag("PlayerShooter");
         targetTag = "PlayerShooter";
     }
 
 
-        void chooseTarget () {
+    void chooseTarget()
+    {
 
         if (target != null) return;
 
-        GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
-        GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
 
-        GameObject[] tantives= new GameObject[]{};
-        GameObject[] falcons= new GameObject[]{};
-    
-        if (tantive != null){
-            tantives = new GameObject[] {tantive};
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
             tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
         }
 
-        if (falcons != null){
-            falcons = new GameObject[] {falcon};
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
             falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
         }
 
-        GameObject[] xwings    = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing")); 
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
-        GameObject[] awings     = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
 
         if (target == null)
         {
@@ -116,7 +125,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
 
         if (target == null)
         {
-            if (falcons !=null && falcons.Length>0)
+            if (falcons != null && falcons.Length > 0)
             {
                 target = falcons[0];
                 targetTag = "falcon";
@@ -125,7 +134,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
 
         if (target == null)
         {
-            if (tantives != null && tantives.Length>0)
+            if (tantives != null && tantives.Length > 0)
             {
                 target = tantives[0];
                 targetTag = "tantiveIV";
@@ -135,81 +144,62 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     }
 
 
-    float GetRandomZAdjustment()
+    float GetRandomZAdjustment_Matrix1()
     {
-        return Random.Range(-0.32f, -0.34f);
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = -0.30f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = -0.45f;// adj for non-slow vehicles
+        }
+        return someValue;
+
     }
+
+    float GetRandomXAdjustment_Matrix2()
+    {
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = 0.05f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = 0.10f;// adj for non-slow vehicles
+        }
+        return someValue;
+
+    }
+
+    float GetRandomXAdjustment_Matrix3()
+    {
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = -0.20f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = -0.25f;// adj for non-slow vehicles
+        }
+        return someValue;
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
 
         chooseTarget();
-
-        /*  This works perfectly when:
-         *
-         * 1)
-         *
-         *   |--O--|   (Tie Fighter)
-         *
-         *      II     
-         *     [  ]    ( Turbo Laser)
-         *
-         *  and both have Z pointing straight forward
-         *
-         * 2)
-         *     
-         *     [  ]    ( Turbo Laser) (Z pointing backwards)
-         *      II         
-         *
-         *
-         *   |--O--|   (Tie Fighter) (Z pointing forward)
-         *
-         *  
-         */
-
-        if (target !=null){
-
-            if (targetTag == "tantiveIV") {
-                //Vector3 targetAdjustedPosition = new Vector3(target.transform.position.x,target.transform.position.y,target.transform.position.z + 0.05f);
-                Vector3 lookPos = target.transform.position - this.transform.position;
-                //Vector3 lookPos = targetAdjustedPosition - this.transform.position;
-                //MyDebug("target x,y,z="+ target.transform.position.x + "\n," + target.transform.position.y + "\n," + target.transform.position.z + "\n"   );
-                Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
-                float eulerY = lookRot.eulerAngles.y;
-                float eulerX = lookRot.eulerAngles.x;
-                float eulerZ = lookRot.eulerAngles.z;
-                Quaternion rotation = Quaternion.Euler(eulerX, eulerY, 0);
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
-                //this.transform.rotation = rotation;
-
-            }
-            else {
-                //float z_adjustment = 0.05f; nope
-                //float z_adjustment = 0.1f;
-                //float z_adjustment = -0.35f;// pretty good except for fast vehicles
-                float z_adjustment = GetRandomZAdjustment();
-                MyDebug("Z adj == " + z_adjustment);
-                Vector3 targetAdjustedPosition = new Vector3(target.transform.position.x,target.transform.position.y,target.transform.position.z + z_adjustment);
-                //Vector3 lookPos = target.transform.position - this.transform.position;
-                Vector3 lookPos = targetAdjustedPosition - this.transform.position;
-                //MyDebug("target x,y,z="+ target.transform.position.x + "\n," + target.transform.position.y + "\n," + target.transform.position.z + "\n"   );
-                Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
-                float eulerY = lookRot.eulerAngles.y;
-                float eulerX = lookRot.eulerAngles.x;
-                float eulerZ = lookRot.eulerAngles.z;
-                Quaternion rotation = Quaternion.Euler(eulerX, eulerY, 0);
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
-                //this.transform.rotation = rotation;
-
-            }
-
-        }
-        else {
-             MyDebug("");
-            Quaternion rotation = Quaternion.Euler(0, 0, 0);
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
-            //this.transform.rotation = rotation;            
-        }
 
         if (shootingAllowed)
         {
@@ -255,6 +245,8 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     }
     void shoot()
     {
+        MyDebug("targetAttempt,X adj== " + targetAttempt + "," + matrix3_x_adjustment);
+        //MyDebug("Z adj == " + matrix1_z_adjustment );
         spawnNewBlasterBolt();
         PlayDeathStarBlastSound_Immediately();
     }
@@ -313,16 +305,118 @@ public class TurboLaserTestBehaviour : MonoBehaviour
         }
 
     }
+
+
     void shootIfTime()
     {
 
         shootingPauseTimer -= Time.deltaTime;
         if (shootingPauseTimer <= 0f)
         {
-            if (target !=null){
+            shootTimes = shootTimes + 1;
+            //getTheMatrixNumber
+            targetAttempt = targetAttempt + 1;
+
+
+
+
+            /*  This works perfectly when:
+             *
+             * 1)
+             *
+             *   |--O--|   (Tie Fighter)
+             *
+             *      II     
+             *     [  ]    ( Turbo Laser)
+             *
+             *  and both have Z pointing straight forward
+             *
+             * 2)
+             *     
+             *     [  ]    ( Turbo Laser) (Z pointing backwards)
+             *      II         
+             *
+             *
+             *   |--O--|   (Tie Fighter) (Z pointing forward)
+             *
+             *  
+             */
+
+            if (target != null)
+            {
+
+                if (targetTag == "tantiveIV")
+                {
+                    //Vector3 targetAdjustedPosition = new Vector3(target.transform.position.x,target.transform.position.y,target.transform.position.z + 0.05f);
+                    Vector3 lookPos = target.transform.position - this.transform.position;
+                    //Vector3 lookPos = targetAdjustedPosition - this.transform.position;
+                    //MyDebug("target x,y,z="+ target.transform.position.x + "\n," + target.transform.position.y + "\n," + target.transform.position.z + "\n"   );
+                    Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                    float eulerY = lookRot.eulerAngles.y;
+                    float eulerX = lookRot.eulerAngles.x;
+                    float eulerZ = lookRot.eulerAngles.z;
+                    Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+                    //this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
+                    this.transform.rotation = rotation;
+
+                }
+                else
+                {
+                    // MyDebug("target x,y,z="+ target.transform.position.x + "\n," + target.transform.position.y + "\n," + target.transform.position.z + "\n"   );
+                    //float z_adjustment = 0.05f; nope
+                    //float z_adjustment = 0.1f;
+                    //float z_adjustment = -0.35f;// pretty good except for fast vehicles
+                    Vector3 targetAdjustedPosition;
+
+                    if (LevelManager.getTheMatrixNumber() == 1)
+                    {
+                        matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                        targetAdjustedPosition = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                    }
+                    else if (LevelManager.getTheMatrixNumber() == 2)
+                    {
+                        matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                        matrix2_x_adjustment = GetRandomXAdjustment_Matrix2();
+                        targetAdjustedPosition = new Vector3(target.transform.position.x + matrix2_x_adjustment, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                    }
+                    else if (LevelManager.getTheMatrixNumber() == 3)
+                    {
+                        matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                        matrix3_x_adjustment = GetRandomXAdjustment_Matrix3();
+                        targetAdjustedPosition = new Vector3(target.transform.position.x + matrix3_x_adjustment, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                    }
+                    else
+                    {
+                        targetAdjustedPosition = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+                    }
+                    //Vector3 lookPos = target.transform.position - this.transform.position;
+                    Vector3 lookPos = targetAdjustedPosition - this.transform.position;
+                    //MyDebug("target x,y,z="+ target.transform.position.x + "\n," + target.transform.position.y + "\n," + target.transform.position.z + "\n"   );
+                    Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                    float eulerY = lookRot.eulerAngles.y;
+                    float eulerX = lookRot.eulerAngles.x;
+                    float eulerZ = lookRot.eulerAngles.z;
+                    Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+                    //this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
+                    this.transform.rotation = rotation;
+
+                }
+
+            }
+            else
+            {
+                MyDebug("");
+                //Quaternion rotation = Quaternion.Euler(0, 0, 0);
+                //this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
+                ////this.transform.rotation = rotation;            
+            }
+
+            if (target != null)
+            {
                 shoot();
                 target = null;
                 targetTag = null;
+
             }
 
             shootingPauseTimer = GetRandomShootingPauseAmount();

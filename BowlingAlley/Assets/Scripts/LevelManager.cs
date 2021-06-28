@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     private static object olock = new object();
 
     static string launchTheDSAttack = "";
-    
+
     static string launchTheCavalryAttack = "";
 
     private float pauseAfterShootingMissles = 1.5f;
@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     System.Random rnd = new System.Random();
 
     List<int> randomSpawnPositions = new List<int>();
-    private int randomSpawnMatrixNumber = 0;
+    private static int randomSpawnMatrixNumber = 0;
     private int numberOfSpawnMatrices = 3;
 
     private AudioSource[] empireSources;
@@ -66,7 +66,7 @@ public class LevelManager : MonoBehaviour
 
     public static int falconIntroIndex = 2;
 
-    private int[] targetRebelVehicleTypes = new[] {1,2};
+    private int[] targetRebelVehicleTypes = new[] { 1, 2 };
 
     // determine what mixture we want of rebel vehicles
     // 1 - swarm of specific vehicle type 
@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour
     // 4 - millenium falcon only
     private int[] targetRebelVehicleMixture = new[] { 1, 2, 3, 4 };
     private int vehicleMixtureLevel = 1;//default
-    private int previous_vehicleMixtureLevel=-1;
+    private int previous_vehicleMixtureLevel = -1;
 
     void load_EmpireSounds()
     {
@@ -112,12 +112,13 @@ public class LevelManager : MonoBehaviour
         // OLD WAY - currentAllowedSpawnPositions = rnd.Next(1, totalSpawnPositionsAvailable);
         // Random.Range(1, 10);
         // return a number (1,2,3,4,5,6,7,8,9 ) - does not include 10
-        int newNumber = Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
-        while(newNumber == previous_currentAllowedSpawnPositions) {
-          newNumber =  Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
-        }      
-       currentAllowedSpawnPositions=newNumber;
-       previous_currentAllowedSpawnPositions = currentAllowedSpawnPositions;
+        int newNumber = Random.Range(1, (totalSpawnPositionsAvailable + 1));
+        while (newNumber == previous_currentAllowedSpawnPositions)
+        {
+            newNumber = Random.Range(1, (totalSpawnPositionsAvailable + 1));
+        }
+        currentAllowedSpawnPositions = newNumber;
+        previous_currentAllowedSpawnPositions = currentAllowedSpawnPositions;
 
     }
     void getRandomSpawnPositions()
@@ -143,12 +144,12 @@ public class LevelManager : MonoBehaviour
     }
 
     float getSlightlyRandomizedSpeed()
-    {    
+    {
         return enemySpeed + GetRandomSpeedAdjustment();
     }
 
     float getFalconSpeed()
-    {    
+    {
         return enemySpeed + 30.0f;
     }
 
@@ -157,16 +158,20 @@ public class LevelManager : MonoBehaviour
         return Random.Range(5.0f, 20.0f);
     }
 
+    public static int getTheMatrixNumber()
+    {
+        return randomSpawnMatrixNumber;
+    }
     void getRandomMatrixNumber()
     {
-       randomSpawnMatrixNumber =  Random.Range(1, (numberOfSpawnMatrices + 1));
+        randomSpawnMatrixNumber = Random.Range(1, (numberOfSpawnMatrices + 1));
     }
 
     int GetRandomSpawnPosition()
     {
 
         // return a number (1,2,3,4,5,6,7,8,9) - does not include 10
-        return Random.Range(1, (totalSpawnPositionsAvailable + 1)); 
+        return Random.Range(1, (totalSpawnPositionsAvailable + 1));
         //return rnd.Next(1, totalSpawnPositionsAvailable);//OLD WAY
     }
 
@@ -180,29 +185,30 @@ public class LevelManager : MonoBehaviour
 
         // Random.Range(1, 3);
         // return a number (1, or 2) - does not include 3
-        int newNumber =  Random.Range(rangeBeginningValue, rangeEndingValue);
+        int newNumber = Random.Range(rangeBeginningValue, rangeEndingValue);
 
         // make sure we don't return a similar value as before
-        while(newNumber == previous_vehicleMixtureLevel) {
-          newNumber =  Random.Range(rangeBeginningValue, rangeEndingValue);
+        while (newNumber == previous_vehicleMixtureLevel)
+        {
+            newNumber = Random.Range(rangeBeginningValue, rangeEndingValue);
         }
-        previous_vehicleMixtureLevel = newNumber;        
+        previous_vehicleMixtureLevel = newNumber;
         return newNumber;
     }
 
     int GetRandomVehicleType()
     {
 
-        
+
         int firstIndex = 0;
         int lastIndex = targetRebelVehicleTypes.Length - 1;
 
         int rangeBeginningValue = targetRebelVehicleTypes[firstIndex];    // e.g. 1
-        int rangeEndingValue    = targetRebelVehicleTypes[lastIndex] + 1; // e.g. 2 + 1
+        int rangeEndingValue = targetRebelVehicleTypes[lastIndex] + 1; // e.g. 2 + 1
 
         // Random.Range(1, 3);
         // return a number (1, or 2) - does not include 3
-        return Random.Range(rangeBeginningValue, rangeEndingValue); 
+        return Random.Range(rangeBeginningValue, rangeEndingValue);
 
         // // let's return only 2 possible values right now
         // // Random.value returns a number between 0 and 1
@@ -221,9 +227,9 @@ public class LevelManager : MonoBehaviour
         meteorite1Prefab = PrefabFactory.getPrefab("meteorite1");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
-        
+
         rebelStarshipPrefab = PrefabFactory.getPrefab("newTantiveIV");
-        starDestroyerPrefab = PrefabFactory.getPrefab ("starDestroyer");
+        starDestroyerPrefab = PrefabFactory.getPrefab("starDestroyer");
 
         falconPrefab = PrefabFactory.getPrefab("falcon");
         deathStarMisslePrefab = PrefabFactory.getPrefab("deathStarMissle");
@@ -250,36 +256,36 @@ public class LevelManager : MonoBehaviour
         GameObject[] falcons;
         GameObject[] tantiveIV;
 
-        List<GameObject> list  = new List<GameObject>();
+        List<GameObject> list = new List<GameObject>();
 
         if (empireMode)
         {
-            xwings     = GameObject.FindGameObjectsWithTag("targetXWing");
+            xwings = GameObject.FindGameObjectsWithTag("targetXWing");
             meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
-            awings     = GameObject.FindGameObjectsWithTag("targetAWing");
-            falcons    = GameObject.FindGameObjectsWithTag("falcon");
-            tantiveIV  = GameObject.FindGameObjectsWithTag("tantiveIV");
+            awings = GameObject.FindGameObjectsWithTag("targetAWing");
+            falcons = GameObject.FindGameObjectsWithTag("falcon");
+            tantiveIV = GameObject.FindGameObjectsWithTag("tantiveIV");
         }
         else
         {
-            xwings     = new GameObject[0];
+            xwings = new GameObject[0];
             meteorites = new GameObject[0];
-            awings     = new GameObject[0];
-            falcons    = new GameObject[0];
-            tantiveIV  = new GameObject[0];
+            awings = new GameObject[0];
+            falcons = new GameObject[0];
+            tantiveIV = new GameObject[0];
         }
 
-         
-         list.AddRange(xwings);
-         list.AddRange(awings);
-         list.AddRange(meteorites);
-         list.AddRange(falcons);
-         list.AddRange(tantiveIV);
+
+        list.AddRange(xwings);
+        list.AddRange(awings);
+        list.AddRange(meteorites);
+        list.AddRange(falcons);
+        list.AddRange(tantiveIV);
 
         GameObject[] allTargetVehicles = list.ToArray();
 
         return allTargetVehicles;
-        
+
     }
 
     bool targetsExist()
@@ -307,7 +313,7 @@ public class LevelManager : MonoBehaviour
             falcons = new GameObject[0];
         }
 
-        return (tvs.Length > 0) || (meteorites.Length > 0) || (awings.Length > 0)|| (boxes.Length > 0) || (falcons.Length > 0);
+        return (tvs.Length > 0) || (meteorites.Length > 0) || (awings.Length > 0) || (boxes.Length > 0) || (falcons.Length > 0);
     }
     void Start()
     {
@@ -324,7 +330,7 @@ public class LevelManager : MonoBehaviour
         float z = falconSpawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(falconPrefab, new Vector3(x, y, z), falconSpawner.transform.rotation);
         go.SendMessage("setAnimationScenario", true);
-        
+
 
     }
 
@@ -401,7 +407,7 @@ public class LevelManager : MonoBehaviour
                 {
                     MyDebug("shootAllTargetVehicles() error: " + e.ToString());
                 }
-                
+
                 yield return new WaitForSeconds(shotDelay);
             }
 
@@ -419,22 +425,22 @@ public class LevelManager : MonoBehaviour
                 }
             }
 
-           
+
 
             makeDeathStarTriangleStemsVisible(false);
 
             onDifferentThread_PauseAfterShootingMissle();
 
         }//if
-        // else {
-        //     MyDebug("No targets found");
-        // }
+         // else {
+         //     MyDebug("No targets found");
+         // }
 
- 
+
 
     }
 
-        void spawnNewDeathStarMissle(GameObject targetGameObject)
+    void spawnNewDeathStarMissle(GameObject targetGameObject)
     {
 
         //missleLauncher
@@ -470,16 +476,16 @@ public class LevelManager : MonoBehaviour
         //MyDebug("About to shoot all missles");
         shootAllMisslesNow();
 
-       
+
     }
 
     void handleLaunchingCavalryAttack()
     {
         launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
 
-         spawnStarDestroyer_AtPositionOne();
+        spawnStarDestroyer_AtPositionOne();
 
-       
+
     }
 
     void FixedUpdate()
@@ -489,13 +495,13 @@ public class LevelManager : MonoBehaviour
         {
             handleLaunchingCavalryAttack();
         }
-        
+
         if (launchTheDSAttack == "launch")
         {
             //MyDebug("calling: handleLaunchingDeathStarAttack ");
             handleLaunchingDeathStarAttack();
         }
-        
+
 
         if (startGameTimer > 0.0f)
             startGameTimer -= Time.deltaTime;
@@ -503,7 +509,7 @@ public class LevelManager : MonoBehaviour
         if (startGameTimer <= 0f)
         {
 
-           // MyDebug("numberOfSpawnsSinceLastClip==" + numberOfSpawnsSinceLastClip);
+            // MyDebug("numberOfSpawnsSinceLastClip==" + numberOfSpawnsSinceLastClip);
             if (!starshipExists)
             {
                 starshipExists = true;
@@ -587,10 +593,10 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    
-        void spawnNormalFalcon()
+
+    void spawnNormalFalcon()
     {
-        int position=5; // middle position of any matrix
+        int position = 5; // middle position of any matrix
         string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
         GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
         float x = enemySpawner.transform.position.x;
@@ -634,7 +640,7 @@ public class LevelManager : MonoBehaviour
 
     void spawnStarDestroyer_AtPositionOne()
     {
-        
+
         float theSpeed = 30.0f;
         string spawnPositionNumber = "starDestroyerSpawnPoint" + 1;
         GameObject spawner = GameObject.Find(spawnPositionNumber);
@@ -643,7 +649,7 @@ public class LevelManager : MonoBehaviour
         float z = spawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(starDestroyerPrefab, new Vector3(x, y, z), spawner.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = theSpeed * spawner.transform.forward * Time.deltaTime;
-        
+
     }
 
     void incrementNumSpawned()
@@ -654,29 +660,33 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public static GameObject[] filterGameObjectsInFrontOfPlayer(GameObject[] given) {
+    public static GameObject[] filterGameObjectsInFrontOfPlayer(GameObject[] given)
+    {
 
-       List<GameObject> list  = new List<GameObject>();
-         
+        List<GameObject> list = new List<GameObject>();
+
         // get player's Z position
         GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
         float shooterZ = shooter.transform.position.z;
 
-        if (given != null) {
+        if (given != null)
+        {
             for (int i = 0; i < given.Length; i++)
             {
-                if (given[i] != null) {
+                if (given[i] != null)
+                {
                     float givenZ = given[i].transform.position.z;
                     // opposite logic to vehicles destroying themselves
                     // shortly after passing shooter.
-                    if (givenZ >= (shooterZ + 0.5f)){
+                    if (givenZ >= (shooterZ + 0.5f))
+                    {
                         list.Add(given[i]);
                     }
                 }
             }
         }//if
 
-      return list.ToArray();
+        return list.ToArray();
     }
 
     public static int getFalconIntroIndex()
@@ -700,18 +710,20 @@ public class LevelManager : MonoBehaviour
 
 
 
-    public static void starDestroyerAttackFinished() {
+    public static void starDestroyerAttackFinished()
+    {
         lock (olock)
         {
 
-         // when star destroyer is finished its mission, it calls this method
-         // to allow the LevelManager to know it is done.
-         launchTheCavalryAttack = "";
+            // when star destroyer is finished its mission, it calls this method
+            // to allow the LevelManager to know it is done.
+            launchTheCavalryAttack = "";
 
         }
-        
-    }    
-    public static void launchCavalryAttack() {
+
+    }
+    public static void launchCavalryAttack()
+    {
         lock (olock)
         {
 
@@ -721,22 +733,22 @@ public class LevelManager : MonoBehaviour
             }
 
         }
-        
+
     }
     public static void launchDeathStarAttack()
     {
 
         lock (olock)
         {
-            
+
             //MyDebug("deathstar attack requested");
             if (launchTheDSAttack == "")
             {
                 launchTheDSAttack = "launch";
             }
         }
-       
-       
+
+
     }
 
     public static void setTieFighterAllowedToShoot(bool value)
@@ -788,7 +800,7 @@ public class LevelManager : MonoBehaviour
         spawnNewXWingAtPosition(1);
     }
 
-        void spawnNewTargets()
+    void spawnNewTargets()
     {
         getRandomMatrixNumber(); // sets matrix number to 1 or 2
 
@@ -832,7 +844,7 @@ public class LevelManager : MonoBehaviour
                 // get random vehicle type within loop
                 //
                 int vehicleType = GetRandomVehicleType();
-                
+
                 if (vehicleType == 1)
                 {
                     spawnNewXWingAtPosition(pos);
@@ -852,13 +864,14 @@ public class LevelManager : MonoBehaviour
             //
             foreach (var pos in randomSpawnPositions)
             {
-               spawnNewMeteoriteAtPosition(pos);
+                spawnNewMeteoriteAtPosition(pos);
             }
 
         }
-        else if (vehicleMixtureLevel == 4) {
-          // falcon flyby
-          spawnNormalFalcon();
+        else if (vehicleMixtureLevel == 4)
+        {
+            // falcon flyby
+            spawnNormalFalcon();
         }
 
         numberOfSpawnsSinceLastClip++; // keep track of spawn events (not number of targets spawned)
