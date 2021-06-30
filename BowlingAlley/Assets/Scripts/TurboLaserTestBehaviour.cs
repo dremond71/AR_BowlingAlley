@@ -245,7 +245,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     }
     void shoot()
     {
-        MyDebug("targetAttempt,X adj== " + targetAttempt + "," + matrix3_x_adjustment);
+       // MyDebug("targetAttempt,X adj== " + targetAttempt + "," + matrix3_x_adjustment);
         //MyDebug("Z adj == " + matrix1_z_adjustment );
         spawnNewBlasterBolt();
         PlayDeathStarBlastSound_Immediately();
@@ -422,5 +422,5 @@ public class TurboLaserTestBehaviour : MonoBehaviour
             shootingPauseTimer = GetRandomShootingPauseAmount();
 
         }
-    }
+    }// end of function
 }

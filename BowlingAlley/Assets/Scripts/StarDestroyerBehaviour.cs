@@ -7,7 +7,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
     private AudioSource metalHitSource;
     private AudioClip metalHit;
     private float blasterVolume = 0.1f;
-    
+
     Vector3 contactPoint;
 
     public float health = 999999999f;
@@ -21,34 +21,40 @@ public class StarDestroyerBehaviour : MonoBehaviour
     bool shootingAllowed = false;
 
     private GameObject turboLasterBlastPrefab;
-    private float blasterSpeed = 180.0f * 2.0f;
+    private float blasterSpeed = 180.0f * 3.0f;
     private float delayBeforeFirstShot;
 
     private AudioSource deathStarBlastSource;
     private AudioClip deathStarBlast;
     private float deathStarBlastVolume = 0.8f;
 
-    private bool debug = true;
+    private bool debug = false;
     private TextMesh debugText;
     private float turboLaserSpeedFactor = 30f;
+
+    float matrix1_z_adjustment = -1.0f;
+    float matrix2_x_adjustment = 0.0f;
+    float matrix3_x_adjustment = 0.0f;
+    int shootTimes = 0;
+    int targetAttempt = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-            metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
-            metalHit = metalHitSource.clip;   
+        metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
+        metalHit = metalHitSource.clip;
 
-            turboLasterBlastPrefab = PrefabFactory.getPrefab("starDestroyerBlast");    
+        turboLasterBlastPrefab = PrefabFactory.getPrefab("starDestroyerBlast");
 
-            deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
-            deathStarBlast = deathStarBlastSource.clip;
+        deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
+        deathStarBlast = deathStarBlastSource.clip;
 
-            shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
+        shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
 
-            delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
+        delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
 
-            pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
-            debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
+        pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
+        debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
     }
 
@@ -81,7 +87,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     float GetRandomStartDelay()
     {
-        return Random.Range(1.0f,1.5f);
+        return Random.Range(1.0f, 1.5f);
     }
     float GetRandomShootingPauseAmount()
     {
@@ -94,33 +100,37 @@ public class StarDestroyerBehaviour : MonoBehaviour
         return Random.Range(-0.32f, -0.34f);
     }
 
-    void chooseTarget2 () {
+    void chooseTarget2()
+    {
         target = GameObject.FindGameObjectWithTag("PlayerShooter");
     }
 
-    void chooseTarget () {
+    void chooseTarget()
+    {
 
-       if (target != null) return;
+        if (target != null) return;
 
-        GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
-        GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
 
-        GameObject[] tantives= new GameObject[]{};
-        GameObject[] falcons= new GameObject[]{};
-    
-        if (tantive != null){
-            tantives = new GameObject[] {tantive};
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
             tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
         }
 
-        if (falcons != null){
-            falcons = new GameObject[] {falcon};
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
             falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
         }
 
-        GameObject[] xwings    = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing")); 
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
-        GameObject[] awings     = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
 
         if (target == null)
         {
@@ -151,7 +161,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         if (target == null)
         {
-            if (falcons !=null && falcons.Length>0)
+            if (falcons != null && falcons.Length > 0)
             {
                 target = falcons[0];
                 targetTag = "falcon";
@@ -160,7 +170,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         if (target == null)
         {
-            if (tantives != null && tantives.Length>0)
+            if (tantives != null && tantives.Length > 0)
             {
                 target = tantives[0];
                 targetTag = "tantiveIV";
@@ -170,17 +180,17 @@ public class StarDestroyerBehaviour : MonoBehaviour
     }
 
 
-        private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
 
         ContactPoint cp = collision.contacts[0];
         contactPoint = cp.point;
 
         if (collision.gameObject.tag == "miniTieBlast")
-        {          
+        {
             health -= 1f;
             handleHit();
-            
+
         }
         else if (collision.gameObject.tag == "miniXWingBlast")
         {
@@ -191,11 +201,11 @@ public class StarDestroyerBehaviour : MonoBehaviour
         {
             health -= 1f;
             handleHit();
-        }        
+        }
         else if (collision.gameObject.tag == "miniTieMissle")
         {
             health -= 1f;
-            handleHit(); 
+            handleHit();
         }
         else if (collision.gameObject.tag == "deathStarMissle")
         {
@@ -208,8 +218,8 @@ public class StarDestroyerBehaviour : MonoBehaviour
             handleHit();
         }
 
-       // MyDebug("box collided with : " + collision.gameObject.tag);
-   
+        // MyDebug("box collided with : " + collision.gameObject.tag);
+
     }
 
     void handleHit()
@@ -228,7 +238,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     }
 
-    
+
     void destroyIfIrrelevantNow()
     {
         // this object becomes irrelevant 
@@ -240,9 +250,11 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         float myZ = transform.position.z;
 
-        if (myZ > (deathStarZ + 10f))
+        MyDebug("deathStar.z, starDestroyer.z : " + deathStarZ + " , " + myZ);
+        if (myZ > (deathStarZ + 7.0f))
         {
             LevelManager.starDestroyerAttackFinished(); // tells LevelManager that the cavalry attack is finished
+            MyDebug("About to destroy Star Destroyer!");
             destroySelf();
         }
 
@@ -308,8 +320,59 @@ public class StarDestroyerBehaviour : MonoBehaviour
         catch (System.Exception e)
         {
 
-            MyDebug("sd spawn bold, error: " + e.ToString());
+            // MyDebug("sd spawn bold, error: " + e.ToString());
         }
+
+    }
+
+    float GetRandomZAdjustment_Matrix1()
+    {
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = -0.30f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = -0.45f;// adj for non-slow vehicles
+        }
+        return someValue;
+
+    }
+
+    float GetRandomXAdjustment_Matrix2()
+    {
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = 0.05f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = 0.10f;// adj for non-slow vehicles
+        }
+        return someValue;
+
+    }
+
+    float GetRandomXAdjustment_Matrix3()
+    {
+        float someValue = 0.0f;
+
+        bool evenValue = ((targetAttempt % 2) == 0);
+        if (evenValue)
+        {
+            someValue = -0.20f;// adj for slower vehicles
+        }
+        else
+        {
+            someValue = -0.25f;// adj for non-slow vehicles
+        }
+        return someValue;
 
     }
 
@@ -319,140 +382,106 @@ public class StarDestroyerBehaviour : MonoBehaviour
         shootingPauseTimer -= Time.deltaTime;
         if (shootingPauseTimer <= 0f)
         {
-            if (target !=null){
-                shoot();
-                target = null;
-                targetTag = null;
-            }
+            shootTimes = shootTimes + 1;
+
+            targetAttempt = targetAttempt + 1;
+
+            // SD (Star Destroyer) TL (Turbo Laser) BR (Bottom Right) Swivel
+            GameObject swivel = GameObject.FindGameObjectWithTag("SD_TL_BR_Swivel");
+            if (swivel != null)
+            {
+
+                if (target != null)
+                {
+
+                    if (targetTag == "tantiveIV")
+                    {
+
+                        Vector3 lookPos = target.transform.position - swivel.transform.position;
+
+                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                        float eulerY = lookRot.eulerAngles.y;
+                        float eulerX = lookRot.eulerAngles.x;
+                        float eulerZ = lookRot.eulerAngles.z;
+                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                        swivel.transform.rotation = rotation;
+
+                    }
+                    else
+                    {
+
+                        Vector3 targetAdjustedPosition;
+
+                        if (LevelManager.getTheMatrixNumber() == 1)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            targetAdjustedPosition = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else if (LevelManager.getTheMatrixNumber() == 2)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            matrix2_x_adjustment = GetRandomXAdjustment_Matrix2();
+                            targetAdjustedPosition = new Vector3(target.transform.position.x + matrix2_x_adjustment, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else if (LevelManager.getTheMatrixNumber() == 3)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            matrix3_x_adjustment = GetRandomXAdjustment_Matrix3();
+                            targetAdjustedPosition = new Vector3(target.transform.position.x + matrix3_x_adjustment, target.transform.position.y, target.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else
+                        {
+                            targetAdjustedPosition = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+                        }
+
+                        Vector3 lookPos = targetAdjustedPosition - swivel.transform.position;
+
+                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                        float eulerY = lookRot.eulerAngles.y;
+                        float eulerX = lookRot.eulerAngles.x;
+                        float eulerZ = lookRot.eulerAngles.z;
+                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                        swivel.transform.rotation = rotation;
+
+                    }
+
+                }
+                else
+                {
+                    // MyDebug("");
+                }
+
+                if (target != null)
+                {
+                    shoot();
+                    target = null;
+                    targetTag = null;
+
+                }
+
+            }// swivel != null
+
 
             shootingPauseTimer = GetRandomShootingPauseAmount();
 
         }
+    }// end of function
+
+    void FixedUpdate()
+    {
+
+        destroyIfIrrelevantNow();
+
+        chooseTarget();
+
+        if (shootingAllowed)
+        {
+            shootIfTime();
+        }
+
     }
-     void FixedUpdate()
-    {
-           
-           destroyIfIrrelevantNow();
 
-           
-            chooseTarget();
-          
-
-            // SD (Star Destroyer) TL (Turbo Laser) BR (Bottom Right) Swivel
-            GameObject swivel = GameObject.FindGameObjectWithTag("SD_TL_BR_Swivel");
-            if (swivel) {
-                
-                if (target !=null){
-
-                    if (targetTag == "tantiveIV") {
-                        Vector3 lookPos = target.transform.position - swivel.transform.position;
-                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
-                        float eulerY = lookRot.eulerAngles.y;
-                        float eulerX = lookRot.eulerAngles.x;
-                        float eulerZ = lookRot.eulerAngles.z;
-                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, 0);
-                        swivel.transform.rotation = Quaternion.Slerp(swivel.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
-                        
-                    }
-                    else {
-                        float z_adjustment = GetRandomZAdjustment();
-                        MyDebug("Z adj == " + z_adjustment);
-                        Vector3 targetAdjustedPosition = new Vector3(target.transform.position.x,target.transform.position.y,target.transform.position.z + z_adjustment);
-                        Vector3 lookPos = targetAdjustedPosition - swivel.transform.position;
-                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
-                        float eulerY = lookRot.eulerAngles.y;
-                        float eulerX = lookRot.eulerAngles.x;
-                        float eulerZ = lookRot.eulerAngles.z;
-                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, 0);
-                        swivel.transform.rotation = Quaternion.Slerp(swivel.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);
-
-                    }
-
-                }
-                else {
-                    
-                   // do not set it to zeros, but save the original position and angles, and set it to that. :)
-                   // MyDebug("");
-                   // Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                   // swivel.transform.rotation = Quaternion.Slerp(swivel.transform.rotation, rotation, turboLaserSpeedFactor * Time.deltaTime);        
-                }
-
-            } //if - swivel
-            
-            if (shootingAllowed)
-            {
-                shootIfTime();
-            }
-
-    } // FixedUpdate() 
-
-    void FixedUpdate2()
-    {
-           
-           destroyIfIrrelevantNow();
-
-            GameObject[] allSwivels = GameObject.FindGameObjectsWithTag("sdTopLeftTurboLaserSwivel");
-            if (allSwivels.Length > 0) {
-                GameObject target         = GameObject.FindGameObjectWithTag ("PlayerShooter");
-                for (int i = 0; i < allSwivels.Length; i++){
-                    GameObject oneSwivel = allSwivels[i]; 
-
-                       // move the turbo laser base left or right depending on the target's position
-                       Vector3 targetPosition = new Vector3(target.transform.position.x, oneSwivel.transform.position.y, target.transform.position.z);
-                       oneSwivel.transform.LookAt(targetPosition);
-
-
-                       //
-                       // Since I cannot seem to succeed at making the barrels to move up or down (without also changing x)
-                       // then perhaps I should make bullets that track their target just like the missles?
-                       // lobbing bullets at targets?
-                       // OR maybe I should make the barrels the child of the barrel rod, and rotate the barrel rod up or down?
-
-
-                    //    GameObject theBlastersParent = PrefabFactory.GetChildWithName(oneSwivel,"theBlasters");
-                    //    if (theBlastersParent != null){
-                    //       GameObject rod = PrefabFactory.GetChildWithName(theBlastersParent,"blasterEndCapRod");
-
-                    //         // figuring out how to move barrel up and down is brutal
-                    //         // similar question here: https://forum.unity.com/threads/help-aiming-a-tank-barrel-locked-y-look-rotation-to-target-turret-movement-is-fine-though.688750/
-
-                            
-                    //         // works with Y, but also tracks x :S
-                    //         Vector3 lookPos = target.transform.position - rod.transform.position;
-                    //         Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
-                    //         float eulerY = lookRot.eulerAngles.y;
-                    //         float eulerX = lookRot.eulerAngles.x;
-                    //         float eulerZ = lookRot.eulerAngles.z;
-                    //         // definitely NOT : Quaternion rotation = Quaternion.Euler (0, eulerY, 0);
-                    //         Quaternion rotation = Quaternion.Euler (-eulerX, 0, 0);//best
-                    //         //Quaternion rotation = Quaternion.Euler (-eulerX, 0, eulerZ);// nope
-                    //         rod.transform.rotation = rotation;
-                    //         //rod.transform.Rotate(90,-90,180);// almost perfect 
-                    //         //rod.transform.Rotate(90,-45,180);// rod tilting to left
-                    //         //rod.transform.Rotate(-90,-90,180);// almost perfect but pointing straight up
-                    //         //rod.transform.Rotate(90,-90,180);// almost perfect but point straight down
-                    //         //rod.transform.Rotate(135,-90,180);// 45 degrees up off horizontal facing me
-                    //         //rod.transform.Rotate(90,-135,180);// 45 degrees down off horizontal facing me
-                    //         //rod.transform.Rotate(90,-90,90);// crooked
-                    //         //rod.transform.Rotate(90,-90,270);// 45 degrees down off horizontal facing me
-                    //         //rod.transform.Rotate(-90,-90,180);// almost perfect but pointing straight up
-                    //          //rod.transform.Rotate(-180,-90,180);// crooked
-                    //          //rod.transform.Rotate(-45,-45,180);//crooked
-                    //          //rod.transform.Rotate(180,180,180);//vertical pointing backwards
-                    //          //rod.transform.Rotate(90,-90,180);// points at sky, but also tracks X :S
-                    //          //rod.transform.Rotate(0,-90,0);// points to left
-                    //          rod.transform.Rotate(90,-90,0);// horizontal points down
-                    //          //rod.transform.Rotate(90,-45,0);// 45 degrees off horizontal points down - away from me
-                    //          //rod.transform.Rotate(90,-90,45);// 45 degrees off horizontal points down - towards me
-                             
-
-                    //    }
-           
-                }
-            }
-            
-
-
-    } // FixedUpdate()
 
 }
