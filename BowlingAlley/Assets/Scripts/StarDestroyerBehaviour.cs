@@ -24,9 +24,15 @@ public class StarDestroyerBehaviour : MonoBehaviour
     private float blasterSpeed = 180.0f * 3.0f;
     private float delayBeforeFirstShot;
 
-    private AudioSource deathStarBlastSource;
-    private AudioClip deathStarBlast;
-    private float deathStarBlastVolume = 0.8f;
+    private AudioSource imperialMarchSource;
+    private AudioClip imperialMarch;
+
+    private float imperialMarchVolume = 0.8f;
+
+
+    private AudioSource turboLaserBlastSource;
+    private AudioClip turboLaserBlast;
+    private float turboLaserBlastVolume = 0.3f;
 
     private bool debug = false;
     private TextMesh debugText;
@@ -38,6 +44,14 @@ public class StarDestroyerBehaviour : MonoBehaviour
     int shootTimes = 0;
     int targetAttempt = 0;
 
+    void Awake()
+    {
+        // 8 MB, so start loading early
+        imperialMarchSource = GameObject.FindGameObjectWithTag("imperialMarch_Sound").GetComponent<AudioSource>();
+        imperialMarch = imperialMarchSource.clip;
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +60,8 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         turboLasterBlastPrefab = PrefabFactory.getPrefab("starDestroyerBlast");
 
-        deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
-        deathStarBlast = deathStarBlastSource.clip;
+        turboLaserBlastSource = GameObject.FindGameObjectWithTag("starDestroyerBlast_Sound").GetComponent<AudioSource>();
+        turboLaserBlast = turboLaserBlastSource.clip;
 
         shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
 
@@ -56,6 +70,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         pauseBeforeShootingOnDifferentThread(); // start the pause (before starting to shoot)
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
+        PlayImperialMarchSound_Immediately();
     }
 
     void MyDebug(string someText)
@@ -68,9 +83,15 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     }
 
-    void PlayDeathStarBlastSound_Immediately()
+    void PlayStarDestroyerBlastSound_Immediately()
     {
-        deathStarBlastSource.PlayOneShot(deathStarBlast, deathStarBlastVolume);
+        turboLaserBlastSource.PlayOneShot(turboLaserBlast, turboLaserBlastVolume);
+
+    }
+
+    void PlayImperialMarchSound_Immediately()
+    {
+        imperialMarchSource.PlayOneShot(imperialMarch, imperialMarchVolume);
 
     }
 
@@ -267,7 +288,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
     void shoot()
     {
         spawnNewBlasterBolt();
-        PlayDeathStarBlastSound_Immediately();
+        PlayStarDestroyerBlastSound_Immediately();
     }
 
     void spawnNewBlasterBolt()

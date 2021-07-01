@@ -29,6 +29,20 @@ public class LevelManager : MonoBehaviour
     private AudioSource[] empireSources;
     private AudioClip[] empireClips;
 
+    private AudioSource generalAkbarItsATrapSource;
+    private AudioClip generalAkbarItsATrap;
+    private float generalAkbarItsATrapVolume = 3.0f;
+
+    private AudioSource landoBreakOffAttackSource;
+    private AudioClip landoBreakOffAttack;
+    private float landoBreakOffAttackVolume = 3.0f;
+
+    private AudioSource emperorDoItSource;
+    private AudioClip emperorDoIt;
+    private float emperorDoItVolume = 3.0f;
+    private AudioSource tarkinFireWhenReadySource;
+    private AudioClip tarkinFireWhenReady;
+    private float tarkinFireWhenReadyVolume = 3.0f;
     private AudioSource deathStarBlastSource;
     private AudioClip deathStarBlast;
     private float deathStarBlastVolume = 0.8f;
@@ -77,6 +91,17 @@ public class LevelManager : MonoBehaviour
     private int vehicleMixtureLevel = 1;//default
     private int previous_vehicleMixtureLevel = -1;
 
+
+    private int[] deathStarClipMixture = new[] { 1, 2, 3, 4, 5 };
+    // determine which deathstar clip to play
+    // 1 - Emperor DoIt
+    // 2 - Tarkin YouMayFireWhenReady
+    // 3 - General AkBar It's A Trap
+    // 4 - Lando Break Off the Attack
+    // 5 - Nothing
+    private int deathStarClipLevelToPlay = 1;//default
+    private int previous_DeathStarClipLevel = -1;
+
     void load_EmpireSounds()
     {
         empireSources = new AudioSource[3];
@@ -90,6 +115,18 @@ public class LevelManager : MonoBehaviour
 
         empireSources[2] = GameObject.FindGameObjectWithTag("emperorLaugh_Sound").GetComponent<AudioSource>();
         empireClips[2] = empireSources[2].clip;
+
+        emperorDoItSource = GameObject.FindGameObjectWithTag("emperor_DoIt_Sound").GetComponent<AudioSource>();
+        emperorDoIt = emperorDoItSource.clip;
+
+        tarkinFireWhenReadySource = GameObject.FindGameObjectWithTag("tarkin_FireWhenReady_Sound").GetComponent<AudioSource>();
+        tarkinFireWhenReady = tarkinFireWhenReadySource.clip;
+
+        generalAkbarItsATrapSource = GameObject.FindGameObjectWithTag("generalAkbar_ItsATrap_Sound").GetComponent<AudioSource>();
+        generalAkbarItsATrap = generalAkbarItsATrapSource.clip;
+
+        landoBreakOffAttackSource = GameObject.FindGameObjectWithTag("lando_BreakOffAttack_Sound").GetComponent<AudioSource>();
+        landoBreakOffAttack = landoBreakOffAttackSource.clip;
 
     }
 
@@ -196,6 +233,27 @@ public class LevelManager : MonoBehaviour
         return newNumber;
     }
 
+    int GetRandomMixtureOfDeathStarClipsValue()
+    {
+        int firstIndex = 0;
+        int lastIndex = deathStarClipMixture.Length - 1;
+
+        int rangeBeginningValue = deathStarClipMixture[firstIndex];    // e.g. 1
+        int rangeEndingValue = deathStarClipMixture[lastIndex] + 1; // e.g. 2 + 1
+
+        // Random.Range(1, 3);
+        // return a number (1, or 2) - does not include 3
+        int newNumber = Random.Range(rangeBeginningValue, rangeEndingValue);
+
+        // make sure we don't return a similar value as before
+        while (newNumber == previous_DeathStarClipLevel)
+        {
+            newNumber = Random.Range(rangeBeginningValue, rangeEndingValue);
+        }
+        previous_DeathStarClipLevel = newNumber;
+        return newNumber;
+    }
+
     int GetRandomVehicleType()
     {
 
@@ -276,11 +334,20 @@ public class LevelManager : MonoBehaviour
         }
 
 
-        list.AddRange(xwings);
-        list.AddRange(awings);
-        list.AddRange(meteorites);
-        list.AddRange(falcons);
-        list.AddRange(tantiveIV);
+        if (xwings.Length > 0)
+            list.AddRange(xwings);
+
+        if (awings.Length > 0)
+            list.AddRange(awings);
+
+        if (meteorites.Length > 0)
+            list.AddRange(meteorites);
+
+        if (falcons.Length > 0)
+            list.AddRange(falcons);
+
+        if (tantiveIV.Length > 0)
+            list.AddRange(tantiveIV);
 
         GameObject[] allTargetVehicles = list.ToArray();
 
@@ -347,7 +414,10 @@ public class LevelManager : MonoBehaviour
 
     void shootAllMisslesNow()
     {
+
         StartCoroutine(shootAllTargetVehicles());
+
+
     }
 
     void makeDeathStarTriangleStemsVisible(bool visible)
@@ -367,14 +437,48 @@ public class LevelManager : MonoBehaviour
     IEnumerator shootAllTargetVehicles()
     {
 
+
         float shotDelay = 0.20f;
         float stemDelay = 0.05f;
 
         //MyDebug("shootAllTargetVehicles");
         GameObject[] allTargets = getAllTargetVehicles();
-        //MyDebug("shootAllTargetVehicles : " + allTargets.Length);
+
+
+
+        MyDebug("shootAllTargetVehicles : " + allTargets.Length);
         if (allTargets.Length > 0)
         {
+
+            //
+            // Play a movie clip BEFORE firing death star
+            //
+            deathStarClipLevelToPlay = GetRandomMixtureOfDeathStarClipsValue();
+
+            if (deathStarClipLevelToPlay == 1)
+            {
+                PlayEmperorDoItSound_Immediately();
+                yield return new WaitForSeconds(emperorDoIt.length);
+            }
+            else if (deathStarClipLevelToPlay == 2)
+            {
+                PlayTarkinFireWhenReadySound_Immediately();
+                yield return new WaitForSeconds(tarkinFireWhenReady.length);
+            }
+            else if (deathStarClipLevelToPlay == 3)
+            {
+                PlayGeneralAkbarItsATrapSound_Immediately();
+                yield return new WaitForSeconds(generalAkbarItsATrap.length);
+            }
+            else if (deathStarClipLevelToPlay == 4)
+            {
+                PlayLandoBreakOffAttackSound_Immediately();
+                yield return new WaitForSeconds(landoBreakOffAttack.length);
+            }
+            else if (deathStarClipLevelToPlay == 5)
+            {
+                // play nothing  
+            }
 
             // play firing sound
             PlayDeathStarBlastSound_Immediately();
@@ -429,14 +533,15 @@ public class LevelManager : MonoBehaviour
 
             makeDeathStarTriangleStemsVisible(false);
 
-            onDifferentThread_PauseAfterShootingMissle();
+
 
         }//if
-         // else {
-         //     MyDebug("No targets found");
-         // }
+        else
+        {
+            MyDebug("No targets found");
+        }
 
-
+        onDifferentThread_PauseAfterShootingMissle();
 
     }
 
@@ -893,6 +998,29 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void PlayLandoBreakOffAttackSound_Immediately()
+    {
+        landoBreakOffAttackSource.PlayOneShot(landoBreakOffAttack, landoBreakOffAttackVolume);
+
+    }
+
+    void PlayGeneralAkbarItsATrapSound_Immediately()
+    {
+        generalAkbarItsATrapSource.PlayOneShot(generalAkbarItsATrap, generalAkbarItsATrapVolume);
+
+    }
+
+    void PlayEmperorDoItSound_Immediately()
+    {
+        emperorDoItSource.PlayOneShot(emperorDoIt, emperorDoItVolume);
+
+    }
+
+    void PlayTarkinFireWhenReadySound_Immediately()
+    {
+        tarkinFireWhenReadySource.PlayOneShot(tarkinFireWhenReady, tarkinFireWhenReadyVolume);
+
+    }
     void playClipOnDifferentThreadThenAllowSpawnedTargets()
     {
 

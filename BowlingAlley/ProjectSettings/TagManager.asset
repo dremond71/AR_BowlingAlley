@@ -93,6 +93,13 @@ TagManager:
   - SD_TL_BR_BlasterPosition4
   - SD_TL_BR_Swivel
   - starDestroyerBlast
+  - imperialMarch_Sound
+  - emperor_DoIt_Sound
+  - tarkin_FireWhenReady_Sound
+  - starDestroyerBlast_Sound
+  - generalAkbar_ItsATrap_Sound
+  - lando_PullUp_Sound
+  - lando_BreakOffAttack_Sound
   layers:
   - Default
   - TransparentFX
