@@ -27,7 +27,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
     private AudioSource imperialMarchSource;
     private AudioClip imperialMarch;
 
-    private float imperialMarchVolume = 0.8f;
+    private float imperialMarchVolume = 1.6f;
 
 
     private AudioSource turboLaserBlastSource;

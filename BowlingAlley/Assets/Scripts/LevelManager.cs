@@ -31,18 +31,18 @@ public class LevelManager : MonoBehaviour
 
     private AudioSource generalAkbarItsATrapSource;
     private AudioClip generalAkbarItsATrap;
-    private float generalAkbarItsATrapVolume = 3.0f;
+    private float generalAkbarItsATrapVolume = 4.0f;
 
     private AudioSource landoBreakOffAttackSource;
     private AudioClip landoBreakOffAttack;
-    private float landoBreakOffAttackVolume = 3.0f;
+    private float landoBreakOffAttackVolume = 4.0f;
 
     private AudioSource emperorDoItSource;
     private AudioClip emperorDoIt;
-    private float emperorDoItVolume = 3.0f;
+    private float emperorDoItVolume = 4.0f;
     private AudioSource tarkinFireWhenReadySource;
     private AudioClip tarkinFireWhenReady;
-    private float tarkinFireWhenReadyVolume = 3.0f;
+    private float tarkinFireWhenReadyVolume = 4.0f;
     private AudioSource deathStarBlastSource;
     private AudioClip deathStarBlast;
     private float deathStarBlastVolume = 0.8f;
