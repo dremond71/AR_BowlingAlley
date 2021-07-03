@@ -100,6 +100,11 @@ TagManager:
   - generalAkbar_ItsATrap_Sound
   - lando_PullUp_Sound
   - lando_BreakOffAttack_Sound
+  - SD_TL_BFC_BlasterPosition1
+  - SD_TL_BFC_BlasterPosition2
+  - SD_TL_BFC_BlasterPosition3
+  - SD_TL_BFC_BlasterPosition4
+  - SD_TL_BFC_Swivel
   layers:
   - Default
   - TransparentFX
