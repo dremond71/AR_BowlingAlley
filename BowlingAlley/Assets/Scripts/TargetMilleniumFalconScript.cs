@@ -63,8 +63,6 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     private AudioSource explosionSource;
     private AudioClip explosion;
 
-
-    public bool facingTieFighter = false;
     public float roarVolume = 0.7f;
 
     bool receivedContact = false;
@@ -479,11 +477,8 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         float x = topBlasterOrigin.transform.position.x;
         float y = topBlasterOrigin.transform.position.y;
         float z = topBlasterOrigin.transform.position.z;
-        if (facingTieFighter)
-        {
-            z = z - 0.05f;
-        }
-        GameObject go = (GameObject)Instantiate(blastPrefab, new Vector3(x, y, z), Quaternion.identity);
+        
+        GameObject go = (GameObject)Instantiate(blastPrefab, new Vector3(x, y, z), topBlasterOrigin.transform.rotation);
         GameObject bolt1 = PrefabFactory.GetChildWithName(go, "falconLeftBlast");
         GameObject bolt2 = PrefabFactory.GetChildWithName(go, "falconRightBlast");
 

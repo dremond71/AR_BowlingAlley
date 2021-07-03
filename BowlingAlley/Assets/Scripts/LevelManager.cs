@@ -187,7 +187,7 @@ public class LevelManager : MonoBehaviour
 
     float getFalconSpeed()
     {
-        return enemySpeed + 30.0f;
+        return enemySpeed + 30.0f * 2.0f;
     }
 
     float GetRandomSpeedAdjustment()
