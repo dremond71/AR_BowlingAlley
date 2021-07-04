@@ -97,6 +97,10 @@ public class StarDestroyerBehaviour : MonoBehaviour
         PlayImperialMarchSound_Immediately();
     }
 
+    public void setSpawnPositionIndex(int theIndex){
+        spawnPositionIndex = theIndex;
+    }
+
     void MyDebug(string someText)
     {
 
@@ -187,7 +191,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         List<GameObject> list    = new List<GameObject>();
         List<string>     tagList = new List<string>();
 
-        if (spawnPositionIndex == 1){
+        if ( (spawnPositionIndex == 1) || (spawnPositionIndex == 2) ){
 
             if (xwings.Length > 0)
             {
@@ -238,7 +242,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 targetTag_SD_TL_BR = targetTags_SD_TL_BR[lastIndex];
             }
 
-        } // if - spawnPositionIndex == 1
+        } // if - spawnPositionIndex == 1 || == 2
 
 
     }
@@ -274,7 +278,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         List<GameObject> list    = new List<GameObject>();
         List<string>     tagList = new List<string>();
 
-        if (spawnPositionIndex == 1){
+        if ( (spawnPositionIndex == 1) || (spawnPositionIndex == 2) ){
 
             if (xwings.Length > 0)
             {
@@ -325,7 +329,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 targetTag_SD_TL_BFC = targetTags_SD_TL_BFC[firstIndex];
             }
 
-        } // if - spawnPositionIndex == 1
+        } // if - spawnPositionIndex == 1 || == 2
 
 
     }
@@ -391,22 +395,40 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     void destroyIfIrrelevantNow()
     {
-        // this object becomes irrelevant 
-        // IF it has flown past the death star; having been spawned from starDestroyerSpawnPoint1
-        // some other condition if spawned from somewhere else
 
-        GameObject deathStar = GameObject.FindGameObjectWithTag("deathStar");
-        float deathStarZ = deathStar.transform.position.z;
+        if (spawnPositionIndex ==1){
+            // this object becomes irrelevant 
+            // IF it has flown past the death star; having been spawned from starDestroyerSpawnPoint1
+            // some other condition if spawned from somewhere else
 
-        float myZ = transform.position.z;
+            GameObject deathStar = GameObject.FindGameObjectWithTag("deathStar");
+            float deathStarZ = deathStar.transform.position.z;
 
-        MyDebug("deathStar.z, starDestroyer.z : " + deathStarZ + " , " + myZ);
-        if (myZ > (deathStarZ + 7.0f))
-        {
-            LevelManager.starDestroyerAttackFinished(); // tells LevelManager that the cavalry attack is finished
-            MyDebug("About to destroy Star Destroyer!");
-            destroySelf();
+            float myZ = transform.position.z;
+
+            //MyDebug("deathStar.z, starDestroyer.z : " + deathStarZ + " , " + myZ);
+            if (myZ > (deathStarZ + 7.0f))
+            {
+                LevelManager.starDestroyerAttackFinished(); // tells LevelManager that the cavalry attack is finished
+                //MyDebug("About to destroy Star Destroyer!");
+                destroySelf();
+            }
         }
+        else if (spawnPositionIndex == 2) {
+            // this object becomes irrelevant if it has flown past the shooter 
+
+            GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+            float shooterZ = shooter.transform.position.z;
+
+            float myZ = transform.position.z;
+
+            if (myZ < (shooterZ - 8f))
+            {
+                LevelManager.starDestroyerAttackFinished(); // tells LevelManager that the cavalry attack is finished
+                destroySelf();
+            }
+        }
+
 
     }
     void destroySelf()

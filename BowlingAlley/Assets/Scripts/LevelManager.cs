@@ -102,6 +102,26 @@ public class LevelManager : MonoBehaviour
     private int deathStarClipLevelToPlay = 1;//default
     private int previous_DeathStarClipLevel = -1;
 
+    private int starDestroyerSpawnAmount = 1;
+
+    int GetRandomStarDestroyerSpawnPoint()
+    {
+        int someValue = 1;
+
+        bool evenValue = ((starDestroyerSpawnAmount % 2) == 0);
+        if (evenValue)
+        {
+            someValue = 1;
+        }
+        else
+        {
+            someValue = 2;
+        }
+        starDestroyerSpawnAmount++;
+
+        return someValue;
+    }
+
     void load_EmpireSounds()
     {
         empireSources = new AudioSource[3];
@@ -588,9 +608,14 @@ public class LevelManager : MonoBehaviour
     {
         launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
 
-        spawnStarDestroyer_AtPositionOne();
-
-
+        int sdSpawnPosition = GetRandomStarDestroyerSpawnPoint();
+        if (sdSpawnPosition == 1){
+           spawnStarDestroyer_AtPositionOne();
+        }
+        else if (sdSpawnPosition == 2) {
+           spawnStarDestroyer_AtPositionTwo();
+        }
+        
     }
 
     void FixedUpdate()
@@ -753,6 +778,22 @@ public class LevelManager : MonoBehaviour
         float y = spawner.transform.position.y;
         float z = spawner.transform.position.z;
         GameObject go = (GameObject)Instantiate(starDestroyerPrefab, new Vector3(x, y, z), spawner.transform.rotation);
+        go.SendMessage("setSpawnPositionIndex", 1);
+        go.GetComponent<Rigidbody>().velocity = theSpeed * spawner.transform.forward * Time.deltaTime;
+
+    }
+
+    void spawnStarDestroyer_AtPositionTwo()
+    {
+
+        float theSpeed = 30.0f;
+        string spawnPositionNumber = "starDestroyerSpawnPoint" + 2;
+        GameObject spawner = GameObject.Find(spawnPositionNumber);
+        float x = spawner.transform.position.x;
+        float y = spawner.transform.position.y;
+        float z = spawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(starDestroyerPrefab, new Vector3(x, y, z), spawner.transform.rotation);
+        go.SendMessage("setSpawnPositionIndex", 2);
         go.GetComponent<Rigidbody>().velocity = theSpeed * spawner.transform.forward * Time.deltaTime;
 
     }
