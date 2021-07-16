@@ -21,7 +21,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     */
 
     private Animator anim;
-    private float energyExplosionVolume = 0.75f;
+    private float energyExplosionVolume = 0.5f;
      
     private bool playAnimation = true;
 
@@ -749,12 +749,14 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         }
         else if (collision.gameObject.tag == "deathStarMissle")
         {
-            health -= 100f; // something unexpected
+            health -= 100f; 
         }
         else if (collision.gameObject.tag == "starDestroyerBlast")
         {
             health -= 10f; 
-            handleHit();
+            missleContactPoint = cp.point;
+            receivedContact = true;
+
         }        
         else if (collision.gameObject.tag == "matrix_item")
         {

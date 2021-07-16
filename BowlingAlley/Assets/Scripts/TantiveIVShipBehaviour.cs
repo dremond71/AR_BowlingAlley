@@ -22,7 +22,7 @@ public class TantiveIVShipBehaviour : MonoBehaviour {
     private AudioSource energyExplosionSource;
     private AudioClip energyExplosion;
 
-    private float energyExplosionVolume = 0.75f;
+    private float energyExplosionVolume = 0.5f;
 
     private AudioSource explosionSource;
     private AudioClip explosion;

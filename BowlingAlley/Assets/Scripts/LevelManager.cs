@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour
     // 3 - asteroid swarm
     // 4 - millenium falcon only
     private int[] targetRebelVehicleMixture = new[] { 1, 2, 3, 4 };
-    private int vehicleMixtureLevel = 1;//default
+    static private int vehicleMixtureLevel = 1;//default
     private int previous_vehicleMixtureLevel = -1;
 
 
@@ -104,6 +104,9 @@ public class LevelManager : MonoBehaviour
 
     private int starDestroyerSpawnAmount = 1;
 
+    public static bool areAsteroidsPresent() {
+        return vehicleMixtureLevel == 3;
+    }
     int GetRandomStarDestroyerSpawnPoint()
     {
         int someValue = 1;
@@ -487,13 +490,19 @@ public class LevelManager : MonoBehaviour
             }
             else if (deathStarClipLevelToPlay == 3)
             {
-                PlayGeneralAkbarItsATrapSound_Immediately();
-                yield return new WaitForSeconds(generalAkbarItsATrap.length);
+                if (!LevelManager.areAsteroidsPresent()){
+                    PlayGeneralAkbarItsATrapSound_Immediately();
+                    yield return new WaitForSeconds(generalAkbarItsATrap.length);
+                }
+
             }
             else if (deathStarClipLevelToPlay == 4)
             {
-                PlayLandoBreakOffAttackSound_Immediately();
-                yield return new WaitForSeconds(landoBreakOffAttack.length);
+                if (!LevelManager.areAsteroidsPresent()){
+                    PlayLandoBreakOffAttackSound_Immediately();
+                    yield return new WaitForSeconds(landoBreakOffAttack.length);
+                }
+
             }
             else if (deathStarClipLevelToPlay == 5)
             {
