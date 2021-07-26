@@ -76,6 +76,8 @@ Added ion torpedo and ion explosion as well.
 
 [Link to the video](https://www.youtube.com/watch?v=prQ8P_4_pXQ&t=17s)
 
+[Link to video showing Star Destroyer and Death Star attacks](https://photos.google.com/photo/AF1QipPbVE-jMvujBb-Oc38QPX1xYNFJw4h_z_oB8VXy)
+
 ### Detailed Tantive IV (Just finished)
 
 I just added this detailed Tantive IV to the video above.
@@ -120,7 +122,7 @@ I just added this detailed A-Wing to the game.
 
 ![](./A-Wing-Back.jpg)
 
-### DeathStar Attack (Just finished)
+### DeathStar Attack
 
 Move the right joystick to the left, and the DeathStar will destroy every target vehicule with a green DeathStar missle dedicated to each.
 
@@ -129,7 +131,7 @@ Move the right joystick to the left, and the DeathStar will destroy every target
 
 ### Star Destroyer
 
-I want the Tie-Fighter to be able to call in a Star Destroyer to come and destroy all the target vehicles on screen.
+Move the right joystick to the right, and the Tie-Fighter calls in a Star Destroyer to come and destroy all the target vehicles on screen.
 
 ![](./star-destroyer-topside-view1.png)
 
@@ -153,7 +155,6 @@ I wasn't focusing on perfect 3D AR textures...just 'good enough' textures. For t
 
 I learnt C# on the fly (I am a Java, Javascript, TypeScript, NodeJS programmer by trade.)
 
-I plan on creating a score board on the left (opposite the control panel) to keep proper score of single player or two player game.
 
 ## Upgraded to a new version of Unity Editor
 
