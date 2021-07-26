@@ -106,6 +106,11 @@ TagManager:
   - SD_TL_BFC_BlasterPosition4
   - SD_TL_BFC_Swivel
   - starDestroyerSpawnPoint2
+  - SD_TL_BL_Swivel
+  - SD_TL_BL_BlasterPosition1
+  - SD_TL_BL_BlasterPosition2
+  - SD_TL_BL_BlasterPosition3
+  - SD_TL_BL_BlasterPosition4
   layers:
   - Default
   - TransparentFX

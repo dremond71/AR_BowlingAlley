@@ -40,6 +40,18 @@ public class StarDestroyerBehaviour : MonoBehaviour
     int spawnPositionIndex = 1;
 
     //
+    // SD_TL_BL
+    //
+    GameObject target_SD_TL_BL = null;
+    string targetTag_SD_TL_BL = null;
+
+    private float shootingPauseTimer_SD_TL_BL;
+
+    bool shootingAllowed_SD_TL_BL = false;
+
+    private float delayBeforeFirstShot_SD_TL_BL;
+
+    //
     // SD_TL_BR
     //
     GameObject target_SD_TL_BR = null;
@@ -83,12 +95,15 @@ public class StarDestroyerBehaviour : MonoBehaviour
         turboLaserBlastSource = GameObject.FindGameObjectWithTag("starDestroyerBlast_Sound").GetComponent<AudioSource>();
         turboLaserBlast = turboLaserBlastSource.clip;
 
+        shootingPauseTimer_SD_TL_BL  = GetRandomShootingPauseAmount(); //pause between each shot
         shootingPauseTimer_SD_TL_BR  = GetRandomShootingPauseAmount(); //pause between each shot
         shootingPauseTimer_SD_TL_BFC = GetRandomShootingPauseAmount(); //pause between each shot
 
+        delayBeforeFirstShot_SD_TL_BL  = GetRandomStartDelay(); // pause before starting to shoot
         delayBeforeFirstShot_SD_TL_BR  = GetRandomStartDelay(); // pause before starting to shoot
         delayBeforeFirstShot_SD_TL_BFC = GetRandomStartDelay(); // pause before starting to shoot
 
+        pauseBeforeShootingOnDifferentThread_SD_TL_BL(); // start the pause (before starting to shoot)
         pauseBeforeShootingOnDifferentThread_SD_TL_BR(); // start the pause (before starting to shoot)
         pauseBeforeShootingOnDifferentThread_SD_TL_BFC(); // start the pause (before starting to shoot)
 
@@ -122,7 +137,16 @@ public class StarDestroyerBehaviour : MonoBehaviour
         imperialMarchSource.PlayOneShot(imperialMarch, imperialMarchVolume);
 
     }
+    void pauseBeforeShootingOnDifferentThread_SD_TL_BL()
+    {
+        StartCoroutine(pauseBeforeStartingToShoot_SD_TL_BL());
+    }
 
+    IEnumerator pauseBeforeStartingToShoot_SD_TL_BL()
+    {
+        yield return new WaitForSeconds(delayBeforeFirstShot_SD_TL_BL);
+        shootingAllowed_SD_TL_BL = true;
+    }
     void pauseBeforeShootingOnDifferentThread_SD_TL_BR()
     {
         StartCoroutine(pauseBeforeStartingToShoot_SD_TL_BR());
@@ -160,10 +184,11 @@ public class StarDestroyerBehaviour : MonoBehaviour
         return Random.Range(-0.32f, -0.34f);
     }
 
+    void chooseTarget_SD_TL_BL() {
 
-    void chooseTarget_SD_TL_BR() {
+        if (target_SD_TL_BL != null) return;
 
-        if (target_SD_TL_BR != null) return;
+        if ( spawnPositionIndex != 2 ) return;
 
         GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
         GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
@@ -191,7 +216,96 @@ public class StarDestroyerBehaviour : MonoBehaviour
         List<GameObject> list    = new List<GameObject>();
         List<string>     tagList = new List<string>();
 
-        if ( (spawnPositionIndex == 1) || (spawnPositionIndex == 2) ){
+        if (  spawnPositionIndex == 2 ){
+
+            if (xwings.Length > 0)
+            {
+                for (int i = 0; i < xwings.Length; i++){
+                    list.Add( xwings[i] );
+                    tagList.Add("targetXWing");    
+                }
+                
+                
+            }
+            
+            if (awings.Length > 0)
+            {
+                for (int i = 0; i < awings.Length; i++){
+                    list.Add( awings[i] );
+                    tagList.Add("targetAWing");    
+                }                
+            }
+
+            if (meteorites.Length > 0)
+            {
+                for (int i = 0; i < meteorites.Length; i++){
+                    list.Add( meteorites[i] );
+                    tagList.Add("targetMeteorite");    
+                }                
+            }
+
+
+            if (falcons != null && falcons.Length > 0)
+            {
+                list.Add( falcons[0] );
+                tagList.Add("falcon");    
+            }
+
+
+            if (tantives != null && tantives.Length > 0)
+            {
+                list.Add( tantives[0] );
+                tagList.Add("tantiveIV");
+            }
+            
+            GameObject[] targets_SD_TL_BL    = list.ToArray();
+            string[] targetTags_SD_TL_BL     = tagList.ToArray();
+
+            if (targets_SD_TL_BL != null && targets_SD_TL_BL.Length>0){
+                int lastIndex = targets_SD_TL_BL.Length - 1;
+                target_SD_TL_BL    = targets_SD_TL_BL[lastIndex];
+                targetTag_SD_TL_BL = targetTags_SD_TL_BL[lastIndex];
+            }
+
+        } // if - spawnPositionIndex == 2
+
+
+    }
+
+
+    void chooseTarget_SD_TL_BR() {
+
+        if (target_SD_TL_BR != null) return;
+
+        if ( spawnPositionIndex != 1 ) return;
+
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
+
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
+            tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+        }
+
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
+            falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+        }
+
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+
+        
+        List<GameObject> list    = new List<GameObject>();
+        List<string>     tagList = new List<string>();
+
+        if ( spawnPositionIndex == 1 ){
 
             if (xwings.Length > 0)
             {
@@ -242,7 +356,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 targetTag_SD_TL_BR = targetTags_SD_TL_BR[lastIndex];
             }
 
-        } // if - spawnPositionIndex == 1 || == 2
+        } // if - spawnPositionIndex == 1 
 
 
     }
@@ -436,6 +550,12 @@ public class StarDestroyerBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
+    void shoot_SD_TL_BL()
+    {
+        spawnNewBlasterBolts_SD_TL_BL();
+        PlayStarDestroyerBlastSound_Immediately();
+    }
+
     void shoot_SD_TL_BR()
     {
         spawnNewBlasterBolts_SD_TL_BR();
@@ -503,6 +623,60 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     }
 
+    void spawnNewBlasterBolts_SD_TL_BL()
+    {
+
+        try
+        {
+            // bolt 1
+            GameObject sdTLBLOrigin1 = GameObject.FindGameObjectWithTag("SD_TL_BL_BlasterPosition1");
+            float x = sdTLBLOrigin1.transform.position.x;
+            float y = sdTLBLOrigin1.transform.position.y;
+            float z = sdTLBLOrigin1.transform.position.z;
+
+            GameObject go = (GameObject)Instantiate(turboLasterBlastPrefab, new Vector3(x, y, z), sdTLBLOrigin1.transform.rotation);
+            GameObject bolt1 = PrefabFactory.GetChildWithName(go, "sdTurboLaserBlast");
+
+            // bolt 2
+            GameObject sdTLBLOrigin2 = GameObject.FindGameObjectWithTag("SD_TL_BL_BlasterPosition2");
+            x = sdTLBLOrigin2.transform.position.x;
+            y = sdTLBLOrigin2.transform.position.y;
+            z = sdTLBLOrigin2.transform.position.z;
+
+            go = (GameObject)Instantiate(turboLasterBlastPrefab, new Vector3(x, y, z), sdTLBLOrigin2.transform.rotation);
+            GameObject bolt2 = PrefabFactory.GetChildWithName(go, "sdTurboLaserBlast");
+
+
+            // bolt 3
+            GameObject sdTLBLOrigin3 = GameObject.FindGameObjectWithTag("SD_TL_BL_BlasterPosition3");
+            x = sdTLBLOrigin3.transform.position.x;
+            y = sdTLBLOrigin3.transform.position.y;
+            z = sdTLBLOrigin3.transform.position.z;
+
+            go = (GameObject)Instantiate(turboLasterBlastPrefab, new Vector3(x, y, z), sdTLBLOrigin3.transform.rotation);
+            GameObject bolt3 = PrefabFactory.GetChildWithName(go, "sdTurboLaserBlast");
+
+            // bolt 4
+            GameObject sdTLBLOrigin4 = GameObject.FindGameObjectWithTag("SD_TL_BL_BlasterPosition4");
+            x = sdTLBLOrigin4.transform.position.x;
+            y = sdTLBLOrigin4.transform.position.y;
+            z = sdTLBLOrigin4.transform.position.z;
+
+            go = (GameObject)Instantiate(turboLasterBlastPrefab, new Vector3(x, y, z), sdTLBLOrigin4.transform.rotation);
+            GameObject bolt4 = PrefabFactory.GetChildWithName(go, "sdTurboLaserBlast");
+
+            bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * sdTLBLOrigin1.transform.forward * Time.deltaTime;
+            bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * sdTLBLOrigin2.transform.forward * Time.deltaTime;
+            bolt3.GetComponent<Rigidbody>().velocity = blasterSpeed * sdTLBLOrigin3.transform.forward * Time.deltaTime;
+            bolt4.GetComponent<Rigidbody>().velocity = blasterSpeed * sdTLBLOrigin4.transform.forward * Time.deltaTime;
+        }
+        catch (System.Exception e)
+        {
+
+            // MyDebug("sd spawn bold, error: " + e.ToString());
+        }
+
+    }
    void spawnNewBlasterBolts_SD_TL_BFC()
     {
 
@@ -608,6 +782,100 @@ public class StarDestroyerBehaviour : MonoBehaviour
         return someValue;
 
     }
+
+    void shootIfTime_SD_TL_BL()
+    {
+
+        shootingPauseTimer_SD_TL_BL -= Time.deltaTime;
+        if (shootingPauseTimer_SD_TL_BL <= 0f)
+        {
+            shootTimes = shootTimes + 1;
+
+            targetAttempt = targetAttempt + 1;
+
+            // SD (Star Destroyer) TL (Turbo Laser) BL (Bottom Left) Swivel
+            GameObject swivel = GameObject.FindGameObjectWithTag("SD_TL_BL_Swivel");
+
+            if (swivel != null)
+            {
+
+                if (target_SD_TL_BL != null)
+                {
+
+                    if (targetTag_SD_TL_BL == "tantiveIV")
+                    {
+
+                        Vector3 lookPos = target_SD_TL_BL.transform.position - swivel.transform.position;
+
+                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                        float eulerY = lookRot.eulerAngles.y;
+                        float eulerX = lookRot.eulerAngles.x;
+                        float eulerZ = lookRot.eulerAngles.z;
+                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                        swivel.transform.rotation = rotation;
+
+                    }
+                    else
+                    {
+
+                        Vector3 targetAdjustedPosition;
+
+                        if (LevelManager.getTheMatrixNumber() == 1)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            targetAdjustedPosition = new Vector3(target_SD_TL_BL.transform.position.x, target_SD_TL_BL.transform.position.y, target_SD_TL_BL.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else if (LevelManager.getTheMatrixNumber() == 2)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            matrix2_x_adjustment = GetRandomXAdjustment_Matrix2();
+                            targetAdjustedPosition = new Vector3(target_SD_TL_BL.transform.position.x + matrix2_x_adjustment, target_SD_TL_BL.transform.position.y, target_SD_TL_BL.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else if (LevelManager.getTheMatrixNumber() == 3)
+                        {
+                            matrix1_z_adjustment = GetRandomZAdjustment_Matrix1();
+                            matrix3_x_adjustment = GetRandomXAdjustment_Matrix3();
+                            targetAdjustedPosition = new Vector3(target_SD_TL_BL.transform.position.x + matrix3_x_adjustment, target_SD_TL_BL.transform.position.y, target_SD_TL_BL.transform.position.z + matrix1_z_adjustment);
+                        }
+                        else
+                        {
+                            targetAdjustedPosition = new Vector3(target_SD_TL_BL.transform.position.x, target_SD_TL_BL.transform.position.y, target_SD_TL_BL.transform.position.z);
+                        }
+
+                        Vector3 lookPos = targetAdjustedPosition - swivel.transform.position;
+
+                        Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                        float eulerY = lookRot.eulerAngles.y;
+                        float eulerX = lookRot.eulerAngles.x;
+                        float eulerZ = lookRot.eulerAngles.z;
+                        Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                        swivel.transform.rotation = rotation;
+
+                    }
+
+                }
+                else
+                {
+                    // MyDebug("");
+                }
+
+                if (target_SD_TL_BL != null)
+                {
+                    shoot_SD_TL_BL();
+                    target_SD_TL_BL = null;
+                    targetTag_SD_TL_BL = null;
+
+                }
+
+            }// swivel != null
+
+
+            shootingPauseTimer_SD_TL_BL = GetRandomShootingPauseAmount();
+
+        }
+    }// end of function
 
     void shootIfTime_SD_TL_BR()
     {
@@ -801,6 +1069,13 @@ public class StarDestroyerBehaviour : MonoBehaviour
     {
 
         destroyIfIrrelevantNow();
+
+        chooseTarget_SD_TL_BL();
+
+        if (shootingAllowed_SD_TL_BL)
+        {
+            shootIfTime_SD_TL_BL();
+        }
 
         chooseTarget_SD_TL_BR();
 
