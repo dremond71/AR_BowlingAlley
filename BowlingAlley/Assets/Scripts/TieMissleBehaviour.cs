@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TieMissleBehaviour : MonoBehaviour {
+public class TieMissleBehaviour : MonoBehaviour
+{
 
     GameObject target;
     bool okToTurn = true;
@@ -11,33 +12,36 @@ public class TieMissleBehaviour : MonoBehaviour {
 
     private float pauseDuration = 0.1f;
     private float pauseTimer;
-    System.Random rnd = new System.Random ();
+    System.Random rnd = new System.Random();
     private TextMesh debugText;
     private bool debug = true;
 
-    void chooseTarget () {
+    void chooseTarget()
+    {
 
         target = null;
 
-        GameObject tantive    = GameObject.FindGameObjectWithTag ("tantiveIV");
-        GameObject falcon     = GameObject.FindGameObjectWithTag ("falcon");
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
 
-        GameObject[] tantives= new GameObject[]{};
-        GameObject[] falcons= new GameObject[]{};
-    
-        if (tantive != null){
-            tantives = new GameObject[] {tantive};
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
             tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
         }
 
-        if (falcons != null){
-            falcons = new GameObject[] {falcon};
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
             falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
         }
 
-        GameObject[] xwings    = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing")); 
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
-        GameObject[] awings     = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
 
         if (target == null)
         {
@@ -65,7 +69,7 @@ public class TieMissleBehaviour : MonoBehaviour {
 
         if (target == null)
         {
-            if (falcons !=null && falcons.Length>0)
+            if (falcons != null && falcons.Length > 0)
             {
                 target = falcons[0];
             }
@@ -73,7 +77,7 @@ public class TieMissleBehaviour : MonoBehaviour {
 
         if (target == null)
         {
-            if (tantives != null && tantives.Length>0)
+            if (tantives != null && tantives.Length > 0)
             {
                 target = tantives[0];
             }
@@ -81,55 +85,61 @@ public class TieMissleBehaviour : MonoBehaviour {
 
     }
     // Start is called before the first frame update
-    void Start () {
+    void Start()
+    {
 
-        debugText = GameObject.Find ("debugText").GetComponent<TextMesh> ();
+        debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
         lifeTimer = lifeDuration;
         pauseTimer = pauseDuration;
 
-        chooseTarget ();
+        chooseTarget();
 
     }
 
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
 
-        this.GetComponent<Rigidbody> ().velocity = 3f * this.transform.forward;
+        this.GetComponent<Rigidbody>().velocity = 3f * this.transform.forward;
 
-/*
-        if (!okToTurn) {
-            pauseTimer -= Time.deltaTime;
-            if (pauseTimer <= 0f) {
-                okToTurn = true;
-            }
-        }
-*/
+        /*
+                if (!okToTurn) {
+                    pauseTimer -= Time.deltaTime;
+                    if (pauseTimer <= 0f) {
+                        okToTurn = true;
+                    }
+                }
+        */
 
-        if (target != null && okToTurn) {
+        if (target != null && okToTurn)
+        {
 
             // float i = turnSpeed * Time.deltaTime;
             //  transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i);
 
-            Quaternion targetRotation = Quaternion.LookRotation (target.transform.position - this.transform.position);
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, targetRotation, 15f * Time.deltaTime);
-            
+            Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - this.transform.position);
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, 15f * Time.deltaTime);
+
             //this.GetComponent<Rigidbody> ().MoveRotation (Quaternion.RotateTowards (this.transform.rotation, targetRotation, 2f));
         }
 
         lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0f) {
+        if (lifeTimer <= 0f)
+        {
 
-            destroySelf ();
+            destroySelf();
         }
     }
 
-    void destroySelf () {
+    void destroySelf()
+    {
 
-        Destroy (gameObject);
+        Destroy(gameObject);
     }
 
-    void OnCollisionEnter (Collision collision) {
-      
+    void OnCollisionEnter(Collision collision)
+    {
+
         if (
             (collision.gameObject.tag == "tantiveIV") ||
             (collision.gameObject.tag == "falcon") ||
@@ -137,18 +147,20 @@ public class TieMissleBehaviour : MonoBehaviour {
              (collision.gameObject.tag == "targetAWing") ||
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "starDestroyer") ||
-              (collision.gameObject.tag == "PlayerShooter") 
-
-
-        ) {
-            destroySelf ();
+              (collision.gameObject.tag == "PlayerShooter") ||
+               (collision.gameObject.tag == "slave1")
+        )
+        {
+            destroySelf();
         }
 
     }
 
-    void MyDebug (string someText) {
+    void MyDebug(string someText)
+    {
 
-        if (debugText != null & debug) {
+        if (debugText != null & debug)
+        {
             debugText.text = someText;
         }
 

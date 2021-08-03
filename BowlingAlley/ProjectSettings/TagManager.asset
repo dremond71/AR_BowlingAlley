@@ -111,6 +111,11 @@ TagManager:
   - SD_TL_BL_BlasterPosition2
   - SD_TL_BL_BlasterPosition3
   - SD_TL_BL_BlasterPosition4
+  - slave1
+  - slave1BlasterPosition1
+  - slave1BlasterPosition2
+  - slave1BlasterPosition3
+  - slave1BlasterPosition4
   layers:
   - Default
   - TransparentFX
