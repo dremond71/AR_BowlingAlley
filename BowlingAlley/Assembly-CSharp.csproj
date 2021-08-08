@@ -105,6 +105,7 @@
      <Compile Include="Assets\Scripts\XYZPositioningHandler.cs" />
      <Compile Include="Assets\Scripts\miniHothTieBehaviour.cs" />
      <Compile Include="Assets\Scripts\slave1Behaviour.cs" />
+     <Compile Include="Assets\Scripts\slave1BlastLifecycle.cs" />
      <Compile Include="Assets\Shared\Ramps\Runtime\RampAsset.cs" />
      <Compile Include="Assets\Shared\Scripts\AdjustTimeScale.cs" />
      <Compile Include="Assets\Shared\Scripts\ProximityActivate.cs" />

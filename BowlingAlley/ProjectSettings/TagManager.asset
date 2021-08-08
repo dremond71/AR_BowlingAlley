@@ -116,6 +116,8 @@ TagManager:
   - slave1BlasterPosition2
   - slave1BlasterPosition3
   - slave1BlasterPosition4
+  - slave1Roar_Sound
+  - slave1Guns_Sound
   layers:
   - Default
   - TransparentFX
