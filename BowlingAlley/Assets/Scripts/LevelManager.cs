@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     private float pauseAfterShootingMissles = 1.5f;
 
-    private static bool debug = false;
+    private static bool debug = true;
 
     private static TextMesh debugText;
 
@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     System.Random rnd = new System.Random();
 
     List<int> randomSpawnPositions = new List<int>();
-    private static int randomSpawnMatrixNumber = 0;
+    private static int randomSpawnMatrixNumber = 1;
     private int numberOfSpawnMatrices = 3;
 
     private AudioSource[] empireSources;
@@ -65,6 +65,9 @@ public class LevelManager : MonoBehaviour
     private GameObject starDestroyerPrefab;
 
     private GameObject falconPrefab;
+
+    private GameObject slave1Prefab;
+
     private GameObject deathStarMisslePrefab;
 
     private bool starshipExists = false;
@@ -104,9 +107,30 @@ public class LevelManager : MonoBehaviour
 
     private int starDestroyerSpawnAmount = 1;
 
+    private int cavalryAttackIndex = 0;
+
     public static bool areAsteroidsPresent() {
         return vehicleMixtureLevel == 3;
     }
+
+        int GetRandomCavalry()
+    {
+        int someValue = 1;
+
+        bool evenValue = ((cavalryAttackIndex % 5) == 0);
+        if (evenValue)
+        {
+            someValue = 1;
+        }
+        else
+        {
+            someValue = 2;
+        }
+        cavalryAttackIndex++;
+
+        return someValue;
+    }
+
     int GetRandomStarDestroyerSpawnPoint()
     {
         int someValue = 1;
@@ -209,6 +233,11 @@ public class LevelManager : MonoBehaviour
     }
 
     float getFalconSpeed()
+    {
+        return enemySpeed + 30.0f * 2.0f;
+    }
+
+    float getSlave1Speed()
     {
         return enemySpeed + 30.0f * 2.0f;
     }
@@ -319,7 +348,8 @@ public class LevelManager : MonoBehaviour
 
         deathStarBlastSource = GameObject.FindGameObjectWithTag("deathStarBlast_Sound").GetComponent<AudioSource>();
         deathStarBlast = deathStarBlastSource.clip;
-
+      
+        slave1Prefab = PrefabFactory.getPrefab("slave-1");
 
         if (empireMode)
         {
@@ -613,9 +643,7 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    void handleLaunchingCavalryAttack()
-    {
-        launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
+    void handleCavalryAttack_StarDestroyer() {
 
         int sdSpawnPosition = GetRandomStarDestroyerSpawnPoint();
         if (sdSpawnPosition == 1){
@@ -624,6 +652,24 @@ public class LevelManager : MonoBehaviour
         else if (sdSpawnPosition == 2) {
            spawnStarDestroyer_AtPositionTwo();
         }
+    }
+
+    void handleCavalryAttack_BobaFett() {
+
+       spawnSlave1();
+
+    }
+
+    void handleLaunchingCavalryAttack()
+    {
+        launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
+
+        int cavalryAttackType = GetRandomCavalry();
+
+        if (cavalryAttackType == 1)
+          handleCavalryAttack_StarDestroyer();
+        else if (cavalryAttackType == 2)
+          handleCavalryAttack_BobaFett();
         
     }
 
@@ -732,6 +778,29 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void spawnSlave1()
+    {
+
+        try
+        {
+            
+            string spawnPositionNumber = "slave1SpawnPosition" + randomSpawnMatrixNumber;
+            GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+            float x = enemySpawner.transform.position.x;
+            float y = enemySpawner.transform.position.y;
+            float z = enemySpawner.transform.position.z;
+            GameObject go = (GameObject)Instantiate(slave1Prefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+            go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+            go.GetComponent<Rigidbody>().velocity = getSlave1Speed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+          
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("spawnSlave1 error: " + e.ToString());
+        }
+
+
+    }
 
     void spawnNormalFalcon()
     {
@@ -871,6 +940,19 @@ public class LevelManager : MonoBehaviour
         {
 
             // when star destroyer is finished its mission, it calls this method
+            // to allow the LevelManager to know it is done.
+            launchTheCavalryAttack = "";
+
+        }
+
+    }
+
+        public static void bobaFettAttackFinished()
+    {
+        lock (olock)
+        {
+
+            // when Boba Fett is finished his mission, it calls this method
             // to allow the LevelManager to know it is done.
             launchTheCavalryAttack = "";
 

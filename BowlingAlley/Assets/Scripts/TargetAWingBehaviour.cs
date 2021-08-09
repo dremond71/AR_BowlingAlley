@@ -162,7 +162,7 @@ public class TargetAWingBehaviour : MonoBehaviour
         ContactPoint cp = collision.contacts[0];
         contactPoint = cp.point;
 
-        if (collision.gameObject.tag == "miniTieBlast")
+        if ( collision.gameObject.tag == "miniTieBlast" )
         {
 
             if (allowDamage)
@@ -190,6 +190,10 @@ public class TargetAWingBehaviour : MonoBehaviour
         {
             health = 0f; 
         }
+        else if ( (collision.gameObject.tag == "slave1Blast") || (collision.gameObject.tag == "slave1"))
+        {
+            health = 0f; 
+        }            
         else
         {
             health = 0f; // something unexpected

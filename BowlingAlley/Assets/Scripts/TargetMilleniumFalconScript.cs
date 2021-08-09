@@ -721,7 +721,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         ContactPoint cp = collision.contacts[0];
         contactPoint = cp.point;
 
-        if (collision.gameObject.tag == "miniTieBlast")
+        if ( collision.gameObject.tag == "miniTieBlast")
         {
 
             if (allowDamage)
@@ -751,13 +751,17 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         {
             health -= 100f; 
         }
+        else if ( (collision.gameObject.tag == "slave1Blast") || (collision.gameObject.tag == "slave1"))
+        {
+            health -= 100f; 
+        }        
         else if (collision.gameObject.tag == "starDestroyerBlast")
         {
             health -= 10f; 
             missleContactPoint = cp.point;
             receivedContact = true;
 
-        }        
+        }            
         else if (collision.gameObject.tag == "matrix_item")
         {
             // do nothing

@@ -16,14 +16,13 @@ public class slave1Behaviour : MonoBehaviour
     private bool debug = true;
     private TextMesh debugText;
 
-    int spawnPositionIndex = 1;
 
     private AudioSource roarSource;
     private AudioClip roar;
 
-    public float blastVolume = 0.3f;
+    public float blastVolume = 2.0f;
 
-    public float roarVolume = 0.7f;
+    public float roarVolume = 2.0f;
 
     bool roarSoundIsPlaying = false;
 
@@ -34,7 +33,142 @@ public class slave1Behaviour : MonoBehaviour
 
     private float blasterSpeed = 180.0f * 3.0f;
 
+
+    GameObject blasterTarget = null;
+    string blasterTargetTag = null;
+
+
     private float shootingPauseTimer;
+
+    bool shootingAllowed = false;
+
+    private float delayBeforeFirstShot;
+
+    void chooseTarget()
+    {
+
+       if (blasterTarget != null) return;
+
+
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        tantive = null;// for now
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
+
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
+            tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+        }
+
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
+            falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+        }
+
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+
+
+        List<GameObject> list = new List<GameObject>();
+        List<string> tagList = new List<string>();
+
+
+
+        if (xwings.Length > 0)
+        {
+            for (int i = 0; i < xwings.Length; i++)
+            {
+                list.Add(xwings[i]);
+                tagList.Add("targetXWing");
+            }
+
+
+        }
+
+        if (awings.Length > 0)
+        {
+            for (int i = 0; i < awings.Length; i++)
+            {
+                list.Add(awings[i]);
+                tagList.Add("targetAWing");
+            }
+        }
+
+        if (meteorites.Length > 0)
+        {
+            for (int i = 0; i < meteorites.Length; i++)
+            {
+                list.Add(meteorites[i]);
+                tagList.Add("targetMeteorite");
+            }
+        }
+
+
+        if (falcons != null && falcons.Length > 0)
+        {
+            list.Add(falcons[0]);
+            tagList.Add("falcon");
+        }
+
+
+        if (tantives != null && tantives.Length > 0)
+        {
+            list.Add(tantives[0]);
+            tagList.Add("tantiveIV");
+        }
+
+        GameObject[] targets = list.ToArray();
+        string[] targetTags = tagList.ToArray();
+
+        if (targets != null && targets.Length > 0)
+        {
+            int lastIndex = targets.Length - 1;
+            blasterTarget = targets[lastIndex];
+            blasterTargetTag = targetTags[lastIndex];
+        }
+
+
+
+    }
+
+   void destroyIfIrrelevantNow()
+    {
+        // this object becomes irrelevant if it has flown past the shooter 
+
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+        float shooterZ = shooter.transform.position.z;
+
+        float myZ = transform.position.z;
+
+        if (myZ < (shooterZ - 3f))
+        {
+            LevelManager.bobaFettAttackFinished();
+            destroySelf();
+        }
+
+    }
+
+    void pauseBeforeShootingOnDifferentThread()
+    {
+        StartCoroutine(pauseBeforeStartingToShoot());
+    }
+
+    IEnumerator pauseBeforeStartingToShoot()
+    {
+        yield return new WaitForSeconds(delayBeforeFirstShot);
+        shootingAllowed = true;
+    }
+
+
+    float GetRandomStartDelay()
+    {
+        return Random.Range(0.5f, 0.8f);
+    }
 
     void Awake()
     {
@@ -52,11 +186,10 @@ public class slave1Behaviour : MonoBehaviour
     void Start()
     {
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
-    }
+        shootingPauseTimer = GetRandomShootingPauseAmount(); //pause between each shot
+        delayBeforeFirstShot = GetRandomStartDelay(); // pause before starting to shoot
 
-    public void setSpawnPositionIndex(int theIndex)
-    {
-        spawnPositionIndex = theIndex;
+        pauseBeforeShootingOnDifferentThread();
     }
 
     void MyDebug(string someText)
@@ -82,6 +215,8 @@ public class slave1Behaviour : MonoBehaviour
         spawnNewBlasterBolt();
         yield return new WaitForSeconds(shotDelay);
 
+        blasterTarget = null;
+        blasterTargetTag = null;
 
     }
 
@@ -96,19 +231,49 @@ public class slave1Behaviour : MonoBehaviour
     }
 
 
+    public void shootBlastersAtTarget()
+    {
+        StartCoroutine(shoot());
+    }
 
     void shootIfTime()
     {
 
         shootingPauseTimer -= Time.deltaTime;
-
         if (shootingPauseTimer <= 0f)
         {
-            StartCoroutine(shoot());
+
+
+            if (blasterTarget != null)
+            {
+
+                // get blaster swivel
+                GameObject swivel = GameObject.FindGameObjectWithTag("slave1GunsSwivel");
+
+                Vector3 lookPos = blasterTarget.transform.position - swivel.transform.position;
+
+                Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                float eulerY = lookRot.eulerAngles.y;
+                float eulerX = lookRot.eulerAngles.x;
+                float eulerZ = lookRot.eulerAngles.z;
+                Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                swivel.transform.rotation = rotation;
+
+
+                shootBlastersAtTarget();
+  
+
+
+
+            }// swivel != null
+
+
             shootingPauseTimer = GetRandomShootingPauseAmount();
 
         }
-    }
+    }// end of function
+
 
     void spawnNewBlasterBolt()
     {
@@ -247,7 +412,14 @@ public class slave1Behaviour : MonoBehaviour
 
         playRoaringSoundIfItIsTime();
 
-        shootIfTime();
+        chooseTarget();
+
+        if (shootingAllowed)
+        {
+            shootIfTime();
+        }
+
+        destroyIfIrrelevantNow();
 
 
     }

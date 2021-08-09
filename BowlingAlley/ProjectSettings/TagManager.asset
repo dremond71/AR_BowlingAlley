@@ -118,6 +118,11 @@ TagManager:
   - slave1BlasterPosition4
   - slave1Roar_Sound
   - slave1Guns_Sound
+  - slave1GunsSwivel
+  - slave1Blast
+  - slave1SpawnPosition1
+  - slave1SpawnPosition2
+  - slave1SpawnPosition3
   layers:
   - Default
   - TransparentFX
