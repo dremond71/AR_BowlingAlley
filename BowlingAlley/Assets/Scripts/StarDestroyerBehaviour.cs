@@ -22,6 +22,8 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     private float imperialMarchVolume = 0.7f;
 
+    private AudioSource exitHyperSpaceSource1;
+    private AudioClip exitHyperspace;
 
     private AudioSource turboLaserBlastSource;
     private AudioClip turboLaserBlast;
@@ -76,17 +78,31 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
     private float delayBeforeFirstShot_SD_TL_BFC;
 
+    void PlayExitHyperspaceSound_Immediately () {
+        // we want a seperate object for each fire; so we can handle multi blasts in quick succession
+
+        // Method I used to achieve multiple blasts that don't interrupt each other:
+        // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
+        exitHyperSpaceSource1.PlayOneShot (exitHyperspace, 2.0f);
+    }
+
     void Awake()
     {
         // 8 MB, so start loading early
         imperialMarchSource = GameObject.FindGameObjectWithTag("imperialMarch_Sound").GetComponent<AudioSource>();
         imperialMarch = imperialMarchSource.clip;
 
+        exitHyperSpaceSource1 = GameObject.FindGameObjectWithTag ("exitHyperspace_Sound").GetComponent<AudioSource> ();
+        exitHyperspace = exitHyperSpaceSource1.clip;
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayExitHyperspaceSound_Immediately ();
+
         metalHitSource = GameObject.FindGameObjectWithTag("swMetalHit_Sound").GetComponent<AudioSource>();
         metalHit = metalHitSource.clip;
 
@@ -109,7 +125,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
-        PlayImperialMarchSound_Immediately();
+        pauseBeforeImperialMarchOnDifferentThread();
     }
 
     public void setSpawnPositionIndex(int theIndex){
@@ -150,6 +166,17 @@ public class StarDestroyerBehaviour : MonoBehaviour
     void pauseBeforeShootingOnDifferentThread_SD_TL_BR()
     {
         StartCoroutine(pauseBeforeStartingToShoot_SD_TL_BR());
+    }
+
+    void pauseBeforeImperialMarchOnDifferentThread()
+    {
+        StartCoroutine(pauseBeforePlayingImperialMarch());
+    }
+
+    IEnumerator pauseBeforePlayingImperialMarch()
+    {
+        yield return new WaitForSeconds(2.5f);
+        PlayImperialMarchSound_Immediately();
     }
 
     IEnumerator pauseBeforeStartingToShoot_SD_TL_BR()

@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class slave1Behaviour : MonoBehaviour
 {
+    public GameObject explosionEffect;
+
     private AudioSource metalHitSource;
     private AudioClip metalHit;
-    private float blasterVolume = 0.1f;
 
     Vector3 contactPoint;
 
     public float health = 999999999f;
     public GameObject muzzleFlashEffect;
 
-    private bool debug = true;
+    private bool debug = false;
     private TextMesh debugText;
 
+    private AudioSource explosionSource;
+    private AudioClip explosion;
 
     private AudioSource roarSource;
     private AudioClip roar;
 
-    public float blastVolume = 2.0f;
+    private AudioSource roarSource2;
+    private AudioClip roar2;
+    public float blastVolume = 1.0f;// volume should be set in Unity editor on object, AND its prefab.
 
-    public float roarVolume = 2.0f;
+    public float roarVolume = 1.0f;
+    public float roarVolume2 = 1.0f;
 
     bool roarSoundIsPlaying = false;
 
@@ -44,10 +50,12 @@ public class slave1Behaviour : MonoBehaviour
 
     private float delayBeforeFirstShot;
 
+    private int randomGunsChoice = 1;
+
     void chooseTarget()
     {
 
-       if (blasterTarget != null) return;
+        if (blasterTarget != null) return;
 
 
         GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
@@ -136,7 +144,7 @@ public class slave1Behaviour : MonoBehaviour
 
     }
 
-   void destroyIfIrrelevantNow()
+    void destroyIfIrrelevantNow()
     {
         // this object becomes irrelevant if it has flown past the shooter 
 
@@ -147,7 +155,6 @@ public class slave1Behaviour : MonoBehaviour
 
         if (myZ < (shooterZ - 3f))
         {
-            LevelManager.bobaFettAttackFinished();
             destroySelf();
         }
 
@@ -170,15 +177,28 @@ public class slave1Behaviour : MonoBehaviour
         return Random.Range(0.5f, 0.8f);
     }
 
+    void PlayExplosionSound_Immediately()
+    {
+        explosionSource.PlayOneShot(explosion, blastVolume * 3.0f);
+
+    }
     void Awake()
     {
+        randomGunsChoice = GetRandomGunsPositionChoice();// choose top or bottom guns
+
         roarSource = GameObject.FindGameObjectWithTag("slave1Roar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
+
+        roarSource2 = GameObject.FindGameObjectWithTag("slave1Roar2_Sound").GetComponent<AudioSource>();
+        roar2 = roarSource2.clip;
 
         blasterSource = GameObject.FindGameObjectWithTag("slave1Guns_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
 
         turboLasterBlastPrefab = PrefabFactory.getPrefab("slave1Blast");
+
+        explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
+        explosion = explosionSource.clip;
 
     }
 
@@ -248,7 +268,16 @@ public class slave1Behaviour : MonoBehaviour
             {
 
                 // get blaster swivel
-                GameObject swivel = GameObject.FindGameObjectWithTag("slave1GunsSwivel");
+                GameObject swivel = null;
+
+                if (randomGunsChoice == 1)
+                {
+                    swivel = GameObject.FindGameObjectWithTag("slave1UpperGunsSwivel");
+                }
+                else if (randomGunsChoice == 2)
+                {
+                    swivel = GameObject.FindGameObjectWithTag("slave1GunsSwivel");
+                }
 
                 Vector3 lookPos = blasterTarget.transform.position - swivel.transform.position;
 
@@ -262,7 +291,7 @@ public class slave1Behaviour : MonoBehaviour
 
 
                 shootBlastersAtTarget();
-  
+
 
 
 
@@ -275,13 +304,73 @@ public class slave1Behaviour : MonoBehaviour
     }// end of function
 
 
+    GameObject getBlasterOrigin(int someValue)
+    {
+
+        GameObject someOrigin = null;
+
+        if (randomGunsChoice == 1)
+        {
+
+            switch (someValue)
+            {
+                case 1:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition1");
+                    break;
+
+                case 2:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition2");
+                    break;
+
+                case 3:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition3");
+                    break;
+
+                case 4:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition4");
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+        else if (randomGunsChoice == 2)
+        {
+            switch (someValue)
+            {
+                case 1:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition5");
+                    break;
+
+                case 2:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition6");
+                    break;
+
+                case 3:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition7");
+                    break;
+
+                case 4:
+                    someOrigin = GameObject.FindGameObjectWithTag("slave1BlasterPosition8");
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
+        return someOrigin;
+    }
     void spawnNewBlasterBolt()
     {
 
         try
         {
             // bolt 1
-            GameObject blastOrigin1 = GameObject.FindGameObjectWithTag("slave1BlasterPosition1");
+            GameObject blastOrigin1 = getBlasterOrigin(1);
+
             float x = blastOrigin1.transform.position.x;
             float y = blastOrigin1.transform.position.y;
             float z = blastOrigin1.transform.position.z;
@@ -291,7 +380,7 @@ public class slave1Behaviour : MonoBehaviour
             bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * blastOrigin1.transform.forward * Time.deltaTime;
 
             // bolt 2
-            GameObject blastOrigin2 = GameObject.FindGameObjectWithTag("slave1BlasterPosition2");
+            GameObject blastOrigin2 = getBlasterOrigin(2);
             x = blastOrigin2.transform.position.x;
             y = blastOrigin2.transform.position.y;
             z = blastOrigin2.transform.position.z;
@@ -301,7 +390,7 @@ public class slave1Behaviour : MonoBehaviour
             bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * blastOrigin2.transform.forward * Time.deltaTime;
 
             // bolt 3
-            GameObject blastOrigin3 = GameObject.FindGameObjectWithTag("slave1BlasterPosition3");
+            GameObject blastOrigin3 = getBlasterOrigin(4);
             x = blastOrigin3.transform.position.x;
             y = blastOrigin3.transform.position.y;
             z = blastOrigin3.transform.position.z;
@@ -311,7 +400,7 @@ public class slave1Behaviour : MonoBehaviour
             bolt3.GetComponent<Rigidbody>().velocity = blasterSpeed * blastOrigin3.transform.forward * Time.deltaTime;
 
             // bolt 4
-            GameObject blastOrigin4 = GameObject.FindGameObjectWithTag("slave1BlasterPosition4");
+            GameObject blastOrigin4 = getBlasterOrigin(4);
             x = blastOrigin4.transform.position.x;
             y = blastOrigin4.transform.position.y;
             z = blastOrigin4.transform.position.z;
@@ -331,7 +420,7 @@ public class slave1Behaviour : MonoBehaviour
     void PlayBlasterSound_Immediately()
     {
         // we want a seperate object for each fire; so we can handle multi blasts in quick succession
-
+        MyDebug("slave1 blaster volume: " + blastVolume);
         // Method I used to achieve multiple blasts that don't interrupt each other:
         // https://docs.unity3d.com/ScriptReference/AudioSource.PlayOneShot.html
         blasterSource.PlayOneShot(blaster, blastVolume);
@@ -379,17 +468,74 @@ public class slave1Behaviour : MonoBehaviour
             health -= 1f;
             handleHit();
         }
+        else if (collision.gameObject.tag == "PlayerShooter")
+        {
+            health = 0f; // immediately explode if it hits player shooter
+        }
         else
         {
             health -= 1f;
-            handleHit();
+            // don't show sparks. This might be when my own blasters touch my collider :S Not sure why ;)
         }
 
         // MyDebug("box collided with : " + collision.gameObject.tag);
 
     }
 
+    /**
+    * Returns 1 or 2; randomly
+    */
+    int GetRandomGunsPositionChoice()
+    {
 
+        int someValue = 1;
+
+        // Random.Range(1, 3);
+        // return a number (1 to 2) - does not include 3
+        int newNumber = Random.Range(1, 3);
+
+        bool evenValue = ((newNumber % 2) == 0);
+        if (evenValue)
+        {
+            someValue = 1;
+        }
+        else
+        {
+            someValue = 2;
+        }
+        return someValue;
+    }
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+            audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+    void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+            stopAudioSource(roarSource);
+
+            stopAudioSource(roarSource2);
+
+            stopAudioSource(blasterSource);
+
+            stopAudioSource(metalHitSource);
+
+
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
     void handleDamage()
     {
 
@@ -400,10 +546,28 @@ public class slave1Behaviour : MonoBehaviour
 
     }
 
+    void Explode()
+    {
 
+        try
+        {
+            stopAllSoundsBeforeIExplode();
+            GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
+            PlayExplosionSound_Immediately();
+            destroySelf();
+
+        }
+        catch (System.Exception e)
+        {
+
+            MyDebug("Explode error: " + e.ToString());
+        }
+
+    }
 
     void destroySelf()
     {
+        LevelManager.bobaFettAttackFinished();
         Destroy(gameObject);
     }
 
@@ -419,6 +583,11 @@ public class slave1Behaviour : MonoBehaviour
             shootIfTime();
         }
 
+        if (health <= 0f)
+        {
+            Explode();
+        }
+
         destroyIfIrrelevantNow();
 
 
@@ -428,8 +597,15 @@ public class slave1Behaviour : MonoBehaviour
     {
         //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
         roarSoundIsPlaying = true;
+
+        // deep/loud roar sound
+        roarSource2.PlayOneShot(roar2, roarVolume2);
+        yield return new WaitForSeconds(roar2.length);
+
+        // light/soft roar sound       
         roarSource.PlayOneShot(roar, roarVolume);
         yield return new WaitForSeconds(roar.length);
+
         roarSoundIsPlaying = false;
 
     }

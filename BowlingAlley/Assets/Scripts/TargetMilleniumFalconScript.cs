@@ -44,7 +44,7 @@ public class TargetMilleniumFalconScript : MonoBehaviour
     Vector3 missleContactPoint;
     private TextMesh debugText;
 
-    private bool debug = true;
+    private bool debug = false;
 
     bool roarSoundIsPlaying = false;
 

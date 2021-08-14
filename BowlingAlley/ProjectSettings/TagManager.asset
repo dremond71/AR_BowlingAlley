@@ -123,6 +123,12 @@ TagManager:
   - slave1SpawnPosition1
   - slave1SpawnPosition2
   - slave1SpawnPosition3
+  - slave1Roar2_Sound
+  - slave1UpperGunsSwivel
+  - slave1BlasterPosition5
+  - slave1BlasterPosition6
+  - slave1BlasterPosition7
+  - slave1BlasterPosition8
   layers:
   - Default
   - TransparentFX

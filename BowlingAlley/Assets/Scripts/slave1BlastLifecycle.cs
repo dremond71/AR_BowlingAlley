@@ -20,9 +20,7 @@ public class slave1BlastLifecycle : MonoBehaviour
               (collision.gameObject.tag == "falcon") ||
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "PlayerShooter") ||
-              (collision.gameObject.tag == "tantiveIV") ||
-              (collision.gameObject.tag == "slave1")
-
+              (collision.gameObject.tag == "tantiveIV")
 
         )
         {

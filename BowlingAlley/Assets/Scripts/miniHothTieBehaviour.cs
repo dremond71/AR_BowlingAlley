@@ -539,13 +539,13 @@ public class miniHothTieBehaviour : MonoBehaviour
         }
 
 
-        if (rightJoyStick.Horizontal >= 0.7f)
+        if (rightJoyStick.Horizontal >= 0.9f)
         {
             MyDebug("Cavalry Attack");
             askForCavalryAttack();
 
         }
-        else if (rightJoyStick.Horizontal <= -0.7f)
+        else if (rightJoyStick.Horizontal <= -0.9f)
         {
             MyDebug("DeathStar Attack");
             askDeathStarToLaunchAttack();

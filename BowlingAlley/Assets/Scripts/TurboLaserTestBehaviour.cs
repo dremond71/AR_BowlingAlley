@@ -30,7 +30,7 @@ public class TurboLaserTestBehaviour : MonoBehaviour
     private AudioClip deathStarBlast;
     private float deathStarBlastVolume = 0.8f;
 
-    private bool debug = true;
+    private bool debug = false;
     private TextMesh debugText;
 
     private float turboLaserSpeedFactor = 30f;

@@ -14,7 +14,7 @@ public class TieMissleBehaviour : MonoBehaviour
     private float pauseTimer;
     System.Random rnd = new System.Random();
     private TextMesh debugText;
-    private bool debug = true;
+    private bool debug = false;
 
     void chooseTarget()
     {

@@ -13,7 +13,7 @@ public class DeathStarMissleBehaviour : MonoBehaviour
     private float lifeTimer;
 
     private TextMesh debugText;
-    private bool debug = true;
+    private bool debug = false;
 
     public void setTargetObject(GameObject targetObject)
     {
