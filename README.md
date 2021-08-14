@@ -140,6 +140,18 @@ Move the right joystick to the right, and the Tie-Fighter calls in a Star Destro
 ![](./star-destroyer-underbelly.png)
 
 
+### Slave I (Boba Fett's ship)
+
+Move the right joystick to the right, and the Tie-Fighter calls in Boba Fett to come and destroy all the target vehicles on screen. I noticed from the movies that Slave I shoot lasers from an upper central area, as well as via the lower gun area, so I added both.
+
+![](./slave1-1.png)
+
+![](./slave1-2.png)
+
+![](./slave1-3.png)
+
+![](./slave1-4.png)
+
 ## Still In Progress
 
 I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
