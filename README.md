@@ -122,6 +122,45 @@ I just added this detailed A-Wing to the game.
 
 ![](./A-Wing-Back.jpg)
 
+### Detailed Y-Wing
+
+I just added this detailed Y-Wing to the game.
+
+![](./yWingTopView.png)
+
+![](./yWingSideView.png)
+
+![](./yWingBottomView.png)
+
+![](./yWingRearView.png)
+
+### Detailed X-Wing
+
+I just added this detailed X-Wing to the game.
+
+![](./xWingFrontView.png)
+
+![](./xWingTopView.png)
+
+![](./xWingSideView.png)
+
+![](./xWingBottomView.png)
+
+![](./xWingRearView.png)
+
+### Detailed X-Wing
+
+I just added this detailed Tie Fighter to the game.
+
+![](./TieFighterFrontView.png)
+
+![](./TieFighterSideView.png)
+
+![](./TieFighterTopView.png)
+
+![](./TieFighterRearView.png)
+
+
 ### DeathStar Attack
 
 Move the right joystick to the left, and the DeathStar will destroy every target vehicule with a green DeathStar missle dedicated to each.
