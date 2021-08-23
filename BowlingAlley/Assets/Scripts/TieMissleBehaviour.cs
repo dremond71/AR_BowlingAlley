@@ -42,6 +42,7 @@ public class TieMissleBehaviour : MonoBehaviour
         GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
         GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
 
         if (target == null)
         {
@@ -56,6 +57,14 @@ public class TieMissleBehaviour : MonoBehaviour
             if (awings.Length > 0)
             {
                 target = awings[0];
+            }
+        }
+
+        if (target == null)
+        {
+            if (ywings.Length > 0)
+            {
+                target = ywings[0];
             }
         }
 
@@ -145,6 +154,7 @@ public class TieMissleBehaviour : MonoBehaviour
             (collision.gameObject.tag == "falcon") ||
             (collision.gameObject.tag == "targetXWing") ||
              (collision.gameObject.tag == "targetAWing") ||
+              (collision.gameObject.tag == "targetYWing") ||
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "starDestroyer") ||
               (collision.gameObject.tag == "PlayerShooter") ||

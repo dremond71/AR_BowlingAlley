@@ -59,6 +59,7 @@ public class LevelManager : MonoBehaviour
     private int numberOfTimesXWingsSpawned = 0;
     private GameObject xwingPrefab;
     private GameObject awingPrefab;
+    private GameObject ywingPrefab;
     private GameObject meteorite1Prefab;
 
     private GameObject rebelStarshipPrefab;
@@ -83,7 +84,10 @@ public class LevelManager : MonoBehaviour
 
     public static int falconIntroIndex = 2;
 
-    private int[] targetRebelVehicleTypes = new[] { 1, 2 };
+    // 1 - x-wing
+    // 2 - a-wing
+    // 3 - y-wing
+    private int[] targetRebelVehicleTypes = new[] { 1, 2, 3 };
 
     // determine what mixture we want of rebel vehicles
     // 1 - swarm of specific vehicle type 
@@ -320,20 +324,13 @@ public class LevelManager : MonoBehaviour
         // return a number (1, or 2) - does not include 3
         return Random.Range(rangeBeginningValue, rangeEndingValue);
 
-        // // let's return only 2 possible values right now
-        // // Random.value returns a number between 0 and 1
-        // if(Random.value<0.5f){
-        //   return 1;
-        // }
-        // else {
-        //   return 2;
-        // }
     }
 
     void Awake()
     {
         xwingPrefab = PrefabFactory.getPrefab("miniTargetXWingFighter");
         awingPrefab = PrefabFactory.getPrefab("a-wing");
+        ywingPrefab = PrefabFactory.getPrefab("yWing");
         meteorite1Prefab = PrefabFactory.getPrefab("meteorite1");
 
         boxPrefab = PrefabFactory.getPrefab("boxTarget");
@@ -363,6 +360,7 @@ public class LevelManager : MonoBehaviour
 
         GameObject[] xwings;
         GameObject[] awings;
+        GameObject[] ywings;
         GameObject[] meteorites;
         GameObject[] falcons;
         GameObject[] tantiveIV;
@@ -374,6 +372,7 @@ public class LevelManager : MonoBehaviour
             xwings = GameObject.FindGameObjectsWithTag("targetXWing");
             meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
             awings = GameObject.FindGameObjectsWithTag("targetAWing");
+            ywings = GameObject.FindGameObjectsWithTag("targetYWing");
             falcons = GameObject.FindGameObjectsWithTag("falcon");
             tantiveIV = GameObject.FindGameObjectsWithTag("tantiveIV");
         }
@@ -382,6 +381,7 @@ public class LevelManager : MonoBehaviour
             xwings = new GameObject[0];
             meteorites = new GameObject[0];
             awings = new GameObject[0];
+            ywings = new GameObject[0];
             falcons = new GameObject[0];
             tantiveIV = new GameObject[0];
         }
@@ -392,6 +392,9 @@ public class LevelManager : MonoBehaviour
 
         if (awings.Length > 0)
             list.AddRange(awings);
+
+        if (ywings.Length > 0)
+            list.AddRange(ywings);
 
         if (meteorites.Length > 0)
             list.AddRange(meteorites);
@@ -414,6 +417,7 @@ public class LevelManager : MonoBehaviour
         GameObject[] boxes;
         GameObject[] meteorites;
         GameObject[] awings;
+        GameObject[] ywings;
         GameObject[] falcons;
 
         if (empireMode)
@@ -421,6 +425,7 @@ public class LevelManager : MonoBehaviour
             tvs = GameObject.FindGameObjectsWithTag("targetXWing");
             meteorites = GameObject.FindGameObjectsWithTag("targetMeteorite");
             awings = GameObject.FindGameObjectsWithTag("targetAWing");
+            ywings = GameObject.FindGameObjectsWithTag("targetYWing");
             boxes = GameObject.FindGameObjectsWithTag("box");
             falcons = GameObject.FindGameObjectsWithTag("falcon");
         }
@@ -429,11 +434,12 @@ public class LevelManager : MonoBehaviour
             tvs = new GameObject[0];
             meteorites = new GameObject[0];
             awings = new GameObject[0];
+            ywings = new GameObject[0];
             boxes = new GameObject[0];
             falcons = new GameObject[0];
         }
 
-        return (tvs.Length > 0) || (meteorites.Length > 0) || (awings.Length > 0) || (boxes.Length > 0) || (falcons.Length > 0);
+        return (tvs.Length > 0) || (meteorites.Length > 0) || (ywings.Length > 0) || (awings.Length > 0) || (boxes.Length > 0) || (falcons.Length > 0);
     }
     void Start()
     {
@@ -846,6 +852,20 @@ public class LevelManager : MonoBehaviour
         incrementNumSpawned();
     }
 
+    void spawnNewYWingAtPosition(int position)
+    {
+
+        string spawnPositionNumber = "spawn" + randomSpawnMatrixNumber + "" + position;
+        GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+        float x = enemySpawner.transform.position.x;
+        float y = enemySpawner.transform.position.y;
+        float z = enemySpawner.transform.position.z;
+        GameObject go = (GameObject)Instantiate(ywingPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+        go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
+        go.GetComponent<Rigidbody>().velocity = getSlightlyRandomizedSpeed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
+        incrementNumSpawned();
+    }
+
     void spawnStarDestroyer_AtPositionOne()
     {
 
@@ -1066,6 +1086,10 @@ public class LevelManager : MonoBehaviour
                 {
                     spawnNewAWingAtPosition(pos);
                 }
+                else if (vehicleType == 3)
+                {
+                    spawnNewYWingAtPosition(pos);
+                }                
 
             }
         }
@@ -1090,6 +1114,10 @@ public class LevelManager : MonoBehaviour
                 {
                     spawnNewAWingAtPosition(pos);
                 }
+                else if (vehicleType == 3)
+                {
+                    spawnNewYWingAtPosition(pos);
+                }                 
 
             }
 

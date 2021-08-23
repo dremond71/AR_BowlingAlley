@@ -93,6 +93,7 @@
      <Compile Include="Assets\Scripts\TargetMilleniumFalconScript.cs" />
      <Compile Include="Assets\Scripts\TargetXWingBehaviour.cs" />
      <Compile Include="Assets\Scripts\TargetXWingBlastLifeCycle.cs" />
+     <Compile Include="Assets\Scripts\TargetYWingBehaviour.cs" />
      <Compile Include="Assets\Scripts\TestFlyerScript.cs" />
      <Compile Include="Assets\Scripts\TieFighter.cs" />
      <Compile Include="Assets\Scripts\TieFighterBlastLifeCycle.cs" />

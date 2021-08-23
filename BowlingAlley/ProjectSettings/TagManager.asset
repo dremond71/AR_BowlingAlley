@@ -129,6 +129,11 @@ TagManager:
   - slave1BlasterPosition6
   - slave1BlasterPosition7
   - slave1BlasterPosition8
+  - yWingRightFrontBlasterPosition
+  - yWingLeftFrontBlasterPosition
+  - yWingTopRightFrontBlasterPosition
+  - yWingTopLeftFrontBlasterPosition
+  - targetYWing
   layers:
   - Default
   - TransparentFX

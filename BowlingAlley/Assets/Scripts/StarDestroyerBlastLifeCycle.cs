@@ -17,6 +17,7 @@ public class StarDestroyerBlastLifeCycle : MonoBehaviour
         if ((collision.gameObject.tag == "box") ||
              (collision.gameObject.tag == "targetXWing") ||
              (collision.gameObject.tag == "targetAWing") ||
+             (collision.gameObject.tag == "targetYWing") ||
               (collision.gameObject.tag == "falcon") ||
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "PlayerShooter") ||

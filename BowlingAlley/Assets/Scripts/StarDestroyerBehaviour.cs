@@ -238,7 +238,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
         GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
-
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
         
         List<GameObject> list    = new List<GameObject>();
         List<string>     tagList = new List<string>();
@@ -260,6 +260,14 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 for (int i = 0; i < awings.Length; i++){
                     list.Add( awings[i] );
                     tagList.Add("targetAWing");    
+                }                
+            }
+
+            if (ywings.Length > 0)
+            {
+                for (int i = 0; i < ywings.Length; i++){
+                    list.Add( ywings[i] );
+                    tagList.Add("targetYWing");    
                 }                
             }
 
@@ -327,6 +335,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
         GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
 
         
         List<GameObject> list    = new List<GameObject>();
@@ -349,6 +358,14 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 for (int i = 0; i < awings.Length; i++){
                     list.Add( awings[i] );
                     tagList.Add("targetAWing");    
+                }                
+            }
+
+            if (ywings.Length > 0)
+            {
+                for (int i = 0; i < ywings.Length; i++){
+                    list.Add( ywings[i] );
+                    tagList.Add("targetYWing");    
                 }                
             }
 
@@ -414,7 +431,7 @@ public class StarDestroyerBehaviour : MonoBehaviour
         GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
         GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
         GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
-
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
         
         List<GameObject> list    = new List<GameObject>();
         List<string>     tagList = new List<string>();
@@ -436,6 +453,14 @@ public class StarDestroyerBehaviour : MonoBehaviour
                 for (int i = 0; i < awings.Length; i++){
                     list.Add( awings[i] );
                     tagList.Add("targetAWing");    
+                }                
+            }
+
+            if (ywings.Length > 0)
+            {
+                for (int i = 0; i < ywings.Length; i++){
+                    list.Add( ywings[i] );
+                    tagList.Add("targetYWing");    
                 }                
             }
 
