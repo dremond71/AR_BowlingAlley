@@ -41,15 +41,15 @@ public class TargetYWingBehaviour : MonoBehaviour
 
     private AudioSource explosionSource;
     private AudioClip explosion;
-    private float blasterVolume = 0.1f;
+    public float blasterVolume = 0.1f;
     private AudioSource metalHitSource;
     private AudioClip metalHit;
 
     private GameObject xwingBlastPrefab;
     private float blasterSpeed = 180.0f;
 
-    private GameObject awingBlastOrigin1;
-    private GameObject awingBlastOrigin2;
+    private GameObject ywingBlastOrigin1;
+    private GameObject ywingBlastOrigin2;
 
     private AudioSource blasterSource;
     private AudioClip blaster;
@@ -72,6 +72,37 @@ public class TargetYWingBehaviour : MonoBehaviour
 
     }
 
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+            audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+        void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+            stopAudioSource(roarSource);
+
+            stopAudioSource(blasterSource);
+
+            stopAudioSource(metalHitSource);
+
+
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
     float GetRandomShootingPauseAmount()
     {
 
@@ -92,9 +123,10 @@ public class TargetYWingBehaviour : MonoBehaviour
     void Awake()
     {
         xwingBlastPrefab = PrefabFactory.getPrefab("miniXWingBlast");
-        blasterSource = GameObject.FindGameObjectWithTag("xwingFighterBlasts_Sound").GetComponent<AudioSource>();
+        blasterSource = GameObject.FindGameObjectWithTag("yWingIonBlaster_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
-        roarSource = GameObject.FindGameObjectWithTag("xwingFighterRoar_Sound").GetComponent<AudioSource>();
+
+        roarSource = GameObject.FindGameObjectWithTag("yWingRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
     }
@@ -136,6 +168,7 @@ public class TargetYWingBehaviour : MonoBehaviour
     void FixedUpdate()
     {
 
+        MyDebug("ywing roar volume: " + roarVolume);
         playRoaringSoundIfItIsTime();
 
         // enemy must have a delay before starting to shoot
@@ -196,6 +229,7 @@ public class TargetYWingBehaviour : MonoBehaviour
         }            
         else
         {
+            //MyDebug(" hit by something unexpected");
             health = 0f; // something unexpected
         }
 
@@ -215,6 +249,7 @@ public class TargetYWingBehaviour : MonoBehaviour
         if (myZ < (shooterZ - 3f))
         {
             LevelManager.decrementNumSpawned(); //since player one didn't kill me, get LevelManager to spawn me again
+            stopAllSoundsBeforeIExplode();
             destroySelf();
         }
 
@@ -225,6 +260,7 @@ public class TargetYWingBehaviour : MonoBehaviour
 
         try
         {
+            stopAllSoundsBeforeIExplode();
             GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
             PlayExplosionSound_Immediately();
 
@@ -351,29 +387,29 @@ public class TargetYWingBehaviour : MonoBehaviour
        
         // bolt 1
 
-        awingBlastOrigin1 = GameObject.FindGameObjectWithTag("yWingTopLeftFrontBlasterPosition");                     
-        //awingBlastOrigin1 = GameObject.FindGameObjectWithTag("yWingLeftFrontBlasterPosition");
-        float x = awingBlastOrigin1.transform.position.x;
-        float y = awingBlastOrigin1.transform.position.y;
-        float z = awingBlastOrigin1.transform.position.z;
+        ywingBlastOrigin1 = GameObject.FindGameObjectWithTag("yWingTopLeftFrontBlasterPosition");                     
+        //ywingBlastOrigin1 = GameObject.FindGameObjectWithTag("yWingLeftFrontBlasterPosition");
+        float x = ywingBlastOrigin1.transform.position.x;
+        float y = ywingBlastOrigin1.transform.position.y;
+        float z = ywingBlastOrigin1.transform.position.z;
 
-        GameObject go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), awingBlastOrigin1.transform.rotation);
+        GameObject go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), ywingBlastOrigin1.transform.rotation);
         GameObject bolt1 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
         // bolt 2
-        awingBlastOrigin2 =GameObject.FindGameObjectWithTag("yWingTopRightFrontBlasterPosition");
-        //awingBlastOrigin2 =GameObject.FindGameObjectWithTag("yWingRightFrontBlasterPosition");
-        x = awingBlastOrigin2.transform.position.x;
-        y = awingBlastOrigin2.transform.position.y;
-        z = awingBlastOrigin2.transform.position.z;
+        ywingBlastOrigin2 =GameObject.FindGameObjectWithTag("yWingTopRightFrontBlasterPosition");
+        //ywingBlastOrigin2 =GameObject.FindGameObjectWithTag("yWingRightFrontBlasterPosition");
+        x = ywingBlastOrigin2.transform.position.x;
+        y = ywingBlastOrigin2.transform.position.y;
+        z = ywingBlastOrigin2.transform.position.z;
 
-        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), awingBlastOrigin2.transform.rotation);
+        go = (GameObject)Instantiate(xwingBlastPrefab, new Vector3(x, y, z), ywingBlastOrigin2.transform.rotation);
 
         GameObject bolt2 = PrefabFactory.GetChildWithName(go, "miniXWingBlast2");
 
 
-        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * awingBlastOrigin1.transform.forward * Time.deltaTime;
-        bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * awingBlastOrigin2.transform.forward * Time.deltaTime;
+        bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * ywingBlastOrigin1.transform.forward * Time.deltaTime;
+        bolt2.GetComponent<Rigidbody>().velocity = blasterSpeed * ywingBlastOrigin2.transform.forward * Time.deltaTime;
 
     }
 

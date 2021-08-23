@@ -17,6 +17,7 @@ ScriptsOnlyBuild:
     - TargetMilleniumFalconScript
     - TargetXWingBehaviour
     - TargetXWingBlastLifeCycle
+    - TargetYWingBehaviour
     - TieFighterBlastLifeCycle
     - TieFighterBoxBehaviour
     - TieMissleBehaviour
@@ -289,29 +290,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16266}
     - Class: 114
-      Script: {instanceID: 16314}
+      Script: {instanceID: 16282}
     - Class: 114
-      Script: {instanceID: 16338}
+      Script: {instanceID: 16316}
     - Class: 114
-      Script: {instanceID: 16442}
+      Script: {instanceID: 16340}
     - Class: 114
-      Script: {instanceID: 16474}
+      Script: {instanceID: 16444}
     - Class: 114
-      Script: {instanceID: 16500}
+      Script: {instanceID: 16476}
     - Class: 114
-      Script: {instanceID: 16652}
+      Script: {instanceID: 16502}
     - Class: 114
-      Script: {instanceID: 16656}
+      Script: {instanceID: 16654}
     - Class: 114
-      Script: {instanceID: 16704}
+      Script: {instanceID: 16658}
     - Class: 114
-      Script: {instanceID: 16736}
+      Script: {instanceID: 16706}
     - Class: 114
-      Script: {instanceID: 16886}
+      Script: {instanceID: 16738}
     - Class: 114
-      Script: {instanceID: 16904}
+      Script: {instanceID: 16888}
     - Class: 114
-      Script: {instanceID: 16910}
+      Script: {instanceID: 16906}
+    - Class: 114
+      Script: {instanceID: 16912}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1555,6 +1558,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerEnumHistory
+  - hash:
+      serializedVersion: 2
+      Hash: 0c4e40b62e371efa02c769d384f65ef8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TargetYWingBehaviour
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

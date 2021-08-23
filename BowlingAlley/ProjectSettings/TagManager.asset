@@ -134,6 +134,8 @@ TagManager:
   - yWingTopRightFrontBlasterPosition
   - yWingTopLeftFrontBlasterPosition
   - targetYWing
+  - yWingRoar_Sound
+  - yWingIonBlaster_Sound
   layers:
   - Default
   - TransparentFX
