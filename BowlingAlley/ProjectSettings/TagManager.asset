@@ -136,6 +136,7 @@ TagManager:
   - targetYWing
   - yWingRoar_Sound
   - yWingIonBlaster_Sound
+  - aWingRoar_Sound
   layers:
   - Default
   - TransparentFX

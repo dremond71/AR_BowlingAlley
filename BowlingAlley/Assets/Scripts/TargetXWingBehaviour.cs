@@ -215,6 +215,7 @@ public class TargetXWingBehaviour : MonoBehaviour
         if (myZ < (shooterZ - 3f))
         {
             LevelManager.decrementNumSpawned(); //since player one didn't kill me, get LevelManager to spawn me again
+            stopAllSoundsBeforeIExplode();
             destroySelf();
         }
 
@@ -225,6 +226,7 @@ public class TargetXWingBehaviour : MonoBehaviour
 
         try
         {
+            stopAllSoundsBeforeIExplode();
             GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
             PlayExplosionSound_Immediately();
 
@@ -415,6 +417,55 @@ public class TargetXWingBehaviour : MonoBehaviour
     {
 
         StartCoroutine(PlayRoarSound());
+
+    }
+
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+            audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+      void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+            if (am_I_The_Last_XWing()){
+
+                stopAudioSource(roarSource);
+
+                stopAudioSource(blasterSource);
+
+                stopAudioSource(metalHitSource);
+
+            }
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+bool am_I_The_Last_XWing()
+    {
+
+        bool value = false;
+
+        GameObject[] xwings = GameObject.FindGameObjectsWithTag("targetXWing");
+
+        if (xwings.Length == 1)
+        {
+            value = true;
+        }
+
+        return value;
 
     }
 

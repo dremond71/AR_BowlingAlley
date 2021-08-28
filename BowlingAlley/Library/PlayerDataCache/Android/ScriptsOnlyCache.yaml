@@ -1,5 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp-Editor.dll:
+    - ReadmeEditor
     Assembly-CSharp.dll:
     - DeathStarMissleBehaviour
     - DustExplosionLifeCycle
@@ -9,6 +11,7 @@ ScriptsOnlyBuild:
     - FlyingXWingBlastBoltLifecycle
     - LevelManager
     - MeteoriteBehaviour
+    - Readme
     - StarDestroyerBehaviour
     - StarDestroyerBlastLifeCycle
     - TantiveIVShipBehaviour

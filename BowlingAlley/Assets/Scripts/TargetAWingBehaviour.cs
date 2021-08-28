@@ -94,7 +94,7 @@ public class TargetAWingBehaviour : MonoBehaviour
         xwingBlastPrefab = PrefabFactory.getPrefab("miniXWingBlast");
         blasterSource = GameObject.FindGameObjectWithTag("xwingFighterBlasts_Sound").GetComponent<AudioSource>();
         blaster = blasterSource.clip;
-        roarSource = GameObject.FindGameObjectWithTag("xwingFighterRoar_Sound").GetComponent<AudioSource>();
+        roarSource = GameObject.FindGameObjectWithTag("aWingRoar_Sound").GetComponent<AudioSource>();
         roar = roarSource.clip;
 
     }
@@ -215,6 +215,7 @@ public class TargetAWingBehaviour : MonoBehaviour
         if (myZ < (shooterZ - 3f))
         {
             LevelManager.decrementNumSpawned(); //since player one didn't kill me, get LevelManager to spawn me again
+            stopAllSoundsBeforeIExplode();
             destroySelf();
         }
 
@@ -225,6 +226,7 @@ public class TargetAWingBehaviour : MonoBehaviour
 
         try
         {
+            stopAllSoundsBeforeIExplode();
             GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
             PlayExplosionSound_Immediately();
 
@@ -398,6 +400,53 @@ public class TargetAWingBehaviour : MonoBehaviour
 
     }
 
+      void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+            if (am_I_The_Last_AWing()){
+
+                stopAudioSource(roarSource);
+
+                stopAudioSource(blasterSource);
+
+                stopAudioSource(metalHitSource);
+
+            }
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+            audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+bool am_I_The_Last_AWing()
+    {
+
+        bool value = false;
+
+        GameObject[] awings = GameObject.FindGameObjectsWithTag("targetAWing");
+
+        if (awings.Length == 1)
+        {
+            value = true;
+        }
+
+        return value;
+
+    }
     IEnumerator PlayRoarSound()
     {
         //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
