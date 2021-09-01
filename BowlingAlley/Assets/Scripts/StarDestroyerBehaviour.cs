@@ -125,7 +125,12 @@ public class StarDestroyerBehaviour : MonoBehaviour
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
 
-        pauseBeforeImperialMarchOnDifferentThread();
+        // to make videos that can be 'allowed' on YouTube, I need to be able to silence
+        // any soundtrack music :)
+        if ( LevelManager.getPlaySoundtrackMusic() == true) {
+           pauseBeforeImperialMarchOnDifferentThread();
+        }
+        
     }
 
     public void setSpawnPositionIndex(int theIndex){

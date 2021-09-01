@@ -81,7 +81,7 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     public float increment = 0.001f;
 
-    private bool debug = false;
+    private bool debug = true;
 
     void Start()
     {
@@ -115,11 +115,13 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         debugText = GameObject.Find("debugText").GetComponent<TextMesh>();
     }
+
+     // MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
     void Update()
     {
 
         switchHoverSoundTimer -= Time.deltaTime;
-        //MyDebug(switchHoverSoundTimer + " , playingHover1: " + playingHover1);
+       
         if (switchHoverSoundTimer <= 0f)
         {
             //start duplicate sound 
@@ -365,17 +367,41 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         if (Input.GetKey("d"))
         {
-            MyDebug("Deathstar Attack");
+            //MyDebug("Deathstar Attack");
             askDeathStarToLaunchAttack();
 
         }
 
         if (Input.GetKey("c"))
         {
-            MyDebug("Cavalry Attack");
+           // MyDebug("Cavalry Attack");
             askForCavalryAttack();
 
         }
+
+        if (Input.GetKey("s"))
+        {
+            bool currentValue = LevelManager.getPlaySoundtrackMusic();
+            bool newvalue = !currentValue;
+            LevelManager.setPlaySoundtrackMusic(newvalue);
+
+            bool theCurrent = LevelManager.getPlaySoundtrackMusic();
+            MyDebug("play music : " + theCurrent);
+
+        }
+
+        if (Input.GetKey("o"))
+        {
+           // ask Level manager to open options dialog
+           LevelManager.launchOptionsDialog();
+        }
+
+        if (Input.GetKey("p"))
+        {
+           // ask Level manager to open options dialog
+           LevelManager.closeOptionsDialog();
+        }
+
     }
 
     private void FixedUpdate()
@@ -509,7 +535,7 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         if (leftJoyStick.Horizontal >= 0.2f)
         {
-            MyDebug("Move right");
+            //MyDebug("Move right");
 
             setMovingRight();
             increaseXvalue();
@@ -517,7 +543,7 @@ public class miniHothTieBehaviour : MonoBehaviour
         }
         else if (leftJoyStick.Horizontal <= -0.2f)
         {
-            MyDebug("Move left");
+           // MyDebug("Move left");
             setMovingLeft();
             decreaseXvalue();
             //handleRoar();
@@ -525,14 +551,14 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         if (leftJoyStick.Vertical >= 0.5f)
         {
-            MyDebug("Move up");
+           // MyDebug("Move up");
             setMovingUp();
             increaseYvalue();
             //handleRoar();
         }
         else if (leftJoyStick.Vertical <= -0.5f)
         {
-            MyDebug("Move down");
+           // MyDebug("Move down");
             setMovingDown();
             decreaseYvalue();
             //handleRoar();
@@ -541,24 +567,24 @@ public class miniHothTieBehaviour : MonoBehaviour
 
         if (rightJoyStick.Horizontal >= 0.9f)
         {
-            MyDebug("Cavalry Attack");
+           // MyDebug("Cavalry Attack");
             askForCavalryAttack();
 
         }
         else if (rightJoyStick.Horizontal <= -0.9f)
         {
-            MyDebug("DeathStar Attack");
+           // MyDebug("DeathStar Attack");
             askDeathStarToLaunchAttack();
         }
 
         if (rightJoyStick.Vertical >= 0.5f)
         {
-            MyDebug("Fire");
+            //MyDebug("Fire");
             handleShoot();
         }
         else if (rightJoyStick.Vertical <= -0.7f)
         {
-            MyDebug("Fire Missle");
+           // MyDebug("Fire Missle");
             handleShootMissle();
         }
 

@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     static string launchTheDSAttack = "";
 
+    static string launchTheOptionsDialog = "";
+
     static string launchTheCavalryAttack = "";
 
     private float pauseAfterShootingMissles = 1.5f;
@@ -52,6 +54,8 @@ public class LevelManager : MonoBehaviour
 
     static bool tieFighterAllowedToAttack = true;
 
+    static bool playSoundtrackMusic = false;
+
     public float enemySpeed = 15.0f;
 
     private GameObject boxPrefab;
@@ -64,6 +68,9 @@ public class LevelManager : MonoBehaviour
 
     private GameObject rebelStarshipPrefab;
     private GameObject starDestroyerPrefab;
+
+    private GameObject soundTrackOptionsPrefab;
+    private static GameObject optionsDialog;
 
     private GameObject falconPrefab;
 
@@ -348,6 +355,9 @@ public class LevelManager : MonoBehaviour
       
         slave1Prefab = PrefabFactory.getPrefab("slave-1");
 
+        // soundTrackOptionsPrefab
+        soundTrackOptionsPrefab = PrefabFactory.getPrefab("optionsDialog");
+
         if (empireMode)
         {
             load_EmpireSounds();
@@ -445,7 +455,35 @@ public class LevelManager : MonoBehaviour
     {
         numberOfSpawnsSinceLastClip = totalSpawnsBeforeClip; //we want to play a clip at the start
         startGameTimer = startGamePauseDuration;
+
+        //spawnOptionsDialog();
     }
+
+void activateProperCheckBox(bool checkboxValue, GameObject optionsDialog) {
+
+GameObject yesCheckBox =  PrefabFactory.GetChildWithName(optionsDialog,"SoundCheckBoxOn"); 
+GameObject noCheckBox  =  PrefabFactory.GetChildWithName(optionsDialog,"SoundCheckBoxOff"); 
+
+if (checkboxValue == true) {
+   setActive_withTryCatch(yesCheckBox,true);
+   setActive_withTryCatch(noCheckBox,false);
+}
+else {
+   setActive_withTryCatch(yesCheckBox,false);
+   setActive_withTryCatch(noCheckBox,true);
+}
+
+}
+
+void setActive_withTryCatch(GameObject go, bool value) {
+  //not sure why some of the non-null objects cause an exception when I turn active on or off. weird.
+  try {    
+    go.SetActive(value); 
+  }
+  catch (System.Exception e) {
+    Debug.LogException(e, this);
+  }
+}
 
     void spawnFalconAtSpawnPosition1()
     {
@@ -505,7 +543,7 @@ public class LevelManager : MonoBehaviour
 
 
 
-        MyDebug("shootAllTargetVehicles : " + allTargets.Length);
+       // MyDebug("shootAllTargetVehicles : " + allTargets.Length);
         if (allTargets.Length > 0)
         {
 
@@ -649,6 +687,12 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void handleLaunchingOptionsDialog()
+    {
+        launchTheOptionsDialog = "launched";// we only want launch the dialog once
+        spawnOptionsDialog();
+    }
+
     void handleCavalryAttack_StarDestroyer() {
 
         int sdSpawnPosition = GetRandomStarDestroyerSpawnPoint();
@@ -693,6 +737,10 @@ public class LevelManager : MonoBehaviour
             handleLaunchingDeathStarAttack();
         }
 
+        if (launchTheOptionsDialog == "launch")
+        {
+            handleLaunchingOptionsDialog();
+        }
 
         if (startGameTimer > 0.0f)
             startGameTimer -= Time.deltaTime;
@@ -866,6 +914,16 @@ public class LevelManager : MonoBehaviour
         incrementNumSpawned();
     }
 
+    void spawnOptionsDialog()
+    {
+        GameObject spawner = GameObject.Find("soundTrackOptionsSpawnPoint");
+        float x = spawner.transform.position.x;
+        float y = spawner.transform.position.y;
+        float z = spawner.transform.position.z;
+        optionsDialog = (GameObject)Instantiate(soundTrackOptionsPrefab, new Vector3(x, y, z), spawner.transform.rotation);
+        activateProperCheckBox(LevelManager.getPlaySoundtrackMusic(), optionsDialog); 
+    }
+
     void spawnStarDestroyer_AtPositionOne()
     {
 
@@ -1008,6 +1066,35 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public static void launchOptionsDialog()
+    {
+
+        lock (olock)
+        {
+
+            if (launchTheOptionsDialog == "")
+            {
+                launchTheOptionsDialog = "launch";
+            }
+        }
+
+
+    }
+
+        public static void closeOptionsDialog()
+    {
+
+        lock (olock)
+        {
+              if (optionsDialog != null){
+                 Destroy(optionsDialog);
+              }
+              launchTheOptionsDialog = "";
+              
+        }
+
+    }
+
     public static void setTieFighterAllowedToShoot(bool value)
     {
         lock (olock)
@@ -1016,6 +1103,21 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public static bool getPlaySoundtrackMusic()
+    {
+        lock (olock)
+        {
+            return playSoundtrackMusic;
+        }
+    }
+
+    public static void setPlaySoundtrackMusic(bool value)
+    {
+        lock (olock)
+        {
+            playSoundtrackMusic = value;
+        }
+    }
     public static void decrementNumSpawned()
     {
         lock (olock)
@@ -1210,4 +1312,49 @@ public class LevelManager : MonoBehaviour
         clipIsPlaying = false;
 
     }
+
+    void handleInputAndroid(){
+
+     int nbTouches = Input.touchCount;
+ 
+      if ( nbTouches > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+      {
+
+          
+           Touch touch = Input.GetTouch(0);
+           Ray ray = Camera.main.ScreenPointToRay(touch.position);
+ 
+           RaycastHit hit;
+             
+            if (Physics.Raycast(ray,out hit, 100.0f)) {
+                if (hit.transform && hit.transform.gameObject){
+           
+                    string name = hit.collider.transform.gameObject.name;
+                     
+                    if (name == "DeathStar"){  
+                        MyDebug("touched: DeathStar");
+                        LevelManager.launchOptionsDialog();
+                    }
+                    else if (name == "closeIcon"){     
+                        MyDebug("touched: closeIcon");
+                        LevelManager.closeOptionsDialog();
+                    }                    
+                    else if (name == "SoundCheckBoxOn"){
+                           
+                        MyDebug("touched: SoundCheckBoxOn");
+                            
+                    }
+                    else if (name == "SoundCheckBoxOff") {
+                       
+                       MyDebug("touched: SoundCheckBoxOff");    
+                        
+                    }
+                }//if
+            }//if
+
+
+      }// 
+
+   }
+
 }
