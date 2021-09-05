@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     static bool tieFighterAllowedToAttack = true;
 
-    static bool playSoundtrackMusic = false;
+    static bool playSoundtrackMusic = true;
 
     public float enemySpeed = 15.0f;
 

@@ -66,11 +66,27 @@ Here is video of the application in action:
 ## Tie Fighter and X-Wing Fighter Shooting Game (In Progress)
 
 Right now I am working on a shooting game. Currently you control a
-Tie Fighter, and you shoot at incoming swarms of X-Wing Fighters.
+Tie Fighter, and you shoot at incoming swarms of various rebel fighters.
+
+The rebel vehicles are spawned from `three` separate `3x3` matrices: one `directly in front` of the Tie Fighter, another from the `front left` and angled on a 45 degree angle, and another from the `front right` and angled on a 45 degree angle.
+
 I have a Tantive IV coming out of hyperspace, and letting out a bang.
 Then the Emperor (from inside the Death Star) taunts the rebels, and a swarm
-of X-Wing Fighters attacks the Tie Fighter. This process repeats.
-Added ion torpedo and ion explosion as well.
+of various rebel fighters attacks the Tie Fighter. 
+
+The left joystick controls the Tie Fighter's movement.
+
+The right joystick controls the Tie Fighter's various attacks:
+- Up (Fire green blasts)
+- Down (Fire blue ion missle)
+- Left (Request for a DeathStar attack on all rebels)
+- Right (Request a Cavalry Attack on all rebels: Either 1) a Star Destroyer Attack, or 2) a Boba Fett Attack)
+
+Occasionally the Millenium Falcon appears on screen, stays motionless as it plays various specific bites from various scenes from Episode IV, and then attacks the Tie Fighter with a specific animated sequence, turns around and disappears.
+
+This process repeats.
+
+I haven't designed this game to bring you through an adventure with different levels...I designed this game so I can have a Star Wars battle whenever I felt like it. Oh, and the Tie Fighter can never die, so there's no reason to be stressed out playing this game ;) lol .
 
 ![](./shootingGame.png)
 
@@ -191,20 +207,36 @@ Move the right joystick to the right, and the Tie-Fighter calls in Boba Fett to 
 
 ![](./slave1-4.png)
 
+### Soundtrack on/off dialog
+
+The game has a soundtrack on/off dialog. By default the soundtrack is on.
+
+I created it because YouTube will give you a copyright strike if you try to upload an action video with any Star Wars songs playing in the background.
+
+To bring up the soundtrack on/off dialog, `touch` on the DeathStar's disc with your `finger`.
+
+![](./soundtrack-dialog3.png)
+
+It will display a `volume on` icon if the soundtrack setting is currently set to `on`.
+
+![](./soundtrack-dialog1.png)
+
+It will display a `volume off` icon if the soundtrack setting is currently set to `off`.
+
+![](./soundtrack-dialog2.png)
+
+To toggle the setting, `touch` the current icon.
+
+Press the `close icon` in the top right corner to close the dialog.
+
+
 ## Still In Progress
 
-I originally worked on the bowling alley and X-Wing showcase apps during my Christmas vacation, so they still needs some work.
+I am working on this only to amuse myself with Star Wars-related AR stuff.
 
-Since January, I've started to work on the shooting game, and it is still in progress.
+I wasn't focusing on `'perfect'` 3D AR textures...just `'good enough'` textures. For textures (materials) applied to 3D objects, I just quickly used the RGB color editor to find a close approximation, or I made square panels with portions of images.
 
-Things I couldn't figure out:
-
-- how to use an image with a transparent background in Unity (had to resort to images with white backgrounds)
-- I used Plane detection stuff at first (to set my bowling alley on the ground), but had to abandon it because the alley would be angled a tiny bit, and bowling ball would fall off
-
-I wasn't focusing on perfect 3D AR textures...just 'good enough' textures. For textures (materials) applied to 3D objects, I just quickly used the RGB color editor to find a close approximation, or I made square panels with portions of images.
-
-I learnt C# on the fly (I am a Java, Javascript, TypeScript, NodeJS programmer by trade.)
+I learnt C# on the fly (I am a Java, Javascript, TypeScript, NodeJS, and golang programmer by trade.)
 
 
 ## Upgraded to a new version of Unity Editor
@@ -225,6 +257,6 @@ Long story short, I had to perform these steps to get things working again:
 
 ## Conclusion
 
-I had a lot of fun using the [Unity Editor](https://unity.com/products/core-platform), the [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) programming language, and [Google's AR Core API](https://developers.google.com/ar) to make these apps.
+I am having a lot of fun using the [Unity Editor](https://unity.com/products/core-platform), the [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) programming language, and [Google's AR Core API](https://developers.google.com/ar) to make these apps.
 
 Being able to export all my work as an android application (and others) is really convenient. :)
