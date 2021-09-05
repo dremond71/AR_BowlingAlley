@@ -94,6 +94,8 @@ I haven't designed this game to bring you through an adventure with different le
 
 [Link to video showing Star Destroyer and Death Star attacks](https://photos.google.com/photo/AF1QipPbVE-jMvujBb-Oc38QPX1xYNFJw4h_z_oB8VXy)
 
+[Link to video showing Boba Fett ship attack](https://youtu.be/jajerJSvMe8)
+
 ### Detailed Tantive IV (Just finished)
 
 I just added this detailed Tantive IV to the video above.
