@@ -81,7 +81,7 @@ public class miniHothTieBehaviour : MonoBehaviour
 
     public float increment = 0.001f;
 
-    private bool debug = true;
+    private bool debug = false;
 
     void Start()
     {
