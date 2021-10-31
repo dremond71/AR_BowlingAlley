@@ -92,7 +92,7 @@ I haven't designed this game to bring you through an adventure with different le
 
 [Link to the video](https://www.youtube.com/watch?v=prQ8P_4_pXQ&t=17s)
 
-[Link to video showing Star Destroyer and Death Star attacks](https://photos.google.com/photo/AF1QipPbVE-jMvujBb-Oc38QPX1xYNFJw4h_z_oB8VXy)
+[Link to video showing Star Destroyer and Death Star attacks](https://photos.app.goo.gl/rwErxJPTzEkVYvXw7)
 
 [Link to video showing Boba Fett ship attack](https://youtu.be/jajerJSvMe8)
 
