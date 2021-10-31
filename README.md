@@ -96,6 +96,9 @@ I haven't designed this game to bring you through an adventure with different le
 
 [Link to video showing Boba Fett ship attack](https://youtu.be/jajerJSvMe8)
 
+[Link to video showing SoundTrack ON/OFF Dialog](https://www.youtube.com/watch?v=hYVGVsCjGds)
+
+
 ### Detailed Tantive IV (Just finished)
 
 I just added this detailed Tantive IV to the video above.
