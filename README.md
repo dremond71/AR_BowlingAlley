@@ -235,6 +235,13 @@ To toggle the setting, `touch` the current icon.
 Press the `close icon` in the top right corner to close the dialog.
 
 
+### Imperial Viper Droid
+
+![](./dom_viper_droid.png)
+
+[Link to the Imperial Viper Droid 360 degree view in Unity Editor](https://www.youtube.com/watch?v=bAHVlAxD198)
+
+
 ## Still In Progress
 
 I am working on this only to amuse myself with Star Wars-related AR stuff.
