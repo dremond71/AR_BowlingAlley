@@ -138,6 +138,9 @@ TagManager:
   - yWingIonBlaster_Sound
   - aWingRoar_Sound
   - soundTrackOptionsSpawnPoint
+  - viperDroidHum_Sound
+  - viperDroidBlast_Sound
+  - viperDroidTalk_Sound
   layers:
   - Default
   - TransparentFX
