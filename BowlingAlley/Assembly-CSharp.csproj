@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\FlyingXWingBlastBoltLifecycle.cs" />
      <Compile Include="Assets\Scripts\GameBehaviour.cs" />
      <Compile Include="Assets\Scripts\Grenade.cs" />
+     <Compile Include="Assets\Scripts\ImperialViperDroid.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MeteoriteBehaviour.cs" />
      <Compile Include="Assets\Scripts\MoveBall.cs" />
@@ -102,6 +103,7 @@
      <Compile Include="Assets\Scripts\TieMissleBehaviour.cs" />
      <Compile Include="Assets\Scripts\TieMissleTargetBehaviour.cs" />
      <Compile Include="Assets\Scripts\TurboLaserTestBehaviour.cs" />
+     <Compile Include="Assets\Scripts\ViperBlastLifeCycle.cs" />
      <Compile Include="Assets\Scripts\XWingFighter.cs" />
      <Compile Include="Assets\Scripts\XWingFighterShowcase.cs" />
      <Compile Include="Assets\Scripts\XYZPositioningHandler.cs" />
