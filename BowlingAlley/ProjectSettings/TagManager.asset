@@ -141,6 +141,7 @@ TagManager:
   - viperDroidHum_Sound
   - viperDroidBlast_Sound
   - viperDroidTalk_Sound
+  - viperDroidBlast
   layers:
   - Default
   - TransparentFX

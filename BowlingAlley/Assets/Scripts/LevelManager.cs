@@ -736,7 +736,7 @@ public class LevelManager : MonoBehaviour
         }
 
         if (startGameTimer > 0.0f)
-           // startGameTimer -= Time.deltaTime; // DOM UNCOMMENT THIS
+           startGameTimer -= Time.deltaTime;
 
         if (startGameTimer <= 0f)
         {

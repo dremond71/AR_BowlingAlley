@@ -28,10 +28,16 @@ public class ImperialViperDroid : MonoBehaviour
 
     private GameObject blastOrigin;
     private GameObject viperBlastPrefab;
-    private float blasterSpeed = 540.0f;
+    private float blasterSpeed = 540.0f; // 540.0f
     private float delayBeforeFirstShot;
 
     bool shootingAllowed = false;
+
+
+
+    GameObject blasterTarget = null;
+    string blasterTargetTag = null;
+
 
     void setUpBlastOrigin()
     {
@@ -59,31 +65,63 @@ public class ImperialViperDroid : MonoBehaviour
 
         bolt1.GetComponent<Rigidbody>().velocity = blasterSpeed * blastOrigin.transform.forward * Time.deltaTime;
 
+
     }
 
     float GetRandomShootingPauseAmount()
     {
 
-        return Random.Range(5.0f, 10.0f);
+        return Random.Range(0.4f, 0.5f);
 
     }
 
+    
     void shootIfTime()
     {
 
         shootingPauseTimer -= Time.deltaTime;
         if (shootingPauseTimer <= 0f)
         {
-            shoot();
+
+            chooseTarget();
+            if (blasterTarget != null)
+            {
+
+                // get blaster swivel
+                GameObject theBlaster = PrefabFactory.GetChildWithName(gameObject, "theBlaster");
+                GameObject swivel = PrefabFactory.GetChildWithName(theBlaster, "blasterBasePart2");
+
+                Vector3 lookPos = blasterTarget.transform.position - swivel.transform.position;
+
+                Quaternion lookRot = Quaternion.LookRotation(lookPos, Vector3.up);
+                float eulerY = lookRot.eulerAngles.y;
+                float eulerX = lookRot.eulerAngles.x;
+                float eulerZ = lookRot.eulerAngles.z;
+                Quaternion rotation = Quaternion.Euler(eulerX, eulerY, eulerZ);
+
+                swivel.transform.rotation = rotation;
+
+                shoot();
+
+                
+
+            }
+
+
             shootingPauseTimer = GetRandomShootingPauseAmount();
 
         }
-    }
+    }// end of function
+
+
+ 
+
 
     void shoot()
     {
         spawnNewBlasterBolt();
         PlayBlasterSound_Immediately();
+
     }
 
     void PlayBlasterSound_Immediately()
@@ -210,6 +248,118 @@ public class ImperialViperDroid : MonoBehaviour
         {
             shootIfTime();
         }
+    }
+
+
+
+    void chooseTarget()
+    {
+
+        
+
+        blasterTarget = null;
+        blasterTargetTag = null;
+
+        GameObject tantive = GameObject.FindGameObjectWithTag("tantiveIV");
+        tantive = null;// for now
+        GameObject falcon = GameObject.FindGameObjectWithTag("falcon");
+
+        GameObject[] tantives = new GameObject[] { };
+        GameObject[] falcons = new GameObject[] { };
+
+        if (tantive != null)
+        {
+            tantives = new GameObject[] { tantive };
+            tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+        }
+
+        if (falcons != null)
+        {
+            falcons = new GameObject[] { falcon };
+            falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+        }
+
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
+
+
+        List<GameObject> list = new List<GameObject>();
+        List<string> tagList = new List<string>();
+
+
+
+        if (xwings.Length > 0)
+        {
+            for (int i = 0; i < xwings.Length; i++)
+            {
+                list.Add(xwings[i]);
+                tagList.Add("targetXWing");
+            }
+
+
+        }
+
+        if (awings.Length > 0)
+        {
+            for (int i = 0; i < awings.Length; i++)
+            {
+                list.Add(awings[i]);
+                tagList.Add("targetAWing");
+            }
+        }
+
+        if (ywings.Length > 0)
+        {
+            for (int i = 0; i < ywings.Length; i++)
+            {
+                list.Add(ywings[i]);
+                tagList.Add("targetYWing");
+            }
+        }
+
+        if (meteorites.Length > 0)
+        {
+            for (int i = 0; i < meteorites.Length; i++)
+            {
+                list.Add(meteorites[i]);
+                tagList.Add("targetMeteorite");
+            }
+        }
+
+
+        if (falcons != null && falcons.Length > 0)
+        {
+            list.Add(falcons[0]);
+            tagList.Add("falcon");
+        }
+
+
+        if (tantives != null && tantives.Length > 0)
+        {
+            list.Add(tantives[0]);
+            tagList.Add("tantiveIV");
+        }
+
+        GameObject[] targets = list.ToArray();
+        string[] targetTags = tagList.ToArray();
+
+        if (targets != null && targets.Length > 0)
+        {
+            int lastIndex = targets.Length - 1;
+            blasterTarget = targets[lastIndex];
+            blasterTargetTag = targetTags[lastIndex];
+        }
+
+
+
+    }
+
+    void destroySelf()
+    {
+        
+        Destroy(gameObject);
     }
 
 }
