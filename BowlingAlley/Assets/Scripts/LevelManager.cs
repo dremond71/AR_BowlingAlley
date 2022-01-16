@@ -76,6 +76,8 @@ public class LevelManager : MonoBehaviour
 
     private GameObject slave1Prefab;
 
+    private GameObject viperDroidPrefab;
+
     private GameObject deathStarMisslePrefab;
 
     private bool starshipExists = false;
@@ -355,6 +357,7 @@ public class LevelManager : MonoBehaviour
       
         slave1Prefab = PrefabFactory.getPrefab("slave-1");
 
+        viperDroidPrefab = PrefabFactory.getPrefab("imperialViperDroid");
         // soundTrackOptionsPrefab
         soundTrackOptionsPrefab = PrefabFactory.getPrefab("optionsDialog");
 
@@ -837,6 +840,7 @@ public class LevelManager : MonoBehaviour
             float y = enemySpawner.transform.position.y;
             float z = enemySpawner.transform.position.z;
             GameObject go = (GameObject)Instantiate(slave1Prefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+            //GameObject go = (GameObject)Instantiate(viperDroidPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
             go.transform.RotateAround(go.transform.position, go.transform.up, 180f);
             go.GetComponent<Rigidbody>().velocity = getSlave1Speed() * enemySpawner.transform.forward * -1f * Time.deltaTime;
           

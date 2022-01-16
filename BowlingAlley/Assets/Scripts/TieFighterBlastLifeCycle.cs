@@ -21,7 +21,8 @@ public class TieFighterBlastLifeCycle : MonoBehaviour
               (collision.gameObject.tag == "falcon") ||
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "starDestroyer") ||
-               (collision.gameObject.tag == "slave1") 
+               (collision.gameObject.tag == "slave1") || 
+               (collision.gameObject.tag == "viperDroid") 
               
 
         )

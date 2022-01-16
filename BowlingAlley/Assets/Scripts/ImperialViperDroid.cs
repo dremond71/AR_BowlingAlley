@@ -38,6 +38,17 @@ public class ImperialViperDroid : MonoBehaviour
     GameObject blasterTarget = null;
     string blasterTargetTag = null;
 
+    public float health = 999999999f;
+
+    Vector3 contactPoint;
+
+    public GameObject muzzleFlashEffect;
+    public GameObject explosionEffect;
+
+    private AudioSource explosionSource;
+    private AudioClip explosion;
+
+    public float blastVolume = 1.0f;// volume should be set in Unity editor on object, AND its prefab.
 
     void setUpBlastOrigin()
     {
@@ -152,6 +163,9 @@ public class ImperialViperDroid : MonoBehaviour
             blasterSource = GameObject.FindGameObjectWithTag("viperDroidBlast_Sound").GetComponent<AudioSource>();
             blaster = blasterSource.clip;
 
+            explosionSource = GameObject.FindGameObjectWithTag("swExplosion_Sound").GetComponent<AudioSource>();
+            explosion = explosionSource.clip;
+
             viperBlastPrefab = PrefabFactory.getPrefab("viperBlaster");
 
             setUpBlastOrigin();
@@ -248,6 +262,14 @@ public class ImperialViperDroid : MonoBehaviour
         {
             shootIfTime();
         }
+
+        if (health <= 0f)
+        {
+            Explode();
+        }
+
+        destroyIfIrrelevantNow();
+
     }
 
 
@@ -358,8 +380,156 @@ public class ImperialViperDroid : MonoBehaviour
 
     void destroySelf()
     {
-        
+        // LevelManager.bobaFettAttackFinished();
         Destroy(gameObject);
+    }
+
+    
+    void destroyIfIrrelevantNow()
+    {
+        // this object becomes irrelevant if it has flown past the shooter 
+
+        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
+        float shooterZ = shooter.transform.position.z;
+
+        float myZ = transform.position.z;
+
+        if (myZ < (shooterZ - 3f))
+        {
+            destroySelf();
+        }
+
+    }
+
+    void stopAudioSource(AudioSource audioSource)
+    {
+        try
+        {
+            audioSource.Stop();
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+    void PlayExplosionSound_Immediately()
+    {
+        explosionSource.PlayOneShot(explosion, blastVolume * 3.0f);
+
+    }
+
+    void Explode()
+    {
+
+        try
+        {
+            stopAllSoundsBeforeIExplode();
+            GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
+            PlayExplosionSound_Immediately();
+            destroySelf();
+
+        }
+        catch (System.Exception e)
+        {
+
+            MyDebug("Explode error: " + e.ToString());
+        }
+
+    }
+
+    void stopAllSoundsBeforeIExplode()
+    {
+        try
+        {
+
+            stopAudioSource(hummingSoundSource);
+
+            stopAudioSource(talkingSoundSource);
+
+            stopAudioSource(blasterSource);
+
+
+
+        }
+        catch (System.Exception e)
+        {
+
+        }
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        ContactPoint cp = collision.contacts[0];
+        contactPoint = cp.point;
+
+        if (collision.gameObject.tag == "miniTieBlast")
+        {
+            health -= 1f;
+            handleHit();
+
+        }
+        else if (collision.gameObject.tag == "miniXWingBlast")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else if (collision.gameObject.tag == "falconBlast")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else if (collision.gameObject.tag == "miniTieMissle")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else if (collision.gameObject.tag == "deathStarMissle")
+        {
+            health -= 1f;
+            handleHit();
+        }
+        else if (collision.gameObject.tag == "PlayerShooter")
+        {
+            health = 0f; // immediately explode if it hits player shooter
+        }
+        else
+        {
+            health -= 1f;
+            // don't show sparks. This might be when my own blasters touch my collider :S Not sure why ;)
+        }
+
+        // MyDebug("box collided with : " + collision.gameObject.tag);
+
+    }
+
+   void handleHit()
+    {
+
+        handleDamage();
+
+
+
+    }
+
+    
+    void handleDamage()
+    {
+
+        GameObject damageObject = Instantiate(muzzleFlashEffect, contactPoint, muzzleFlashEffect.transform.rotation);
+        // float x = 10.0f;
+        // float y = 10.0f;
+        // float z = 10.0f;
+        // damageObject.transform.localScale -= new Vector3(x, y, z);
+
+
+
+        damageObject.transform.Rotate(0f, 45f, 0f);
+        damageObject.transform.SetParent(this.transform);
+
+
     }
 
 }

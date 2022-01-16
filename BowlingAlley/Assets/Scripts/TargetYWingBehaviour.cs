@@ -195,7 +195,11 @@ public class TargetYWingBehaviour : MonoBehaviour
         else if ( (collision.gameObject.tag == "slave1Blast") || (collision.gameObject.tag == "slave1"))
         {
             health = 0f; 
-        }            
+        } 
+        else if ( (collision.gameObject.tag == "viperDroidBlast") || (collision.gameObject.tag == "viperDroid") )
+        {
+            health = 0f; // immediately explode if falcon hits meteorite
+        }                     
         else
         {
             //MyDebug(" hit by something unexpected");

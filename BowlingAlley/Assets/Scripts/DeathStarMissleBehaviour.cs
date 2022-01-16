@@ -68,7 +68,8 @@ public class DeathStarMissleBehaviour : MonoBehaviour
             (collision.gameObject.tag == "targetMeteorite") ||
             (collision.gameObject.tag == "starDestroyer") ||
             (collision.gameObject.tag == "PlayerShooter")   ||
-            (collision.gameObject.tag == "slave1")           
+            (collision.gameObject.tag == "slave1")       ||
+            (collision.gameObject.tag == "viperDroid")    
         )
         {
             destroySelf();

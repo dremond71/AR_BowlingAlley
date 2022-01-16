@@ -754,7 +754,11 @@ public class TargetMilleniumFalconScript : MonoBehaviour
         else if ( (collision.gameObject.tag == "slave1Blast") || (collision.gameObject.tag == "slave1"))
         {
             health -= 100f; 
-        }        
+        } 
+        else if ( (collision.gameObject.tag == "viperDroidBlast") || (collision.gameObject.tag == "viperDroid") )
+        {
+            health = 0f; // immediately explode if falcon hits meteorite
+        }                 
         else if (collision.gameObject.tag == "starDestroyerBlast")
         {
             health -= 10f; 
