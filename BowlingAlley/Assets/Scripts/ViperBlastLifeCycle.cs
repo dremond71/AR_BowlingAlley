@@ -22,6 +22,7 @@ public class ViperBlastLifeCycle : MonoBehaviour
               (collision.gameObject.tag == "targetMeteorite") ||
               (collision.gameObject.tag == "PlayerShooter") ||
               (collision.gameObject.tag == "tantiveIV") 
+           
               
 
 

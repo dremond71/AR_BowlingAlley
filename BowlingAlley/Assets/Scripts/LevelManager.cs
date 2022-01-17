@@ -255,6 +255,12 @@ public class LevelManager : MonoBehaviour
         return enemySpeed + 30.0f * 2.0f;
     }
 
+    float getViperDroidSpeed()
+    {
+        return enemySpeed + 10.0f;
+    }
+
+
     float GetRandomSpeedAdjustment()
     {
         return Random.Range(5.0f, 20.0f);
@@ -697,6 +703,12 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void handleCavalryAttack_ViperDroidSwarm() {
+
+       spawnViperDroid();
+
+    }
+
     void handleLaunchingCavalryAttack()
     {
         launchTheCavalryAttack = "launched";// we only want launch the attack once for the initial request
@@ -704,9 +716,11 @@ public class LevelManager : MonoBehaviour
         int cavalryAttackType = GetRandomCavalry();
 
         if (cavalryAttackType == 1)
-          handleCavalryAttack_StarDestroyer();
+          //handleCavalryAttack_StarDestroyer();
+          handleCavalryAttack_ViperDroidSwarm();
         else if (cavalryAttackType == 2)
-          handleCavalryAttack_BobaFett();
+          //handleCavalryAttack_BobaFett();
+          handleCavalryAttack_ViperDroidSwarm();
         
     }
 
@@ -853,6 +867,28 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    void spawnViperDroid()
+    {
+
+        try
+        {
+            string spawnPositionNumber = "vp_spawn18";
+            GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
+            float x = enemySpawner.transform.position.x;
+            float y = enemySpawner.transform.position.y;
+            float z = enemySpawner.transform.position.z;
+
+            GameObject go = (GameObject)Instantiate(viperDroidPrefab, new Vector3(x, y, z), enemySpawner.transform.rotation);
+            go.GetComponent<Rigidbody>().velocity = getViperDroidSpeed() * enemySpawner.transform.forward * 1f * Time.deltaTime;
+          
+        }
+        catch (System.Exception e)
+        {
+            MyDebug("spawnViperDroid error: " + e.ToString());
+        }
+
+
+    }
     void spawnNormalFalcon()
     {
         int position = 5; // middle position of any matrix
@@ -962,6 +998,35 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public static GameObject[] filterGameObjectsInFrontOfViperDroid(GameObject viperDroid,GameObject[] given)
+    {
+
+        List<GameObject> list = new List<GameObject>();
+
+        // get viper droid's Z position
+        GameObject shooter = viperDroid;
+        float shooterZ = shooter.transform.position.z;
+
+        if (given != null)
+        {
+            for (int i = 0; i < given.Length; i++)
+            {
+                if (given[i] != null)
+                {
+                    float givenZ = given[i].transform.position.z;
+                    // opposite logic to vehicles destroying themselves
+                    // shortly after passing shooter.
+                    if (givenZ >= (shooterZ + 0.5f))
+                    {
+                        list.Add(given[i]);
+                    }
+                }
+            }
+        }//if
+
+        return list.ToArray();
+    }
+
     public static GameObject[] filterGameObjectsInFrontOfPlayer(GameObject[] given)
     {
 
@@ -1037,6 +1102,18 @@ public class LevelManager : MonoBehaviour
         }
 
     }
+        public static void viperSwarmAttackFinished()
+    {
+        lock (olock)
+        {
+
+            // when viper droid swarm is finished the mission, it calls this method
+            // to allow the LevelManager to know it is done.
+            launchTheCavalryAttack = "";
+
+        }
+
+    }    
     public static void launchCavalryAttack()
     {
         lock (olock)

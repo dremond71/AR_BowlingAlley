@@ -87,6 +87,22 @@ public class ImperialViperDroid : MonoBehaviour
     }
 
     
+        void shootIfTime2()
+    {
+
+        shootingPauseTimer -= Time.deltaTime;
+        if (shootingPauseTimer <= 0f)
+        {
+
+            shoot();
+
+            shootingPauseTimer = GetRandomShootingPauseAmount();
+
+        }
+    }// end of function
+
+
+
     void shootIfTime()
     {
 
@@ -186,7 +202,7 @@ public class ImperialViperDroid : MonoBehaviour
     }
     float GetRandomStartDelay()
     {
-        return Random.Range(10.0f, 15.0f);
+        return Random.Range(0.01f, 0.02f);
 
     }
     void pauseBeforeShootingOnDifferentThread()
@@ -273,11 +289,8 @@ public class ImperialViperDroid : MonoBehaviour
     }
 
 
-
     void chooseTarget()
     {
-
-        
 
         blasterTarget = null;
         blasterTargetTag = null;
@@ -292,19 +305,19 @@ public class ImperialViperDroid : MonoBehaviour
         if (tantive != null)
         {
             tantives = new GameObject[] { tantive };
-            tantives = LevelManager.filterGameObjectsInFrontOfPlayer(tantives);
+            tantives = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject, tantives);
         }
 
         if (falcons != null)
         {
             falcons = new GameObject[] { falcon };
-            falcons = LevelManager.filterGameObjectsInFrontOfPlayer(falcons);
+            falcons = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject,falcons);
         }
 
-        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetXWing"));
-        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetMeteorite"));
-        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetAWing"));
-        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfPlayer(GameObject.FindGameObjectsWithTag("targetYWing"));
+        GameObject[] xwings = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject,GameObject.FindGameObjectsWithTag("targetXWing"));
+        GameObject[] meteorites = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject,GameObject.FindGameObjectsWithTag("targetMeteorite"));
+        GameObject[] awings = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject,GameObject.FindGameObjectsWithTag("targetAWing"));
+        GameObject[] ywings = LevelManager.filterGameObjectsInFrontOfViperDroid(gameObject,GameObject.FindGameObjectsWithTag("targetYWing"));
 
 
         List<GameObject> list = new List<GameObject>();
@@ -380,21 +393,22 @@ public class ImperialViperDroid : MonoBehaviour
 
     void destroySelf()
     {
-        // LevelManager.bobaFettAttackFinished();
+        LevelManager.viperSwarmAttackFinished();
+        stopAllSounds();
         Destroy(gameObject);
     }
 
     
     void destroyIfIrrelevantNow()
     {
-        // this object becomes irrelevant if it has flown past the shooter 
+        // this object becomes irrelevant if it has flown past the deathstar
 
-        GameObject shooter = GameObject.FindGameObjectWithTag("PlayerShooter");
-        float shooterZ = shooter.transform.position.z;
+        GameObject theDeathStar = GameObject.FindGameObjectWithTag("deathStar");
+        float theDeathStarZ = theDeathStar.transform.position.z;
 
         float myZ = transform.position.z;
 
-        if (myZ < (shooterZ - 3f))
+        if (myZ > theDeathStarZ)
         {
             destroySelf();
         }
@@ -424,7 +438,7 @@ public class ImperialViperDroid : MonoBehaviour
 
         try
         {
-            stopAllSoundsBeforeIExplode();
+           stopAllSounds();
             GameObject explosion = Instantiate(explosionEffect, contactPoint, transform.rotation);
             PlayExplosionSound_Immediately();
             destroySelf();
@@ -438,7 +452,7 @@ public class ImperialViperDroid : MonoBehaviour
 
     }
 
-    void stopAllSoundsBeforeIExplode()
+    void stopAllSounds()
     {
         try
         {
