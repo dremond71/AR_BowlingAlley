@@ -15,7 +15,7 @@ public class ImperialViperDroid : MonoBehaviour
     private AudioClip talkingSound;
     private float talkingVolume = 1.0f;
     bool talkingSoundIsPlaying = false;
-
+    bool aboutToDestroySelf = false;
     private AudioSource blasterSource;
     private AudioClip blaster;
 
@@ -82,7 +82,8 @@ public class ImperialViperDroid : MonoBehaviour
     float GetRandomShootingPauseAmount()
     {
 
-        return Random.Range(0.4f, 0.5f);
+        //return Random.Range(0.4f, 0.5f);
+        return Random.Range(1.0f, 1.5f);
 
     }
 
@@ -239,13 +240,15 @@ public class ImperialViperDroid : MonoBehaviour
 
     IEnumerator PlayRoarSound()
     {
-        //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
-        talkingSoundIsPlaying = true;
-        talkingSoundSource.PlayOneShot(talkingSound, talkingVolume);
+        if (!aboutToDestroySelf) {
+            //https://answers.unity.com/questions/904981/how-to-play-an-audio-file-after-another-finishes.html
+            talkingSoundIsPlaying = true;
+            talkingSoundSource.PlayOneShot(talkingSound, talkingVolume);
 
-        // wait for the length of actual sound clip, PLUS a random pause amount
-        yield return new WaitForSeconds(talkingSound.length + GetRandomTalkingPauseAmount());
-        talkingSoundIsPlaying = false;
+            // wait for the length of actual sound clip, PLUS a random pause amount
+            yield return new WaitForSeconds(talkingSound.length + GetRandomTalkingPauseAmount());
+            talkingSoundIsPlaying = false;
+        }
 
     }
 
@@ -258,8 +261,11 @@ public class ImperialViperDroid : MonoBehaviour
     void playTalkingSoundIfItIsTime()
     {
 
-        if (!talkingSoundIsPlaying)
-            playTalkingOnDifferentThread();
+        if (!talkingSoundIsPlaying){
+            destroyIfIrrelevantNow();// don't destroy droid until it is finished talking; if it is drifting away past the spawn point.
+           playTalkingOnDifferentThread();
+        }
+            
 
     }
 
@@ -284,7 +290,6 @@ public class ImperialViperDroid : MonoBehaviour
             Explode();
         }
 
-        destroyIfIrrelevantNow();
 
     }
 
@@ -394,23 +399,24 @@ public class ImperialViperDroid : MonoBehaviour
     void destroySelf()
     {
         LevelManager.viperSwarmAttackFinished();
-        stopAllSounds();
         Destroy(gameObject);
     }
 
     
     void destroyIfIrrelevantNow()
     {
-        // this object becomes irrelevant if it has flown past the deathstar
-
-        GameObject theDeathStar = GameObject.FindGameObjectWithTag("deathStar");
-        float theDeathStarZ = theDeathStar.transform.position.z;
+        // this object becomes irrelevant if it has flown past the center spawn area
+        GameObject centerSpawnPosition = GameObject.Find("slave1SpawnPosition1");
+        float centerSpawnZ = centerSpawnPosition.transform.position.z;
 
         float myZ = transform.position.z;
 
-        if (myZ > theDeathStarZ)
+        if (myZ > centerSpawnZ)
         {
+            aboutToDestroySelf = true;
+            stopAllSounds();
             destroySelf();
+            
         }
 
     }
@@ -511,8 +517,7 @@ public class ImperialViperDroid : MonoBehaviour
         }
         else
         {
-            health -= 1f;
-            // don't show sparks. This might be when my own blasters touch my collider :S Not sure why ;)
+            health = 0f;
         }
 
         // MyDebug("box collided with : " + collision.gameObject.tag);
