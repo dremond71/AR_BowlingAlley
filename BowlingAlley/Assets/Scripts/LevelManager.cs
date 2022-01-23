@@ -126,19 +126,16 @@ public class LevelManager : MonoBehaviour
         return vehicleMixtureLevel == 3;
     }
 
-        int GetRandomCavalry()
+    int GetRandomCavalry()
     {
-        int someValue = 1;
+        // we have 3 cavalry attacks: Star Destroyer, Boba Fett, and Viper Droid Swarm
 
-        bool evenValue = ((cavalryAttackIndex % 5) == 0);
-        if (evenValue)
-        {
-            someValue = 1;
-        }
-        else
-        {
-            someValue = 2;
-        }
+        // 0 - Star Destroyer
+        // 1 - Bobba Fett 
+        // 2 - Viper Droid Swarm
+
+        int someValue = cavalryAttackIndex % 3;
+
         cavalryAttackIndex++;
 
         return someValue;
@@ -281,6 +278,14 @@ public class LevelManager : MonoBehaviour
         // return a number (1,2,3,4,5,6,7,8,9) - does not include 10
         return Random.Range(1, (totalSpawnPositionsAvailable + 1));
         //return rnd.Next(1, totalSpawnPositionsAvailable);//OLD WAY
+    }
+
+    int GetRandomViperSpawnRow() {
+
+        // Random.Range(1, 3);
+        // return a number (1, 2 or 3) - does not include 4
+        int newNumber = Random.Range(1, 4);
+        return newNumber;
     }
 
     int GetRandomMixtureOfVehiclesValue()
@@ -705,7 +710,24 @@ public class LevelManager : MonoBehaviour
 
     void handleCavalryAttack_ViperDroidSwarm() {
 
-       spawnViperDroid();
+     int randomRow = GetRandomViperSpawnRow();
+
+     if (randomRow == 1){
+       spawnViperDroid("vp_spawn11");
+       spawnViperDroid("vp_spawn12");
+       spawnViperDroid("vp_spawn13");
+     }
+     else if (randomRow == 2) {
+       spawnViperDroid("vp_spawn14");
+       spawnViperDroid("vp_spawn15");
+       spawnViperDroid("vp_spawn16");
+     }
+     else if (randomRow == 3) {
+       spawnViperDroid("vp_spawn17");
+       spawnViperDroid("vp_spawn18");
+       spawnViperDroid("vp_spawn19");
+     }
+
 
     }
 
@@ -715,13 +737,17 @@ public class LevelManager : MonoBehaviour
 
         int cavalryAttackType = GetRandomCavalry();
 
-        if (cavalryAttackType == 1)
-          //handleCavalryAttack_StarDestroyer();
-          handleCavalryAttack_ViperDroidSwarm();
+     // 0 - Star Destroyer
+     // 1 - Bobba Fett 
+     // 2 - Viper Droid Swarm
+
+        if (cavalryAttackType == 0)
+           handleCavalryAttack_StarDestroyer();
+           
+        else if (cavalryAttackType == 1)
+           handleCavalryAttack_BobaFett();
         else if (cavalryAttackType == 2)
-          //handleCavalryAttack_BobaFett();
           handleCavalryAttack_ViperDroidSwarm();
-        
     }
 
     void FixedUpdate()
@@ -867,12 +893,11 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    void spawnViperDroid()
+    void spawnViperDroid(string spawnPositionNumber)
     {
 
         try
         {
-            string spawnPositionNumber = "vp_spawn18";
             GameObject enemySpawner = GameObject.Find(spawnPositionNumber);
             float x = enemySpawner.transform.position.x;
             float y = enemySpawner.transform.position.y;

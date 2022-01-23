@@ -7,19 +7,19 @@ public class ImperialViperDroid : MonoBehaviour
 
     private AudioSource hummingSoundSource;
     private AudioClip hummingSound;
-    private float hummingVolume = 1.0f;
+    private float hummingVolume = 0.60f;
 
 
 
     private AudioSource talkingSoundSource;
     private AudioClip talkingSound;
-    private float talkingVolume = 1.0f;
+    private float talkingVolume = 0.40f;
     bool talkingSoundIsPlaying = false;
     bool aboutToDestroySelf = false;
     private AudioSource blasterSource;
     private AudioClip blaster;
 
-    private float blasterVolume = 1.0f;
+    private float blasterVolume = 0.40f;
 
     private float shootingPauseTimer;
 
