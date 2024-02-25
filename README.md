@@ -267,6 +267,50 @@ Long story short, I had to perform these steps to get things working again:
 - Created BowlingAlley\Assets\Plugins\Android\mainTemplate.gradle
 - upgraded to (AR Foundation, AR Subsystems, ARCode XR Plugin) 3.1.10
 
+### Feb 24, 2024
+
+My Google Pixel 3 stopped playing AR applications sometime in summer of 2023. Not sure why.
+( Android OS mentioned it no longer supported my phone, so maybe it turned off `Google service for AR` or something :S )
+
+Bought myself a Google Pixel 7 Pro, and tried my existing APK file, and it failed. Didn't know why.
+(In retrospect, it is probably because my new phone was ARM64)
+
+In Feb of 2024, I decided to dust off my computer, roll up my sleeves, and get my AR applications running
+on my new phone.
+
+#### Migration Effort
+
+- I installed `Unity 2022.3.20f1` and `Android Studio Hedgehog 2023.1.1 Patch 2`
+- In Android Studio, I created a hello world application, got the IDE to recognize my phone, and deployed the app to my phone; to ensure all Google Drivers were in place, and the IDE could handle my phone.
+- In a fresh directory, I `git clone`-ed my AR project repo
+- I opened my old project in Unity 2022, the import took a while, but in the end there were no errors in the Console view, just a few warnings.
+- In my Path environment variable, I needed to add: C:\jdk17\bin (yes, a different version than jdk11 below :S)
+- In Edit > Preferences > External Tools
+    - set JDK: C:\jdk11
+    - set SDK: C:\Users\<userName>\AppData\Local\Android\Sdk ( but had to install cmdline-tools version 8.0: C:\Users\<userName>\AppData\Local\Android\Sdk\cmdline-tools\8.0 using `sdkmanager --install "cmdline-tools;8.0"` )
+    - set NDK: C:\Users\<userName>\AppData\Local\Android\Sdk\ndk\23.1.7779620 ( I installed this beforehand with `sdkmanager --install "ndk;23.1.7779620"` )
+    - kept recommended gradle: C:\Program Files\Unity 2022.3.20f1\Editor\Data\PlaybackEngines\AndroidPlayer\Tools\gradle
+- In Edit > Project Settings > Player > Configuration
+    - set Scripting Backend: `IL2CPP`
+    - set Target Architectures: `ARM64`
+- In Edit > Project Settings > Player > Build
+    - uncheck all custom gradle templates (main and launcher)
+    - as a matter of fact all checkboxes are unchecked
+- In Edit > Project Settings > XR Plug-in Management
+    - checked Plug-in Providers > Google ARCore ( otherwise my game won't actually be an AR 3D game; just a normal 3D game)
+
+#### File > Build Settings... (Building an APK file)
+
+The first time I tried building an apk, the progress bar took a long time and died. The console.log showed that some particle compile encountered an error 'cannot read magic number'.
+
+A few days after, when I came back to it, the build died and it mentioned I didn't have a keystore set up for Android apk.
+
+Once I created the keystore for android, and ran the build, it finally succeeded.
+
+I had a new apk, and installed it onto my phone.
+
+My AR application was finally running on my Google Pixel 7 Pro! yay!
+
 ## Conclusion
 
 I am having a lot of fun using the [Unity Editor](https://unity.com/products/core-platform), the [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) programming language, and [Google's AR Core API](https://developers.google.com/ar) to make these apps.
