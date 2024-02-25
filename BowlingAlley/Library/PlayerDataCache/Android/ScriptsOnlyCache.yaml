@@ -137,6 +137,7 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.ARFoundation.ARSessionOrigin
     Unity.XR.Management.Editor.dll:
     - UnityEditor.XR.Management.XRGeneralSettingsPerBuildTarget
+    - UnityEditor.XR.Management.XRManagerSettingsEditor
     Unity.XR.Management.dll:
     - UnityEngine.XR.Management.XRGeneralSettings
     - UnityEngine.XR.Management.XRManagerSettings
@@ -2515,4 +2516,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/hothBattle.unity
-  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/starwarsBattle_2024_arm64.apk
+  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/hallwayShooter_2024_arm64.apk

@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/hothBattle.unity
     guid: d68426fe6f5b05543bda1cd8d094533b
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/ShowcaseVehicle.unity
+    guid: 21fca66fc147b2c488f8b45a692c61c0
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: ec8dfb0e87e44b64da9512a268cc4626,
       type: 2}

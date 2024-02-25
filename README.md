@@ -311,6 +311,51 @@ I had a new apk, and installed it onto my phone.
 
 My AR application was finally running on my Google Pixel 7 Pro! yay!
 
+## Building each seperate application
+
+### Hallway Shooter
+
+- Open Scene : Assets > Scenes > `hothBattle` (not sure why I named it this lol)
+- Select `hothBattle` scene in navigator
+- Open File > Build Settings..., and in 'Scenes in Build', make certain only `hotBattle` is selected (no others)
+- Open File > Build Settings... > Player Settings... > Other Settings..., and set Product Name to `HallwayShooter`
+- Open File > Build Settings... > Player Settings... > Other Settings... > Identification , and set Package Name to: `com.dremond71.ar.starwars.HallwayShooter`
+- Open File > Build Settings... > Player Settings... > Publish Settings..., specify the Project Keystore Key password and the Project password
+- Close Project Settings...
+- In Build Settings... window, press Build
+- Specify as an APK file name: `hallwayShooter_2024_arm64.apk`
+- Place apk on your phone ( you must allow installation of apps from unknown sources)
+- When app starts, allow it to use your camera. This is necessary for AR.
+
+### Bowling Alley
+
+- Open Scene : Assets > Scenes > `SampleScene`
+- Select `SampleScene` scene in navigator
+- Open File > Build Settings..., and in 'Scenes in Build', make certain only `SampleScene` is selected (no others)
+- Open File > Build Settings... > Player Settings... > Other Settings..., and set Product Name to `BowlingAlley`
+- Open File > Build Settings... > Player Settings... > Other Settings... > Identification , and set Package Name to: `com.dremond71.ar.starwars.BowlingAlley`
+- Open File > Build Settings... > Player Settings... > Publish Settings..., specify the Project Keystore Key password and the Project password
+- Close Project Settings...
+- In Build Settings... window, press Build
+- Specify as an APK file name: `bowlingAlley_2024_arm64.apk`
+- Place apk on your phone ( you must allow installation of apps from unknown sources)
+- When app starts, allow it to use your camera. This is necessary for AR.
+
+### Showcase Vehicle
+
+- Open Scene : Assets > Scenes > `ShowcaseVehicle`
+- Select `ShowcaseVehicle` scene in navigator
+- Open File > Build Settings..., and in 'Scenes in Build', make certain only `ShowcaseVehicle` is selected (no others)
+- Open File > Build Settings... > Player Settings... > Other Settings..., and set Product Name to `ShowcaseVehicle`
+- Open File > Build Settings... > Player Settings... > Other Settings... > Identification , and set Package Name to: `com.dremond71.ar.starwars.ShowcaseVehicle`
+- Open File > Build Settings... > Player Settings... > Publish Settings..., specify the Project Keystore Key password and the Project password
+- Close Project Settings...
+- In Build Settings... window, press Build
+- Specify as an APK file name: `showcaseVehicle_2024_arm64.apk`
+- Place apk on your phone ( you must allow installation of apps from unknown sources)
+- When app starts, allow it to use your camera. This is necessary for AR.
+
+
 ## Conclusion
 
 I am having a lot of fun using the [Unity Editor](https://unity.com/products/core-platform), the [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) programming language, and [Google's AR Core API](https://developers.google.com/ar) to make these apps.
