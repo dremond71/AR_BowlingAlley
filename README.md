@@ -98,6 +98,7 @@ I haven't designed this game to bring you through an adventure with different le
 
 [Link to video showing SoundTrack ON/OFF Dialog](https://www.youtube.com/watch?v=hYVGVsCjGds)
 
+[Link to video showing Viper Droid Swarm attack](https://www.youtube.com/watch?v=swrC5WPC3TY&list=PL8a9JLWkE90c16YEZHfY8O7ASQacUNR6X&index=11)
 
 ### Detailed Tantive IV (Just finished)
 
@@ -241,6 +242,7 @@ Press the `close icon` in the top right corner to close the dialog.
 
 [Link to the Imperial Viper Droid 360 degree view in Unity Editor](https://www.youtube.com/watch?v=bAHVlAxD198)
 
+[Viper Droid - Sound Test](https://www.youtube.com/shorts/qO6WCfDd2Yg)
 
 ## Still In Progress
 
