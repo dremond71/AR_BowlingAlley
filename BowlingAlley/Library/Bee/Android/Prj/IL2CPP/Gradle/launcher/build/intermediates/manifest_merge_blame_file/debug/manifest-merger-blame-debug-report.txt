@@ -1,0 +1,205 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.dom.miniHoth.Meteorite"
+4    android:installLocation="preferExternal"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="29"
+9-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml
+10        android:targetSdkVersion="29" />
+10-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml
+11
+12    <supports-screens
+12-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:3-163
+13        android:anyDensity="true"
+13-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:135-160
+14        android:largeScreens="true"
+14-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:78-105
+15        android:normalScreens="true"
+15-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:49-77
+16        android:smallScreens="true"
+16-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:21-48
+17        android:xlargeScreens="true" />
+17-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:4:106-134
+18
+19    <uses-permission android:name="android.permission.INTERNET" />
+19-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-67
+19-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-64
+20
+21    <uses-feature android:glEsVersion="0x00030000" />
+21-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:5-54
+21-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:19-51
+22    <uses-feature
+22-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:5-15:35
+23        android:name="android.software.home_screen"
+23-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:9-52
+24        android:required="true" />
+24-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:9-32
+25    <uses-feature
+25-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:5-18:36
+26        android:name="android.hardware.touchscreen"
+26-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:9-52
+27        android:required="false" />
+27-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-33
+28    <uses-feature
+28-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:5-21:36
+29        android:name="android.hardware.touchscreen.multitouch"
+29-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:9-63
+30        android:required="false" />
+30-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:9-33
+31    <uses-feature
+31-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:5-24:36
+32        android:name="android.hardware.touchscreen.multitouch.distinct"
+32-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:9-72
+33        android:required="false" />
+33-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:9-33
+34
+35    <uses-permission android:name="android.permission.CAMERA" />
+35-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:5-65
+35-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:22-62
+36
+37    <uses-feature
+37-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:5-30:35
+38        android:name="android.hardware.camera.ar"
+38-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:9-50
+39        android:required="true" />
+39-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:9-32
+40    <uses-feature
+40-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:31:5-33:35
+41        android:name="com.google.ar.core.depth"
+41-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:32:9-48
+42        android:required="true" />
+42-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:33:9-32
+43
+44    <queries>
+44-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:29:5-31:15
+45        <package android:name="com.google.ar.core" />
+45-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:30:9-54
+45-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:30:18-51
+46    </queries>
+47
+48    <application
+48-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:3:3-121
+49        android:banner="@drawable/app_banner"
+49-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:3:81-118
+50        android:debuggable="true"
+51        android:extractNativeLibs="true"
+51-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:36:9-41
+52        android:icon="@mipmap/app_icon"
+52-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:3:49-80
+53        android:isGame="true"
+53-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:37:9-30
+54        android:label="@string/app_name" >
+54-->C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\launcher\src\main\AndroidManifest.xml:3:16-48
+55        <meta-data
+55-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:38:9-40:33
+56            android:name="unity.splash-mode"
+56-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:39:13-45
+57            android:value="0" />
+57-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:40:13-30
+58        <meta-data
+58-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:41:9-43:36
+59            android:name="unity.splash-enable"
+59-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:42:13-47
+60            android:value="True" />
+60-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:43:13-33
+61        <meta-data
+61-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:44:9-46:36
+62            android:name="unity.launch-fullscreen"
+62-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:45:13-51
+63            android:value="True" />
+63-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:46:13-33
+64        <meta-data
+64-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:47:9-49:50
+65            android:name="notch.config"
+65-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:48:13-40
+66            android:value="portrait|landscape" />
+66-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:49:13-47
+67        <meta-data
+67-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:50:9-52:36
+68            android:name="unity.auto-report-fully-drawn"
+68-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:51:13-57
+69            android:value="true" />
+69-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:52:13-33
+70
+71        <activity
+71-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:54:9-75:20
+72            android:name="com.unity3d.player.UnityPlayerActivity"
+72-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:55:13-66
+73            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
+73-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:56:13-194
+74            android:hardwareAccelerated="false"
+74-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:57:13-48
+75            android:launchMode="singleTask"
+75-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:58:13-44
+76            android:resizeableActivity="false"
+76-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:59:13-47
+77            android:screenOrientation="fullUser"
+77-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:60:13-49
+78            android:theme="@style/UnityThemeSelector" >
+78-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:61:13-54
+79            <intent-filter>
+79-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:62:13-67:29
+80                <category android:name="android.intent.category.LAUNCHER" />
+80-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:63:17-77
+80-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:63:27-74
+81                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+81-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:64:17-86
+81-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:64:27-83
+82
+83                <action android:name="android.intent.action.MAIN" />
+83-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:66:17-69
+83-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:66:25-66
+84            </intent-filter>
+85
+86            <meta-data
+86-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:69:13-71:40
+87                android:name="unityplayer.UnityActivity"
+87-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:70:17-57
+88                android:value="true" />
+88-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:71:17-37
+89            <meta-data
+89-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:72:13-74:40
+90                android:name="notch_support"
+90-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:73:17-45
+91                android:value="true" />
+91-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:74:17-37
+92        </activity>
+93
+94        <meta-data
+94-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:77:9-79:36
+95            android:name="unityplayer.SkipPermissionsDialog"
+95-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:78:13-61
+96            android:value="true" />
+96-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:79:13-33
+97        <meta-data
+97-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:80:9-82:40
+98            android:name="com.google.ar.core"
+98-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:81:13-46
+99            android:value="required" /> <!-- The minimal version code of ARCore APK required for an app using this SDK. -->
+99-->[:unityLibrary] C:\Users\domin\AR_BowlingAlley\BowlingAlley\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\merged_manifest\debug\AndroidManifest.xml:82:13-37
+100        <meta-data
+100-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:36:9-38:41
+101            android:name="com.google.ar.core.min_apk_version"
+101-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:37:13-62
+102            android:value="220920000" /> <!-- This activity is critical for installing ARCore when it is not already present. -->
+102-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:38:13-38
+103        <activity
+103-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:40:9-46:80
+104            android:name="com.google.ar.core.InstallActivity"
+104-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:41:13-62
+105            android:configChanges="keyboardHidden|orientation|screenSize"
+105-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:42:13-74
+106            android:excludeFromRecents="true"
+106-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:43:13-46
+107            android:exported="false"
+107-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:44:13-37
+108            android:launchMode="singleTop"
+108-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:45:13-43
+109            android:theme="@android:style/Theme.Material.Light.Dialog.Alert" />
+109-->[:arcore_client:] C:\Users\domin\.gradle\caches\transforms-3\ece6358c3c3b544f3d6f3cc51ffa918c\transformed\arcore_client\AndroidManifest.xml:46:13-77
+110    </application>
+111
+112</manifest>
