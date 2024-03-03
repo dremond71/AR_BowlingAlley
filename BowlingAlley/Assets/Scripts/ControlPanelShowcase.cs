@@ -19,7 +19,7 @@ public class ControlPanelShowcase : MonoBehaviour
 
 
      private TextMesh debugText; 
-
+     private bool debug = true;
      // xwing stuff
      private  AudioSource roarSource;
      private AudioClip roar;
@@ -301,7 +301,8 @@ IEnumerator PlayXYZPositioningSounds()
 
       void MyDebug(string someText) {
      
-      if (debugText != null){
+      if ( (debugText != null) && debug){
+          Debug.Log (someText);
           debugText.text = someText;
       }
 

@@ -151,6 +151,8 @@ TagManager:
   - positioning_on_y
   - positioning_on_z
   - positioning_off_need_game_restart
+  - positioning_on_scale
+  - positioning_on_rotate
   layers:
   - Default
   - TransparentFX

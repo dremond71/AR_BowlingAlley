@@ -25,33 +25,9 @@ ScriptsOnlyBuild:
     - slave1Behaviour
     - slave1BlastLifecycle
     Assembly-CSharp.dll:
-    - DeathStarMissleBehaviour
-    - DustExplosionLifeCycle
-    - EnergyExplosionLifeCycle
-    - ExplosionLifeCycle
-    - FixedJoystick
-    - ImperialViperDroid
-    - LevelManager
-    - MeteoriteBehaviour
-    - SoundTrackOptionsBehaviour
-    - StarDestroyerBehaviour
-    - StarDestroyerBlastLifeCycle
-    - TantiveIVShipBehaviour
-    - TargetAWingBehaviour
-    - TargetMilleniumFalconBlastLifeCycle
-    - TargetMilleniumFalconScript
-    - TargetXWingBehaviour
-    - TargetXWingBlastLifeCycle
-    - TargetYWingBehaviour
-    - TieFighterBlastLifeCycle
-    - TieFighterBoxBehaviour
-    - TieMissleBehaviour
-    - TieMissleTargetBehaviour
-    - TurboLaserTestBehaviour
-    - ViperBlastLifeCycle
-    - miniHothTieBehaviour
-    - slave1Behaviour
-    - slave1BlastLifecycle
+    - ControlPanelShowcase
+    - FloorPositioningBehaviour
+    - XWingFighterShowcase
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridBrushEditor
@@ -119,9 +95,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
-    Unity.TextMeshPro.dll:
-    - TMPro.TMP_FontAsset
-    - TMPro.TextMeshPro
     Unity.VisualEffectGraph.Runtime.dll:
     - UnityEngine.VFX.VFXRuntimeResources
     Unity.XR.ARCore.Editor.dll:
@@ -132,9 +105,6 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.ARFoundation.ARCameraBackground
     - UnityEngine.XR.ARFoundation.ARCameraManager
     - UnityEngine.XR.ARFoundation.ARInputManager
-    - UnityEngine.XR.ARFoundation.ARPlane
-    - UnityEngine.XR.ARFoundation.ARPlaneMeshVisualizer
-    - UnityEngine.XR.ARFoundation.ARRaycastManager
     - UnityEngine.XR.ARFoundation.ARSession
     - UnityEngine.XR.ARFoundation.ARSessionOrigin
     Unity.XR.Management.Editor.dll:
@@ -152,6 +122,7 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.Simulation.XRSimulationRuntimeSettings
     Unity.XR.Simulation.Editor.dll:
     - UnityEditor.XR.Simulation.SimulationEnvironmentAssetsManager
+    - UnityEditor.XR.Simulation.XREnvironmentViewManager
     - UnityEditor.XR.Simulation.XRSimulationSettings
     Unity.XR.Simulation.dll:
     - UnityEngine.XR.Simulation.SimulatedBoundedPlane
@@ -182,12 +153,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
-    UnityEngine.UI.dll:
-    - UnityEngine.EventSystems.EventSystem
-    - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Image
   serializedClasses:
     Unity.RenderPipelines.Core.Runtime:
     - UnityEngine.Rendering.UI.DebugUIPrefabBundle
@@ -279,7 +244,7 @@ ScriptsOnlyBuild:
     fullTypeName: UnityEngine.Rendering.UI.DebugUIHandlerPanel
     methodName: ResetDebugManager
   sceneClasses:
-    Assets/Scenes/hothBattle.unity:
+    Assets/Scenes/ShowcaseVehicle.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -343,15 +308,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17588}
     - Class: 114
-      Script: {instanceID: 17594}
-    - Class: 114
       Script: {instanceID: 17738}
     - Class: 114
       Script: {instanceID: 17820}
     - Class: 114
       Script: {instanceID: 17932}
     - Class: 114
-      Script: {instanceID: 18044}
+      Script: {instanceID: 18038}
     - Class: 114
       Script: {instanceID: 18076}
     - Class: 114
@@ -359,13 +322,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 18400}
     - Class: 114
-      Script: {instanceID: 18412}
-    - Class: 114
       Script: {instanceID: 18568}
     - Class: 114
       Script: {instanceID: 18684}
-    - Class: 114
-      Script: {instanceID: 19028}
     - Class: 114
       Script: {instanceID: 19116}
     - Class: 114
@@ -390,6 +349,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 19726}
     - Class: 114
       Script: {instanceID: 19802}
+    - Class: 114
+      Script: {instanceID: 19810}
     - Class: 114
       Script: {instanceID: 19848}
     - Class: 114
@@ -418,6 +379,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 21030}
     - Class: 114
       Script: {instanceID: 21566}
+    - Class: 114
+      Script: {instanceID: 21644}
     - Class: 114
       Script: {instanceID: 21672}
     - Class: 114
@@ -457,8 +420,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 23020}
     - Class: 114
-      Script: {instanceID: 23102}
-    - Class: 114
       Script: {instanceID: 23182}
     - Class: 114
       Script: {instanceID: 23310}
@@ -470,8 +431,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 23532}
     - Class: 114
       Script: {instanceID: 23588}
-    - Class: 114
-      Script: {instanceID: 23686}
     - Class: 114
       Script: {instanceID: 23710}
     - Class: 114
@@ -512,10 +471,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 25684}
     - Class: 114
       Script: {instanceID: 25722}
-    - Class: 114
-      Script: {instanceID: 26008}
-    - Class: 114
-      Script: {instanceID: 26016}
     - Class: 114
       Script: {instanceID: 26082}
     - Class: 115
@@ -2497,5 +2452,5 @@ ScriptsOnlyBuild:
     className: VFXRaycastBinder
   platform: 13
   scenePathNames:
-  - Assets/Scenes/hothBattle.unity
-  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/hallwayShooter_2024_arm64.apk
+  - Assets/Scenes/ShowcaseVehicle.unity
+  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/showcaseVehicle_2024_arm64.apk
