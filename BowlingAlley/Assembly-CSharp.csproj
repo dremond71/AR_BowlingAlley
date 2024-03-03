@@ -109,14 +109,11 @@
     <Compile Include="Assets\Scripts\EnergyExplosionLifeCycle.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\Shared\Scripts\AdjustTimeScale.cs" />
-    <Compile Include="Assets\Scripts\ReferencePointManagerOriginal.cs" />
     <Compile Include="Assets\Scripts\TargetMilleniumFalconScript.cs" />
     <Compile Include="Assets\Scripts\FlyingXWingBlastBoltLifecycle.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Scripts\DeathStarMissleBehaviour.cs" />
-    <Compile Include="Assets\Scripts\SceneHandler.cs" />
     <Compile Include="Assets\Scripts\XWingFighter.cs" />
-    <Compile Include="Assets\Scripts\ReferencePointManager.cs" />
     <Compile Include="Assets\Scripts\ExplosionLifeCycle.cs" />
     <Compile Include="Assets\Scripts\TieFighter.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />

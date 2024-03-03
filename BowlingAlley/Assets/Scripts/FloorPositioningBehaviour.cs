@@ -11,6 +11,9 @@ public class FloorPositioningBehaviour : MonoBehaviour
     public GameObject positioningMenu;
     public GameObject quitDialog;
 
+    public bool androidDevice = false;
+    private bool debug = false;
+
    private GameObject themeStatusHolder;
 
     private GameObject frikkingAnnoying3DLabel;
@@ -34,22 +37,26 @@ public class FloorPositioningBehaviour : MonoBehaviour
      private AudioClip buttonClick;
 
 
-
+ //  xwingBlastPrefab = PrefabFactory.getPrefab("xwingBlast2");
 
     void Awake() {
+      //MyDebug("Start of Awake():FloorPositioningBehaviour"); 
       goodbye = GameObject.FindGameObjectWithTag("goodbye_Sound").GetComponent<AudioSource>();  
        xyzPositioning = GameObject.FindGameObjectWithTag("xyzPositioning_Sound").GetComponent<AudioSource>(); 
        debugText =  GameObject.Find("debugText").GetComponent<TextMesh>();
 
         buttonClickSource=  GameObject.FindGameObjectWithTag("buttonClick_Sound").GetComponent<AudioSource>();
-        buttonClick = buttonClickSource.clip;   
+        buttonClick = buttonClickSource.clip;  
+
+        //MyDebug("End of Awake():FloorPositioningBehaviour"); 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // MyDebug("working...");
+        //MyDebug("Start of Start():FloorPositioningBehaviour");
         positioningStatus      =  GameObject.Find("positioningStatus");
+
         frikkingAnnoying3DLabel      =  GameObject.Find("configPanelLabel");
 
         positioningConfigIcon      =  GameObject.Find("positioningConfigIcon");
@@ -67,30 +74,62 @@ public class FloorPositioningBehaviour : MonoBehaviour
         
 
         defaultChecked      =  GameObject.Find("defaultChecked");
+
         imperialChecked      =  GameObject.Find("imperialChecked");
+
         rebelsChecked      =  GameObject.Find("rebelsChecked");
 
   
         themeStatusHolder  =  GameObject.Find("themeStatusHolder");
+        
+
        
        defaultTheme_Selection();// we aren't storing settings yet, so default theme will always be first.
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-     handleInputAndroid();   
+     if (androidDevice) {
+       handleInputAndroid();
+     } 
+     else {
+       handleInputWindows();
+     }  
     }
 
 void setActive_withTryCatch(GameObject go, bool value) {
-  //not sure why some of the non-null objects cause an exception when I turn active on or off. weird.
-  try {    
-    go.SetActive(value); 
+   setVisibility_withTryCatch(go,value);
+
+   // Code below does not work anymore
+   
+  //  if (go != null){
+  //    go.SetActive(value);
+  //  }
+}
+
+void setVisibility_withTryCatch(GameObject go, bool value) {
+  
+  // Instead of setting an object inactive to make it invisible, in 2024, while debugging
+  // null pointers around this function, I found this discussion
+  // https://discussions.unity.com/t/how-to-make-an-gameobject-invisible-and-disappeared/174/7
+  // which suggested to disable or enable an object's mesh renderer instead.
+  try {  
+    if (go !=null){
+      MeshRenderer mr = go.GetComponent<MeshRenderer>();
+      if (mr != null) {
+         mr.enabled = value;
+      }
+    }  
+     
   }
   catch (Exception e) {
     Debug.LogException(e, this);
   }
 }
+
+
 void defaultTheme_Selection() {
   
    //MyDebug("defaultTheme_Selection - 1");
@@ -106,20 +145,21 @@ void defaultTheme_Selection() {
 
 void imperialTheme_Selection() {
    
-  // MyDebug("imperialTheme_Selection - 1");
+    //MyDebug("imperialTheme_Selection - 1");
     setActive_withTryCatch(defaultChecked,false);
     //MyDebug("imperialTheme_Selection - 2");
-   setActive_withTryCatch(imperialChecked,true); 
+    setActive_withTryCatch(imperialChecked,true); 
     //MyDebug("imperialTheme_Selection - 3");
     setActive_withTryCatch(rebelsChecked,false);
     //MyDebug("imperialTheme_Selection - 4");
+    
     themeStatusHolder.tag = "theme_starwars_empire";
     //MyDebug("imperialTheme_Selection - end");
 }
 
 void rebelsTheme_Selection() {
   
-  //MyDebug("rebelsTheme_Selection - 1");
+    //MyDebug("rebelsTheme_Selection - 1");
     setActive_withTryCatch(defaultChecked,false);
     //MyDebug("rebelsTheme_Selection - 2");
     setActive_withTryCatch(imperialChecked,false);  
@@ -127,7 +167,36 @@ void rebelsTheme_Selection() {
     setActive_withTryCatch(rebelsChecked,true);
     //MyDebug("rebelsTheme_Selection - 4");
     themeStatusHolder.tag = "theme_starwars_rebels";
-   // MyDebug("rebelsTheme_Selection - end");
+    //MyDebug("rebelsTheme_Selection - end");
+}
+
+void handleInputWindows(){
+
+    // default theme
+    if (Input.GetKey("d")) {
+      PlayButtonClickSound_Immediately();
+      MyDebug("you selected default theme");
+      defaultTheme_Selection();
+
+      
+    } // empire theme
+    else if (Input.GetKey("e")) {
+      PlayButtonClickSound_Immediately();
+      MyDebug("you selected imperial theme");
+      imperialTheme_Selection();
+      
+    }                   
+    else if (Input.GetKey("r")) {
+      PlayButtonClickSound_Immediately();
+      MyDebug("you selected rebel theme");
+      rebelsTheme_Selection();
+    }
+    else if (Input.GetKey("p")) {
+      positioningStatus.tag = "positioning_on"; //global status
+      PlayButtonClickSound_Immediately();
+      activatePositioningMenu();
+    }    
+    
 }
 
 void handleInputAndroid(){
@@ -194,19 +263,19 @@ void handleInputAndroid(){
                     }
                     else if (name == "defaultTheme") {
                       PlayButtonClickSound_Immediately();
-                     // MyDebug("you selected default theme");
+                      MyDebug("you selected default theme");
                       defaultTheme_Selection();
                       
                     }                   
                     else if (name == "imperialTheme") {
                       PlayButtonClickSound_Immediately();
-                     // MyDebug("you selected imperial theme");
+                     MyDebug("you selected imperial theme");
                      imperialTheme_Selection();
                       
                     }                   
                     else if (name == "rebelTheme") {
                       PlayButtonClickSound_Immediately();
-                      // MyDebug("you selected rebel theme");
+                      MyDebug("you selected rebel theme");
                      rebelsTheme_Selection();
                     }
 
@@ -231,6 +300,19 @@ void handleInputAndroid(){
            themeLabel.SetActive(false);
            configXYZLabel.SetActive(false);
            quitLabel.SetActive(false);
+
+          //  setVisibility_withTryCatch(frikkingAnnoying3DLabel,false);
+          //  setVisibility_withTryCatch(positioningConfigIcon,false);
+          //  setVisibility_withTryCatch(quitIcon,false);
+          //  setVisibility_withTryCatch(imperialTheme,false);
+          //  setVisibility_withTryCatch(rebelTheme,false);
+          //  setVisibility_withTryCatch(defaultTheme,false);
+          //  setVisibility_withTryCatch(themeLabel,false);
+          //  setVisibility_withTryCatch(configXYZLabel,false);
+          //  setVisibility_withTryCatch(quitLabel,false);
+           
+
+
         }
       void enable_Main_ControlPanel_Buttons() {
  
@@ -244,21 +326,37 @@ void handleInputAndroid(){
            configXYZLabel.SetActive(true);
            quitLabel.SetActive(true);
 
+          //  setVisibility_withTryCatch(frikkingAnnoying3DLabel,true);
+          //  setVisibility_withTryCatch(positioningConfigIcon,true);
+          //  setVisibility_withTryCatch(quitIcon,true);
+          //  setVisibility_withTryCatch(imperialTheme,true);
+          //  setVisibility_withTryCatch(rebelTheme,true);
+          //  setVisibility_withTryCatch(defaultTheme,true);
+          //  setVisibility_withTryCatch(themeLabel,true);
+          //  setVisibility_withTryCatch(configXYZLabel,true);
+          //  setVisibility_withTryCatch(quitLabel,true);
+
         }
          void activateQuitDialog() {
              
            quitDialog.SetActive(true);
+           //setVisibility_withTryCatch(quitDialog,true);
+
            disable_Main_ControlPanel_Buttons();
            
      }
 
        void deactivateQuitDialog() {
            quitDialog.SetActive(false);
+           //setVisibility_withTryCatch(quitDialog,false);
+
            enable_Main_ControlPanel_Buttons();
      }     
 
          void activatePositioningMenu() {
            positioningMenu.SetActive(true);
+           // setVisibility_withTryCatch(positioningMenu,true);
+          
           // handleXYZPositioningSoundsOnDifferentThread();
            
      }
@@ -266,6 +364,7 @@ void handleInputAndroid(){
     void deactivatePositioningMenu() {
             
            positioningMenu.SetActive(false);
+           //setVisibility_withTryCatch(positioningMenu,false);
      }
 
 void PlayButtonClickSound_Immediately()
@@ -307,7 +406,8 @@ IEnumerator PlayXYZPositioningSounds()
 
       void MyDebug(string someText) {
      
-      if (debugText != null){
+      if ( (debugText != null) && debug){
+          Debug.Log (someText);
           debugText.text = someText;
       }
 

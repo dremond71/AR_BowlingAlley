@@ -27,7 +27,7 @@ public class TieFighter : MonoBehaviour
     private GameObject tieBlastPrefab;
     private bool rolling = false;
     // TextMesh debugText;
-    private bool onAndroid = true;
+
 
 
     private AudioSource roarSource;

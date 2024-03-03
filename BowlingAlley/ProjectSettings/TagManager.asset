@@ -143,6 +143,14 @@ TagManager:
   - viperDroidTalk_Sound
   - viperDroidBlast
   - viperDroid
+  - theme_starwars_rebels
+  - theme_starwars_empire
+  - deleted_pin
+  - positioning_on
+  - positioning_on_x
+  - positioning_on_y
+  - positioning_on_z
+  - positioning_off_need_game_restart
   layers:
   - Default
   - TransparentFX

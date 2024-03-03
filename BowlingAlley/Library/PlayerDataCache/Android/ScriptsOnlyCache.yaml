@@ -25,33 +25,15 @@ ScriptsOnlyBuild:
     - slave1Behaviour
     - slave1BlastLifecycle
     Assembly-CSharp.dll:
-    - DeathStarMissleBehaviour
-    - DustExplosionLifeCycle
-    - EnergyExplosionLifeCycle
-    - ExplosionLifeCycle
-    - FixedJoystick
-    - ImperialViperDroid
-    - LevelManager
-    - MeteoriteBehaviour
-    - SoundTrackOptionsBehaviour
-    - StarDestroyerBehaviour
-    - StarDestroyerBlastLifeCycle
-    - TantiveIVShipBehaviour
-    - TargetAWingBehaviour
-    - TargetMilleniumFalconBlastLifeCycle
-    - TargetMilleniumFalconScript
-    - TargetXWingBehaviour
-    - TargetXWingBlastLifeCycle
-    - TargetYWingBehaviour
-    - TieFighterBlastLifeCycle
-    - TieFighterBoxBehaviour
-    - TieMissleBehaviour
-    - TieMissleTargetBehaviour
-    - TurboLaserTestBehaviour
-    - ViperBlastLifeCycle
-    - miniHothTieBehaviour
-    - slave1Behaviour
-    - slave1BlastLifecycle
+    - CatchPlaneBehaviour
+    - FloorPositioningBehaviour
+    - GameBehaviour
+    - MoveBall
+    - PinBehaviour
+    - TestFlyerScript
+    - TieFighter
+    - XWingFighter
+    - XYZPositioningHandler
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridBrushEditor
@@ -119,9 +101,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
-    Unity.TextMeshPro.dll:
-    - TMPro.TMP_FontAsset
-    - TMPro.TextMeshPro
     Unity.VisualEffectGraph.Runtime.dll:
     - UnityEngine.VFX.VFXRuntimeResources
     Unity.XR.ARCore.Editor.dll:
@@ -129,15 +108,18 @@ ScriptsOnlyBuild:
     Unity.XR.ARCore.dll:
     - UnityEngine.XR.ARCore.ARCoreLoader
     Unity.XR.ARFoundation.dll:
+    - UnityEngine.XR.ARFoundation.ARAnchorManager
     - UnityEngine.XR.ARFoundation.ARCameraBackground
     - UnityEngine.XR.ARFoundation.ARCameraManager
     - UnityEngine.XR.ARFoundation.ARInputManager
+    - UnityEngine.XR.ARFoundation.ARPlane
+    - UnityEngine.XR.ARFoundation.ARPlaneManager
+    - UnityEngine.XR.ARFoundation.ARPlaneMeshVisualizer
     - UnityEngine.XR.ARFoundation.ARRaycastManager
     - UnityEngine.XR.ARFoundation.ARSession
     - UnityEngine.XR.ARFoundation.ARSessionOrigin
     Unity.XR.Management.Editor.dll:
     - UnityEditor.XR.Management.XRGeneralSettingsPerBuildTarget
-    - UnityEditor.XR.Management.XRManagerSettingsEditor
     Unity.XR.Management.dll:
     - UnityEngine.XR.Management.XRGeneralSettings
     - UnityEngine.XR.Management.XRManagerSettings
@@ -185,9 +167,11 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   serializedClasses:
     Unity.RenderPipelines.Core.Runtime:
     - UnityEngine.Rendering.UI.DebugUIPrefabBundle
@@ -279,7 +263,7 @@ ScriptsOnlyBuild:
     fullTypeName: UnityEngine.Rendering.UI.DebugUIHandlerPanel
     methodName: ResetDebugManager
   sceneClasses:
-    Assets/Scenes/hothBattle.unity:
+    Assets/Scenes/SampleScene.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -331,9 +315,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16868}
     - Class: 114
+      Script: {instanceID: 16894}
+    - Class: 114
       Script: {instanceID: 16924}
     - Class: 114
       Script: {instanceID: 16930}
+    - Class: 114
+      Script: {instanceID: 17038}
     - Class: 114
       Script: {instanceID: 17058}
     - Class: 114
@@ -341,9 +329,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17108}
     - Class: 114
+      Script: {instanceID: 17500}
+    - Class: 114
       Script: {instanceID: 17588}
     - Class: 114
-      Script: {instanceID: 17594}
+      Script: {instanceID: 17702}
     - Class: 114
       Script: {instanceID: 17738}
     - Class: 114
@@ -351,11 +341,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17932}
     - Class: 114
-      Script: {instanceID: 18044}
-    - Class: 114
       Script: {instanceID: 18076}
     - Class: 114
       Script: {instanceID: 18110}
+    - Class: 114
+      Script: {instanceID: 18178}
     - Class: 114
       Script: {instanceID: 18400}
     - Class: 114
@@ -363,9 +353,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 18568}
     - Class: 114
-      Script: {instanceID: 18684}
+      Script: {instanceID: 18650}
     - Class: 114
-      Script: {instanceID: 19028}
+      Script: {instanceID: 18684}
     - Class: 114
       Script: {instanceID: 19116}
     - Class: 114
@@ -393,6 +383,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 19848}
     - Class: 114
+      Script: {instanceID: 19866}
+    - Class: 114
       Script: {instanceID: 19942}
     - Class: 114
       Script: {instanceID: 19948}
@@ -411,6 +403,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 20750}
     - Class: 114
+      Script: {instanceID: 20822}
+    - Class: 114
       Script: {instanceID: 20866}
     - Class: 114
       Script: {instanceID: 21026}
@@ -419,106 +413,114 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21566}
     - Class: 114
+      Script: {instanceID: 21644}
+    - Class: 114
       Script: {instanceID: 21672}
     - Class: 114
-      Script: {instanceID: 21842}
+      Script: {instanceID: 21840}
     - Class: 114
-      Script: {instanceID: 21874}
+      Script: {instanceID: 21872}
     - Class: 114
-      Script: {instanceID: 21924}
+      Script: {instanceID: 21922}
     - Class: 114
-      Script: {instanceID: 21972}
+      Script: {instanceID: 21970}
     - Class: 114
-      Script: {instanceID: 22032}
+      Script: {instanceID: 22030}
     - Class: 114
-      Script: {instanceID: 22070}
+      Script: {instanceID: 22068}
     - Class: 114
-      Script: {instanceID: 22136}
+      Script: {instanceID: 22134}
     - Class: 114
-      Script: {instanceID: 22148}
+      Script: {instanceID: 22146}
     - Class: 114
-      Script: {instanceID: 22470}
+      Script: {instanceID: 22358}
     - Class: 114
-      Script: {instanceID: 22472}
+      Script: {instanceID: 22466}
     - Class: 114
-      Script: {instanceID: 22498}
+      Script: {instanceID: 22468}
     - Class: 114
-      Script: {instanceID: 22562}
+      Script: {instanceID: 22494}
     - Class: 114
-      Script: {instanceID: 22564}
+      Script: {instanceID: 22558}
     - Class: 114
-      Script: {instanceID: 22608}
+      Script: {instanceID: 22560}
     - Class: 114
-      Script: {instanceID: 22730}
+      Script: {instanceID: 22604}
     - Class: 114
-      Script: {instanceID: 22846}
+      Script: {instanceID: 22726}
     - Class: 114
-      Script: {instanceID: 22994}
+      Script: {instanceID: 22842}
     - Class: 114
-      Script: {instanceID: 23024}
+      Script: {instanceID: 22960}
     - Class: 114
-      Script: {instanceID: 23106}
+      Script: {instanceID: 22990}
     - Class: 114
-      Script: {instanceID: 23186}
+      Script: {instanceID: 23020}
     - Class: 114
-      Script: {instanceID: 23314}
+      Script: {instanceID: 23182}
     - Class: 114
-      Script: {instanceID: 23338}
+      Script: {instanceID: 23310}
     - Class: 114
-      Script: {instanceID: 23482}
+      Script: {instanceID: 23334}
     - Class: 114
-      Script: {instanceID: 23538}
+      Script: {instanceID: 23478}
     - Class: 114
-      Script: {instanceID: 23594}
+      Script: {instanceID: 23532}
     - Class: 114
-      Script: {instanceID: 23692}
+      Script: {instanceID: 23588}
     - Class: 114
-      Script: {instanceID: 23716}
+      Script: {instanceID: 23686}
     - Class: 114
-      Script: {instanceID: 23858}
+      Script: {instanceID: 23710}
     - Class: 114
-      Script: {instanceID: 23992}
+      Script: {instanceID: 23852}
     - Class: 114
-      Script: {instanceID: 24062}
+      Script: {instanceID: 23986}
     - Class: 114
-      Script: {instanceID: 24214}
+      Script: {instanceID: 24056}
     - Class: 114
-      Script: {instanceID: 24270}
+      Script: {instanceID: 24126}
     - Class: 114
-      Script: {instanceID: 24308}
+      Script: {instanceID: 24208}
     - Class: 114
-      Script: {instanceID: 24352}
+      Script: {instanceID: 24264}
     - Class: 114
-      Script: {instanceID: 24386}
+      Script: {instanceID: 24302}
     - Class: 114
-      Script: {instanceID: 24428}
+      Script: {instanceID: 24346}
     - Class: 114
-      Script: {instanceID: 24514}
+      Script: {instanceID: 24380}
     - Class: 114
-      Script: {instanceID: 24708}
+      Script: {instanceID: 24422}
     - Class: 114
-      Script: {instanceID: 24992}
+      Script: {instanceID: 24508}
     - Class: 114
-      Script: {instanceID: 25090}
+      Script: {instanceID: 24702}
     - Class: 114
-      Script: {instanceID: 25136}
+      Script: {instanceID: 24986}
     - Class: 114
-      Script: {instanceID: 25184}
+      Script: {instanceID: 25084}
     - Class: 114
-      Script: {instanceID: 25234}
+      Script: {instanceID: 25130}
     - Class: 114
-      Script: {instanceID: 25456}
+      Script: {instanceID: 25178}
     - Class: 114
-      Script: {instanceID: 25690}
+      Script: {instanceID: 25228}
     - Class: 114
-      Script: {instanceID: 25728}
+      Script: {instanceID: 25450}
     - Class: 114
-      Script: {instanceID: 26014}
+      Script: {instanceID: 25684}
     - Class: 114
-      Script: {instanceID: 26022}
+      Script: {instanceID: 25722}
     - Class: 114
-      Script: {instanceID: 26088}
+      Script: {instanceID: 25812}
+    - Class: 114
+      Script: {instanceID: 26016}
+    - Class: 114
+      Script: {instanceID: 26082}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 120
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -541,6 +543,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 258
       Script: {instanceID: 0}
     - Class: 850595691
       Script: {instanceID: 0}
@@ -1531,7 +1535,7 @@ ScriptsOnlyBuild:
     className: PostProcessResources
   - hash:
       serializedVersion: 2
-      Hash: c8ce2c47127981cbaaa0a5671f9ec5b8
+      Hash: a7e1d9e9830d63f8aa8036d51c81d950
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: FloorPositioningBehaviour
@@ -1589,12 +1593,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime
     namespaceName: UnityEngine.Rendering
     className: VolumeProfile
-  - hash:
-      serializedVersion: 2
-      Hash: 63ef86ecd8f3c42120f4a1d8536c837c
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: ReferencePointManager
   - hash:
       serializedVersion: 2
       Hash: 47ee34eb8b6021efa0289dbbb17a5a85
@@ -1735,12 +1733,6 @@ ScriptsOnlyBuild:
     className: NavMeshSurface
   - hash:
       serializedVersion: 2
-      Hash: 1297dacc3442ae77bb7175d792d97d90
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: SceneHandler
-  - hash:
-      serializedVersion: 2
       Hash: e8fd74e57e72e8e4ef28792881adb864
     assemblyName: Unity.RenderPipelines.Core.Runtime
     namespaceName: UnityEngine.Rendering.UI
@@ -1819,7 +1811,7 @@ ScriptsOnlyBuild:
     className: UIFoldout
   - hash:
       serializedVersion: 2
-      Hash: 75bfcb4ade2481d9d6bd56f028cd1d33
+      Hash: fecc46df87ee87dcfbfa0e1f6f707a0f
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: MoveBall
@@ -1907,12 +1899,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerVector4
-  - hash:
-      serializedVersion: 2
-      Hash: a4135b1832cd03d62a9714d1b46779bb
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: ReferencePointManagerOriginal
   - hash:
       serializedVersion: 2
       Hash: 49a2510725c4699325c7cc6a8eca7f69
@@ -2515,5 +2501,5 @@ ScriptsOnlyBuild:
     className: VFXRaycastBinder
   platform: 13
   scenePathNames:
-  - Assets/Scenes/hothBattle.unity
-  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/hallwayShooter_2024_arm64.apk
+  - Assets/Scenes/SampleScene.unity
+  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/bowlingAlley_2024_arm64.apk

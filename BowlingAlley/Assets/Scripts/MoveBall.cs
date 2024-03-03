@@ -7,7 +7,7 @@ public class MoveBall : MonoBehaviour
    
     public Rigidbody rb;
     private  AudioSource RollingBall;
-    private bool onAndroid = true;
+    public bool onAndroid = false;
     private int throwForceValue=700;
    
 

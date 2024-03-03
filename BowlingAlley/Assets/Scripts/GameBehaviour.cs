@@ -35,7 +35,7 @@ public class GameBehaviour : MonoBehaviour
     private AudioSource controlPanelLocation;
     private bool playIntroSounds = false;
     private TextMesh debugText;
-
+    private bool debug = false;
     private GameObject endCap;
 
     private int timesKilledBall = 0;
@@ -84,8 +84,8 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            // Debug.Log("Error deleting ball");
-            // //MyDebug("Error deleting ball");
+            Debug.Log("Error deleting ball");
+            //MyDebug("Error deleting ball");
         }
     }
 
@@ -102,7 +102,7 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error deleting pin");
+            MyDebug("Error deleting pin");
         }
 
 
@@ -117,7 +117,7 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error tagging pin");
+            MyDebug("Error tagging pin");
         }
 
     }
@@ -133,7 +133,7 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error in taggedAsDeleted");
+            MyDebug("Error in taggedAsDeleted");
         }
 
         return value;
@@ -214,7 +214,7 @@ public class GameBehaviour : MonoBehaviour
         }//try
         catch (Exception e)
         {
-            //MyDebug("Error in kill_Ball_With_NullCheck()");
+            MyDebug("Error in kill_Ball_With_NullCheck()");
         }
     }
     void simply_Kill_Ball()
@@ -250,14 +250,13 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error playing particle effect");
+            MyDebug("Error playing particle effect");
         }
 
     }
     // Update is called once per frame
     void Update()
     {
-
         //MyDebug("Total Balls Deleted:" + timesKilledBall + "\ntotal # of balls:"+ getTotalBalls() );
         //
         // detect change of theme
@@ -384,7 +383,7 @@ public class GameBehaviour : MonoBehaviour
         }//try  
         catch (Exception e)
         {
-            //MyDebug("Error in falling(obj)");
+            MyDebug("Error in falling(obj)");
         }
 
         return value;
@@ -405,6 +404,7 @@ public class GameBehaviour : MonoBehaviour
     {
         try
         {
+            
             // recreating ball
             GameObject ballSpawner = GameObject.FindGameObjectWithTag("ballSpawner");
             float x = ballSpawner.transform.position.x;
@@ -412,6 +412,8 @@ public class GameBehaviour : MonoBehaviour
             float z = ballSpawner.transform.position.z;
 
             GameObject go;
+
+             
 
             if (themeStatusHolder.tag == "theme_default")
             {
@@ -429,7 +431,7 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error in spawnNewBall()");
+            MyDebug("Error in spawnNewBall()");
         }
 
     }
@@ -589,7 +591,7 @@ public class GameBehaviour : MonoBehaviour
             }//try
             catch (Exception e)
             {
-                //MyDebug("Error in killPins_If_NotVertical");
+                MyDebug("Error in killPins_If_NotVertical");
             }
 
 
@@ -610,7 +612,7 @@ public class GameBehaviour : MonoBehaviour
         }//try
         catch (Exception e)
         {
-            //MyDebug("Error in anyPinsLeft()");
+            MyDebug("Error in anyPinsLeft()");
         }
 
         return pinsLeft;
@@ -632,7 +634,7 @@ public class GameBehaviour : MonoBehaviour
         }
         catch (Exception e)
         {
-            //MyDebug("Error in spawnNewRack()");
+            MyDebug("Error in spawnNewRack()");
         }
     }
 
@@ -671,7 +673,7 @@ public class GameBehaviour : MonoBehaviour
         }//try
         catch (Exception e)
         {
-            //MyDebug("isXWingFighter_BowlingBall()");
+            MyDebug("isXWingFighter_BowlingBall()");
         }
 
         return value;
@@ -695,7 +697,7 @@ public class GameBehaviour : MonoBehaviour
         }//try
         catch (Exception e)
         {
-            //MyDebug("isTieFighter_BowlingBall()");
+            MyDebug("isTieFighter_BowlingBall()");
         }//catch
 
 
@@ -705,10 +707,10 @@ public class GameBehaviour : MonoBehaviour
     void MyDebug(string someText)
     {
 
-        if (debugText != null)
-        {
-            debugText.text = someText;
-        }
+      if ( (debugText != null) && debug){
+          Debug.Log (someText);
+          debugText.text = someText;
+      }
 
     }
 }

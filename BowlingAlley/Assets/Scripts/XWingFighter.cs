@@ -36,8 +36,6 @@ public class XWingFighter : MonoBehaviour
      private GameObject xwingBlastPrefab;
      private bool rolling = false;
      
- private bool onAndroid = true;
-
 
      private  AudioSource roarSource;
      private AudioClip roar;
