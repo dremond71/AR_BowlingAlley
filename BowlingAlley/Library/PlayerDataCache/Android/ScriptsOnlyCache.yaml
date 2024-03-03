@@ -25,9 +25,33 @@ ScriptsOnlyBuild:
     - slave1Behaviour
     - slave1BlastLifecycle
     Assembly-CSharp.dll:
-    - ControlPanelShowcase
-    - FloorPositioningBehaviour
-    - XWingFighterShowcase
+    - DeathStarMissleBehaviour
+    - DustExplosionLifeCycle
+    - EnergyExplosionLifeCycle
+    - ExplosionLifeCycle
+    - FixedJoystick
+    - ImperialViperDroid
+    - LevelManager
+    - MeteoriteBehaviour
+    - SoundTrackOptionsBehaviour
+    - StarDestroyerBehaviour
+    - StarDestroyerBlastLifeCycle
+    - TantiveIVShipBehaviour
+    - TargetAWingBehaviour
+    - TargetMilleniumFalconBlastLifeCycle
+    - TargetMilleniumFalconScript
+    - TargetXWingBehaviour
+    - TargetXWingBlastLifeCycle
+    - TargetYWingBehaviour
+    - TieFighterBlastLifeCycle
+    - TieFighterBoxBehaviour
+    - TieMissleBehaviour
+    - TieMissleTargetBehaviour
+    - TurboLaserTestBehaviour
+    - ViperBlastLifeCycle
+    - miniHothTieBehaviour
+    - slave1Behaviour
+    - slave1BlastLifecycle
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridBrushEditor
@@ -95,6 +119,9 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TextMeshPro
     Unity.VisualEffectGraph.Runtime.dll:
     - UnityEngine.VFX.VFXRuntimeResources
     Unity.XR.ARCore.Editor.dll:
@@ -105,6 +132,7 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.ARFoundation.ARCameraBackground
     - UnityEngine.XR.ARFoundation.ARCameraManager
     - UnityEngine.XR.ARFoundation.ARInputManager
+    - UnityEngine.XR.ARFoundation.ARRaycastManager
     - UnityEngine.XR.ARFoundation.ARSession
     - UnityEngine.XR.ARFoundation.ARSessionOrigin
     Unity.XR.Management.Editor.dll:
@@ -122,7 +150,6 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.Simulation.XRSimulationRuntimeSettings
     Unity.XR.Simulation.Editor.dll:
     - UnityEditor.XR.Simulation.SimulationEnvironmentAssetsManager
-    - UnityEditor.XR.Simulation.XREnvironmentViewManager
     - UnityEditor.XR.Simulation.XRSimulationSettings
     Unity.XR.Simulation.dll:
     - UnityEngine.XR.Simulation.SimulatedBoundedPlane
@@ -153,6 +180,12 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
+    UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
   serializedClasses:
     Unity.RenderPipelines.Core.Runtime:
     - UnityEngine.Rendering.UI.DebugUIPrefabBundle
@@ -244,7 +277,7 @@ ScriptsOnlyBuild:
     fullTypeName: UnityEngine.Rendering.UI.DebugUIHandlerPanel
     methodName: ResetDebugManager
   sceneClasses:
-    Assets/Scenes/ShowcaseVehicle.unity:
+    Assets/Scenes/hothBattle.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -294,169 +327,175 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 16846}
+    - Class: 114
+      Script: {instanceID: 16848}
+    - Class: 114
+      Script: {instanceID: 16850}
+    - Class: 114
+      Script: {instanceID: 16852}
+    - Class: 114
+      Script: {instanceID: 16854}
+    - Class: 114
+      Script: {instanceID: 16856}
+    - Class: 114
+      Script: {instanceID: 16858}
+    - Class: 114
+      Script: {instanceID: 16860}
+    - Class: 114
+      Script: {instanceID: 16864}
+    - Class: 114
+      Script: {instanceID: 16866}
+    - Class: 114
       Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 16924}
+      Script: {instanceID: 16872}
     - Class: 114
-      Script: {instanceID: 16930}
+      Script: {instanceID: 16898}
     - Class: 114
-      Script: {instanceID: 17058}
+      Script: {instanceID: 16954}
     - Class: 114
-      Script: {instanceID: 17090}
+      Script: {instanceID: 16960}
     - Class: 114
-      Script: {instanceID: 17108}
+      Script: {instanceID: 17086}
     - Class: 114
-      Script: {instanceID: 17588}
+      Script: {instanceID: 17118}
     - Class: 114
-      Script: {instanceID: 17738}
+      Script: {instanceID: 17614}
     - Class: 114
-      Script: {instanceID: 17820}
+      Script: {instanceID: 17620}
     - Class: 114
-      Script: {instanceID: 17932}
+      Script: {instanceID: 17764}
     - Class: 114
-      Script: {instanceID: 18038}
+      Script: {instanceID: 17846}
     - Class: 114
-      Script: {instanceID: 18076}
+      Script: {instanceID: 17958}
     - Class: 114
-      Script: {instanceID: 18110}
+      Script: {instanceID: 18100}
     - Class: 114
-      Script: {instanceID: 18400}
+      Script: {instanceID: 18134}
     - Class: 114
-      Script: {instanceID: 18568}
+      Script: {instanceID: 18422}
     - Class: 114
-      Script: {instanceID: 18684}
+      Script: {instanceID: 18434}
     - Class: 114
-      Script: {instanceID: 19116}
+      Script: {instanceID: 18590}
     - Class: 114
-      Script: {instanceID: 19266}
+      Script: {instanceID: 18706}
     - Class: 114
-      Script: {instanceID: 19322}
+      Script: {instanceID: 19050}
     - Class: 114
-      Script: {instanceID: 19350}
+      Script: {instanceID: 19138}
     - Class: 114
-      Script: {instanceID: 19352}
+      Script: {instanceID: 19288}
     - Class: 114
-      Script: {instanceID: 19356}
+      Script: {instanceID: 19344}
     - Class: 114
-      Script: {instanceID: 19446}
+      Script: {instanceID: 19372}
     - Class: 114
-      Script: {instanceID: 19640}
+      Script: {instanceID: 19376}
     - Class: 114
-      Script: {instanceID: 19694}
+      Script: {instanceID: 19466}
     - Class: 114
-      Script: {instanceID: 19702}
+      Script: {instanceID: 19660}
     - Class: 114
-      Script: {instanceID: 19726}
+      Script: {instanceID: 19714}
     - Class: 114
-      Script: {instanceID: 19802}
+      Script: {instanceID: 19744}
     - Class: 114
-      Script: {instanceID: 19810}
+      Script: {instanceID: 19820}
     - Class: 114
-      Script: {instanceID: 19848}
+      Script: {instanceID: 19956}
     - Class: 114
-      Script: {instanceID: 19942}
+      Script: {instanceID: 19964}
     - Class: 114
-      Script: {instanceID: 19948}
+      Script: {instanceID: 20078}
     - Class: 114
-      Script: {instanceID: 19952}
+      Script: {instanceID: 20258}
     - Class: 114
-      Script: {instanceID: 20066}
+      Script: {instanceID: 20438}
     - Class: 114
-      Script: {instanceID: 20246}
+      Script: {instanceID: 20636}
     - Class: 114
-      Script: {instanceID: 20360}
+      Script: {instanceID: 20760}
     - Class: 114
-      Script: {instanceID: 20428}
+      Script: {instanceID: 20876}
     - Class: 114
-      Script: {instanceID: 20626}
+      Script: {instanceID: 21036}
     - Class: 114
-      Script: {instanceID: 20750}
+      Script: {instanceID: 21040}
     - Class: 114
-      Script: {instanceID: 20866}
+      Script: {instanceID: 21576}
     - Class: 114
-      Script: {instanceID: 21026}
+      Script: {instanceID: 21848}
     - Class: 114
-      Script: {instanceID: 21030}
+      Script: {instanceID: 21880}
     - Class: 114
-      Script: {instanceID: 21566}
+      Script: {instanceID: 21930}
     - Class: 114
-      Script: {instanceID: 21644}
+      Script: {instanceID: 21978}
     - Class: 114
-      Script: {instanceID: 21672}
+      Script: {instanceID: 22038}
     - Class: 114
-      Script: {instanceID: 21840}
+      Script: {instanceID: 22076}
     - Class: 114
-      Script: {instanceID: 21872}
+      Script: {instanceID: 22142}
     - Class: 114
-      Script: {instanceID: 21922}
+      Script: {instanceID: 22154}
     - Class: 114
-      Script: {instanceID: 21970}
+      Script: {instanceID: 22474}
     - Class: 114
-      Script: {instanceID: 22030}
+      Script: {instanceID: 22476}
     - Class: 114
-      Script: {instanceID: 22068}
+      Script: {instanceID: 22502}
     - Class: 114
-      Script: {instanceID: 22134}
+      Script: {instanceID: 22566}
     - Class: 114
-      Script: {instanceID: 22146}
+      Script: {instanceID: 22568}
     - Class: 114
-      Script: {instanceID: 22466}
+      Script: {instanceID: 22846}
     - Class: 114
-      Script: {instanceID: 22468}
+      Script: {instanceID: 22994}
     - Class: 114
-      Script: {instanceID: 22494}
+      Script: {instanceID: 23024}
     - Class: 114
-      Script: {instanceID: 22558}
+      Script: {instanceID: 23184}
     - Class: 114
-      Script: {instanceID: 22560}
+      Script: {instanceID: 23312}
     - Class: 114
-      Script: {instanceID: 22604}
+      Script: {instanceID: 23336}
     - Class: 114
-      Script: {instanceID: 22726}
+      Script: {instanceID: 23480}
     - Class: 114
-      Script: {instanceID: 22842}
+      Script: {instanceID: 23534}
     - Class: 114
-      Script: {instanceID: 22990}
+      Script: {instanceID: 23590}
     - Class: 114
-      Script: {instanceID: 23020}
+      Script: {instanceID: 23688}
     - Class: 114
-      Script: {instanceID: 23182}
+      Script: {instanceID: 23712}
     - Class: 114
-      Script: {instanceID: 23310}
+      Script: {instanceID: 23854}
     - Class: 114
-      Script: {instanceID: 23334}
+      Script: {instanceID: 23988}
     - Class: 114
-      Script: {instanceID: 23478}
+      Script: {instanceID: 24058}
     - Class: 114
-      Script: {instanceID: 23532}
+      Script: {instanceID: 24210}
     - Class: 114
-      Script: {instanceID: 23588}
+      Script: {instanceID: 24266}
     - Class: 114
-      Script: {instanceID: 23710}
+      Script: {instanceID: 24304}
     - Class: 114
-      Script: {instanceID: 23852}
+      Script: {instanceID: 24348}
     - Class: 114
-      Script: {instanceID: 23986}
+      Script: {instanceID: 24382}
     - Class: 114
-      Script: {instanceID: 24056}
+      Script: {instanceID: 24424}
     - Class: 114
-      Script: {instanceID: 24208}
+      Script: {instanceID: 24510}
     - Class: 114
-      Script: {instanceID: 24264}
-    - Class: 114
-      Script: {instanceID: 24302}
-    - Class: 114
-      Script: {instanceID: 24346}
-    - Class: 114
-      Script: {instanceID: 24380}
-    - Class: 114
-      Script: {instanceID: 24422}
-    - Class: 114
-      Script: {instanceID: 24508}
-    - Class: 114
-      Script: {instanceID: 24702}
-    - Class: 114
-      Script: {instanceID: 24986}
+      Script: {instanceID: 24704}
     - Class: 114
       Script: {instanceID: 25084}
     - Class: 114
@@ -471,6 +510,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 25684}
     - Class: 114
       Script: {instanceID: 25722}
+    - Class: 114
+      Script: {instanceID: 26008}
+    - Class: 114
+      Script: {instanceID: 26016}
     - Class: 114
       Script: {instanceID: 26082}
     - Class: 115
@@ -500,6 +543,96 @@ ScriptsOnlyBuild:
     - Class: 850595691
       Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 392091a48ece2fbbd6cc1a2a8393cd7c
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GameBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 03b11debade5d914d1bef471bd286744
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TargetAWingBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 7eaa1ecf6d48ead6a791d3302c43ddab
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TargetMilleniumFalconScript
+  - hash:
+      serializedVersion: 2
+      Hash: ab818cf31928698443ecf431fd74c4dc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TargetYWingBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 046fe6c9da9eb55757a939d14e22b7ec
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TargetXWingBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: dac96bb43b811c7b592292a409b91a97
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: ImperialViperDroid
+  - hash:
+      serializedVersion: 2
+      Hash: 5f59d614e4d61a311a888fd07fae7434
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: slave1Behaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 8fd0dffde3ba79ffc837f5d59ea0dbcd
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: StarDestroyerBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: a23e068cc56b423fcfa7ebe55c320e66
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TurboLaserTestBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 45f8c17e9153bcc2550caa09430692ce
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: XYZPositioningHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 30dd529858e798a0ac72cc547d4adcd6
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: miniHothTieBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: bc34c345d2100ad335fa53be90fac51d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: MeteoriteBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: f1d8c2d84849f1d8e0dd6fd29e3a3a72
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TantiveIVShipBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: ab5f38fb6f54a4e469a35b07e624ab66
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: XWingFighterShowcase
+  - hash:
+      serializedVersion: 2
+      Hash: 2a26a5e66c18b9838466a30a702d3e90
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TieFighterBoxBehaviour
   - hash:
       serializedVersion: 2
       Hash: 904e953e3c373d31e8dfe3cef7729039
@@ -556,12 +689,6 @@ ScriptsOnlyBuild:
     className: FreeCamera
   - hash:
       serializedVersion: 2
-      Hash: 45f8c17e9153bcc2550caa09430692ce
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: XYZPositioningHandler
-  - hash:
-      serializedVersion: 2
       Hash: 34bcbd4b9a8d1ee94b65669777a5e8b4
     assemblyName: Unity.VisualEffectGraph.Runtime
     namespaceName: UnityEngine.VFX.Utility
@@ -590,12 +717,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: Grain
-  - hash:
-      serializedVersion: 2
-      Hash: 5f59d614e4d61a311a888fd07fae7434
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: slave1Behaviour
   - hash:
       serializedVersion: 2
       Hash: 00bbd9db8634496d079d17711b2ff7c4
@@ -736,12 +857,6 @@ ScriptsOnlyBuild:
     className: ControlPanelShowcase
   - hash:
       serializedVersion: 2
-      Hash: a23e068cc56b423fcfa7ebe55c320e66
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TurboLaserTestBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: da281dc879c7932e0c9669da88ae40c0
     assemblyName: Unity.RenderPipelines.Core.Runtime
     namespaceName: UnityEngine.Rendering.UI
@@ -764,12 +879,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: DustExplosionLifeCycle
-  - hash:
-      serializedVersion: 2
-      Hash: 392091a48ece2fbbd6cc1a2a8393cd7c
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: GameBehaviour
   - hash:
       serializedVersion: 2
       Hash: 37dbaff32a49c70ff37b8bb15bd24c18
@@ -1000,12 +1109,6 @@ ScriptsOnlyBuild:
     className: ARCameraBackground
   - hash:
       serializedVersion: 2
-      Hash: bc34c345d2100ad335fa53be90fac51d
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: MeteoriteBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: d41ab9b5ea92474f9c0a6937a0607ce1
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
@@ -1072,12 +1175,6 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerValueTuple
   - hash:
       serializedVersion: 2
-      Hash: f1d8c2d84849f1d8e0dd6fd29e3a3a72
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TantiveIVShipBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: 731480b83236435ed9fb94ca37cf5283
     assemblyName: Unity.XR.Management
     namespaceName: UnityEngine.XR.Management
@@ -1120,18 +1217,6 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerToggleHistory
   - hash:
       serializedVersion: 2
-      Hash: ab5f38fb6f54a4e469a35b07e624ab66
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: XWingFighterShowcase
-  - hash:
-      serializedVersion: 2
-      Hash: 2a26a5e66c18b9838466a30a702d3e90
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TieFighterBoxBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: 36011f0a95d05fc59acadcc3e436f7df
     assemblyName: Unity.XR.ARFoundation
     namespaceName: UnityEngine.XR.ARFoundation
@@ -1142,12 +1227,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.XR.Simulation
     namespaceName: UnityEngine.XR.Simulation
     className: SimulationEnvironment
-  - hash:
-      serializedVersion: 2
-      Hash: ab818cf31928698443ecf431fd74c4dc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TargetYWingBehaviour
   - hash:
       serializedVersion: 2
       Hash: 776903a262591f2540a3bf11e8543daf
@@ -1232,12 +1311,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp
     namespaceName: UnityTemplateProjects
     className: SimpleCameraController
-  - hash:
-      serializedVersion: 2
-      Hash: dac96bb43b811c7b592292a409b91a97
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: ImperialViperDroid
   - hash:
       serializedVersion: 2
       Hash: 5dc51b0140815ee83ba613dce32f5b12
@@ -1498,12 +1571,6 @@ ScriptsOnlyBuild:
     className: NavMeshLink
   - hash:
       serializedVersion: 2
-      Hash: 046fe6c9da9eb55757a939d14e22b7ec
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TargetXWingBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: 76aa43cc6adae8454a66255a8113266d
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -1720,22 +1787,10 @@ ScriptsOnlyBuild:
     className: Text
   - hash:
       serializedVersion: 2
-      Hash: 8fd0dffde3ba79ffc837f5d59ea0dbcd
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: StarDestroyerBehaviour
-  - hash:
-      serializedVersion: 2
       Hash: 49d1f93f0fc6b40f80723b4a9f635e8d
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: MoveBall_Original
-  - hash:
-      serializedVersion: 2
-      Hash: 03b11debade5d914d1bef471bd286744
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TargetAWingBehaviour
   - hash:
       serializedVersion: 2
       Hash: a9f0153fc675e1f4ade818b83e4ff0c1
@@ -1790,12 +1845,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime
     namespaceName: UnityEngine.Rendering
     className: ProbeTouchupVolume
-  - hash:
-      serializedVersion: 2
-      Hash: 30dd529858e798a0ac72cc547d4adcd6
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: miniHothTieBehaviour
   - hash:
       serializedVersion: 2
       Hash: 33656f83bb0079184b2206a69690ec46
@@ -2200,12 +2249,6 @@ ScriptsOnlyBuild:
     className: ARCoreLoader
   - hash:
       serializedVersion: 2
-      Hash: 7eaa1ecf6d48ead6a791d3302c43ddab
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TargetMilleniumFalconScript
-  - hash:
-      serializedVersion: 2
       Hash: f2e2fc20d4e9e96d9dd76b68ab028ff5
     assemblyName: Unity.VisualEffectGraph.Runtime
     namespaceName: UnityEngine.VFX.Utility
@@ -2452,5 +2495,5 @@ ScriptsOnlyBuild:
     className: VFXRaycastBinder
   platform: 13
   scenePathNames:
-  - Assets/Scenes/ShowcaseVehicle.unity
-  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/showcaseVehicle_2024_arm64.apk
+  - Assets/Scenes/hothBattle.unity
+  playerPath: C:/Users/domin/AR_BowlingAlley/BowlingAlley/hallwayShooter_2024_arm64.apk
